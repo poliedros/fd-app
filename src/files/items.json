@@ -1,0 +1,128 @@
+{
+    "clients": [
+        {
+            "urlName": "pzzabea",
+            "name": "Pizza Beça",
+            "logo": "pblogo.png",
+            "code": "PB01"
+        },
+        {
+            "urlName": "czar",
+            "name": "CZAR Desenvolvedores",
+            "logo": "pblogo.png",
+            "code": "CA01"
+        }
+    ],
+    "items": [ 
+    {
+        "code": "PB01",
+        "pizza": [
+            {
+                "id": 0,
+                "image": "https://thebigmansworld.com/wp-content/uploads/2020/03/2-ingredient-pizza-dough-13.jpg",
+                "name": "Muçarela",
+                "description": "Molho especial, muçarela e orégano.",
+                "price": 45
+            },
+            {
+                "id": 1,
+                "image": "https://www.recipetineats.com/wp-content/uploads/2020/05/Pizza-Crust-without-yeast_5-SQ.jpg?w=500&h=500&crop=1",
+                "name": "Portuguesa",
+                "description": "Molho especial, muçarela, presunto, catupiry, milho verde, calabresa ralada, cebola, ovo cozido, pimentão, tomate e orégano.",
+                "price": 51
+            },
+            {
+                "id": 2,
+                "image": "https://www.tasteofhome.com/wp-content/uploads/2018/01/Homemade-Pizza_EXPS_HCA20_376_E07_09_2b-2.jpg?fit=700,1024",
+                "name": "Toscana",
+                "description": "Molho especial, muçarela, calabresa ralada, presunto, parmesão, ovo cozido e orégano.",
+                "price": 48
+            }
+        ],
+        "edge": [],
+        "additional": [],
+        "drinks": [
+            {
+                "id": 0,
+                "type": "1L",
+                "image": "https://tentulogo.com/wp-content/uploads/2017/06/cocacola-logo.jpg",
+                "name": "Coca-Cola 1L",
+                "description": "1 litro.",
+                "price": 8
+            },
+            {
+                "id": 1,
+                "type": "1L",
+                "image": "https://brasilmarketingmix.files.wordpress.com/2012/08/logo-guaranc3a1-antarctica1.jpg",
+                "name": "Guaraná Antártica 1L",
+                "description": "1 litro.",
+                "price": 8
+            },
+            {
+                "id": 2,
+                "type": "1L",
+                "image": "https://brandemia.org/contenido/subidas/2011/03/pepsi-a-traves-de-la-historia.jpg",
+                "name": "Pepsi 1L",
+                "description": "1 litro.",
+                "price": 8
+            },
+            {
+                "id": 3,
+                "type": "1L",
+                "image": "https://brandemia.org/contenido/subidas/2011/03/pepsi-a-traves-de-la-historia.jpg",
+                "name": "Guaraná Antártica 1,5L",
+                "description": "1,5 litro.",
+                "price": 9
+            },
+            {
+                "id": 4,
+                "type": "2L",
+                "image": "https://tentulogo.com/wp-content/uploads/2017/06/cocacola-logo.jpg",
+                "name": "Coca-Cola 2L",
+                "description": "2 litro.",
+                "price": 12
+            },
+            {
+                "id": 5,
+                "type": "2L",
+                "image": "https://brasilmarketingmix.files.wordpress.com/2012/08/logo-guaranc3a1-antarctica1.jpg",
+                "name": "Guaraná Antártica 2L",
+                "description": "2 litro.",
+                "price": 10
+            },
+            {
+                "id": 6,
+                "type": "2L",
+                "image": "https://blogger.googleusercontent.com/img/a/AVvXsEifcyjVrNeIOgfTXHMgGYGaCaU31lgiSY0alKvqo0gVEVflltqHUHNrMvjZdHeNECXg8v8wR_5KiUmucLYMDv_LYHB606ULjXFw0NWVgX2Yb12Rv4LiVkOjeA8DRBcumCIUWvi0oPQjfQejjxYsOGPAW47HIxg0SKviIfQiZ2YPZkWdNEjvsA=w1200-h630-p-k-no-nu",
+                "name": "Sukita Laranja 2L",
+                "description": "2 litro.",
+                "price": 10
+            },
+            {
+                "id": 7,
+                "type": "2L",
+                "image": "https://brandemia.org/contenido/subidas/2011/03/pepsi-a-traves-de-la-historia.jpg",
+                "name": "Pepsi 2L",
+                "description": "2 litro.",
+                "price": 10
+            },
+            {
+                "id": 8,
+                "type": "2L",
+                "image": "https://brasilmarketingmix.files.wordpress.com/2012/08/logo-guaranc3a1-antarctica1.jpg",
+                "name": "Guaraná Antártica Zero 2L",
+                "description": "2 litro.",
+                "price": 10
+            },
+            {
+                "id": 9,
+                "type": "Wine",
+                "image": "https://i.pinimg.com/736x/d9/1e/90/d91e90d351ed6ea268d3a95e7628ab61--logo-designing-icon-design.jpg",
+                "name": "Vinho La Casa Bordô Suave 750ml",
+                "description": "Bordô Suave 750 militros.",
+                "price": 22.90
+            }
+        ]
+    }
+    ]
+}

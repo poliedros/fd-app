@@ -1,0 +1,1035 @@
+import React, { FC, useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+
+import { useLocation } from 'react-router-dom';
+
+//import { Order } from "./../../interfaces/Order";
+
+import './FdPizzaBasicSelect.css';
+
+import Container from 'react-bootstrap/Container';
+import Accordion from 'react-bootstrap/Accordion';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import Badge from 'react-bootstrap/Badge';
+import Figure from 'react-bootstrap/Figure';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Card from 'react-bootstrap/Card';
+import Nav from 'react-bootstrap/Nav';
+import Table from 'react-bootstrap/Table';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+
+import itemsFile from './items.json';
+
+interface FdPizzaBasicSelectProps {}
+
+const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = () => {
+  interface Product {
+    id: number;
+    title: string;
+    name: string;
+    quantity: string;
+    price: number;
+    note: string;
+  }
+
+  let navigate = useNavigate();
+
+  const location = useLocation();
+  const state = location.state as Product[];
+  //const state = location.state as Order;
+
+  console.log("CHAVES");
+  console.log(state);
+  console.log(typeof(state));
+
+  const [sProduct, setSProduct] = useState({ id: 0, title: 'Pizza 1', name: '', quantity: '1', price: 0, note: '' });
+
+  const [sList, setSList] = useState(state != null ? state : [sProduct]); //state.length > 0 ? [sProduct] : state
+
+  /* const order = {
+    orderId: null,
+    delivery: null,
+    Payment: {
+        type: null,
+        cardBrand: null,
+        exchange: null
+    },
+    Client: {
+        name: '',
+        phoneNumber: '',
+        email: '',
+        address: '',
+        addicionalInfo: '',
+        city: ''
+    },
+    Products: [
+      {
+        productId: 0,
+        lable: 'Pizza 1',
+        type: 'Pizza',
+        name: '',
+        quantity: '1',
+        price: 0,
+        note: ''
+      }
+    ]
+  }; */
+
+  /* const [sOrder, setSOrder] = useState(order); */
+
+  const [index, setIndex] = useState(0);
+
+  /* console.log("Order");
+  console.log(sOrder); */
+
+  /* const getStateLocal = () => {
+    console.log("PALHARES");
+    let respondValue: Product[] = [];
+    state.map((s) => {
+      respondValue.push(s);
+    })
+    setSList(respondValue);
+  }; */
+
+  /* if (state.length > 0) {
+    let respondValue: Product[] = [];
+    state.map((s) => {
+      respondValue.push(s);
+    })
+    setSList(respondValue);
+  } */
+
+  const getProduct = async () => {
+    /* setSList([]);
+    setSList([...sList, sProduct]); */
+  };
+
+  const getIndex = async (idx: number) => {
+    setIndex(idx);
+  };
+
+  /* const productChangeQuantity = async (v: number) => {
+    let copyOrder = sOrder;
+    copyOrder.Products[index].quantity = (parseInt(copyOrder.Products[index].quantity) + v).toString();
+    setSOrder(copyOrder);
+    console.log(sOrder);
+  }; */
+
+  const productChangeQuantity = async (v: number) => {
+    let copyList = [...sList];
+    copyList[index].quantity = (parseInt(copyList[index].quantity) + v).toString();
+    setSList(copyList);
+  };
+
+  /* const orderAddProduct = async (id: number, lable: string, type: string, name: string, quantity: string, price: number, note: string) => {
+    let copyOrder = sOrder;
+    let copyProducts = [...sOrder.Products, { productId: id, lable: lable, type: type, name: name, quantity: quantity, price: price, note: note }];
+    /* copyOrder.Products[index].productId = id;
+    copyOrder.Products[index].lable = lable;
+    copyOrder.Products[index].type = type;
+    copyOrder.Products[index].quantity = quantity;
+    copyOrder.Products[index].name = name;
+    copyOrder.Products[index].price = price;
+    copyOrder.Products[index].note = note; /
+    copyOrder.Products = copyProducts;
+    console.log(copyOrder);
+    setSOrder(copyOrder);
+  }; */
+
+  /* const orderAddProductValue = async (name: string, price: number) => {
+    let copyOrder = sOrder;
+    copyOrder.Products[index].name = name;
+    copyOrder.Products[index].price = price;
+    setSOrder(copyOrder);
+  }; */
+
+  const orderAddProductValue = async (name:string, price:number) => {
+    let copyList = [...sList];
+    copyList[index].name = name;
+    copyList[index].price = price;
+    setSList(copyList);
+  };
+
+  /* const orderRemoveProduct = async () => {
+    let copyOrder = sOrder;
+    copyOrder.Products.splice(index, 1);
+    setSOrder(copyOrder);
+    if(index == sOrder.Products.length-1)
+        setIndex(index-1);
+  }; */
+
+  const orderRemoveProduct = async () => {
+    let copyList = [...sList];
+    //if (index !== -1) {
+      copyList.splice(index, 1);
+      setSList(copyList);
+      console.log("DADOS");
+      console.log(index + " " + sList.length);
+      if(index == sList.length-1)
+        setIndex(index-1);
+    //}
+  };
+
+  /* const orderAddNote = async (note: string) => {
+    let copyOrder = sOrder;
+    copyOrder.Products[index].note = note;
+    setSOrder(copyOrder);
+  }; */
+
+  const orderAddNote = async (note:string) => {
+    let copyList = [...sList];
+    copyList[index].note = note;
+    setSList(copyList);
+  };
+  
+  useEffect ( () => {
+    getProduct();
+  }, sList);
+
+  /* console.log("LIST");
+  console.log(sList); */
+
+  return (
+    <Container style={{ marginTop: "1.5rem", marginBottom: "1.5rem" /* position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" */ }}>
+      <div style={{ textAlign: "left" }}>
+        <Button style={{ marginBottom: "1rem" }} onClick={ () => navigate("/") }>Retornar ao Início</Button>
+      </div>
+      { /* getStateLocal() */ }
+      <div>
+      <Card bg="secondary">
+        <Card.Header>
+          <DropdownButton as={ButtonGroup} title="Adicionar um novo produto" id="bg-nested-dropdown">
+            {/* <Dropdown.Item eventKey="1" onClick={ () => { orderAddProduct(sOrder.Products.length, 'Pizza ' + (sOrder.Products.length + 1), 'Pizza', '', '1', 0, ''); setIndex(sOrder.Products.length) } }>Pizza</Dropdown.Item>
+            <Dropdown.Item eventKey="2" onClick={ () => { orderAddProduct(sOrder.Products.length, 'Soda ' + (sOrder.Products.length + 1), 'Bebida', '', '1', 0, ''); setIndex(sOrder.Products.length) } }>Bebida</Dropdown.Item> */}
+            <Dropdown.Item eventKey="1" onClick={ () => { setSList([...sList, { id: sList.length, title: 'Pizza ' + (sList.length + 1), name: '', quantity: '1', price: 0, note: '' }]); setIndex(sList.length) } }>Pizza</Dropdown.Item>
+            <Dropdown.Item eventKey="2" onClick={ () => { setSList([...sList, { id: sList.length, title: 'Soda ' + (sList.length + 1), name: '', quantity: '1', price: 0, note: '' }]); setIndex(sList.length) } }>Bebida</Dropdown.Item>
+          </DropdownButton>
+          <Nav variant="pills" defaultActiveKey="0">
+          { sList.map((it, idx) => 
+            <Nav.Item>
+              <Nav.Link id={ idx.toString() } eventKey={ idx.toString() } /* href={it.name} */ onClick={ event => { getIndex(idx); console.log("Bananudo"); console.log(sList) } }>{it.title}</Nav.Link>
+            </Nav.Item>
+          ) }
+          </Nav>
+        </Card.Header>
+          { sList[index].title.includes("Pizza") ? 
+          <Card.Body>
+            <div style={{ textAlign: "right" }}>
+              { sList.length > 1 ?
+                <Button variant="danger" onClick={ () => { orderRemoveProduct() } }>Apagar - { sList[index].title }</Button>
+              :
+                <Button onClick={ () => navigate("/") }>Retornar ao Início</Button>
+              }
+            </div>
+            <Card.Title>Escolha até dois tipos de Pizzas &nbsp;<Badge pill bg="warning" text="dark">{ sList[index].name }{ sList[index].name ? ' x' + sList[index].quantity : null }</Badge></Card.Title>
+            <br/>
+            <Card.Text>
+              <div>
+              <Accordion flush>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>
+                    <Figure>
+                      <Figure.Image
+                        width={45}
+                        height={45}
+                        alt="171x180"
+                        src="pizza_2.png"
+                        style={{ margin: "0 10px 0 0" }}
+                      />
+                      {/* <Figure.Caption>
+                        Nulla vitae elit libero, a pharetra augue mollis interdum.
+                      </Figure.Caption> */}
+                    </Figure>
+                    Pizza 1 &nbsp;<Badge pill bg="secondary">{ sList[index].name }</Badge>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <div>
+                      <fieldset>
+                        <Form.Group as={Row} className="mb-12">
+                          {/* <Form.Label as="legend" column sm={2}>
+                            Sabores
+                          </Form.Label> */}
+                          <Col sm={12}>
+                          <Table striped responsive hover size="sm">
+                              {/* <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>First Name</th>
+                                  <th>Last Name</th>
+                                  <th>Username</th>
+                                </tr>
+                              </thead> */}
+                              <tbody>
+                                { itemsFile.pizza.map(i => {
+                                  return <tr className="align-middle">
+                                  
+                                  <td>
+                                    <Form.Check
+                                      type="radio"
+                                      label=""
+                                      name="Pizza"
+                                      id={ i.name }
+                                      style={{ marginLeft: "10px" }}
+                                      onClick={ () => { orderAddProductValue(i.name ?? '', i.price ?? 0) } }
+                                      checked={ sList[index].name == i.name }
+                                    />
+                                  </td>
+                                  <td>
+                                    <Figure.Image
+                                      width={45}
+                                      height={45}
+                                      alt="171x180"
+                                      src={ i.image }
+                                      style={{ margin: "0 10px 0 0" }}
+                                    />
+                                  </td>
+                                  <td>
+                                    <b>{ i.name }</b> { ' ' + i.description }
+                                  </td>
+                                  <td>
+                                    <Badge pill bg="dark" style={{ marginRight: "10px" }}>
+                                      R$ { i.price },00
+                                    </Badge>
+                                  </td>
+                                  
+                                </tr>
+                                }) }
+                                {/* <tr className="align-middle">
+                                  
+                                  <td>
+                                    <Form.Check
+                                      type="radio"
+                                      label=""
+                                      name="Pizza"
+                                      id="Muçarela"
+                                      onClick={ () => { orderAddProductValue('Muçarela', 45) } }
+                                      checked={ sList[index].name == 'Muçarela' }
+                                    />
+                                  </td>
+                                  <td>
+                                    <Figure.Image
+                                      width={45}
+                                      height={45}
+                                      alt="171x180"
+                                      src="https://thebigmansworld.com/wp-content/uploads/2020/03/2-ingredient-pizza-dough-13.jpg"
+                                      style={{ margin: "0 10px 0 0" }}
+                                    />
+                                  </td>
+                                  <td>
+                                    <b>Muçarela</b> Molho especial, mussarela e orégano.
+                                  </td>
+                                  <td>
+                                    <Badge pill bg="dark">
+                                      R$ 45,00
+                                    </Badge>
+                                  </td>
+                                  
+                                </tr>
+                                <tr className="align-middle">
+                                  
+                                  <td>
+                                    <Form.Check
+                                      type="radio"
+                                      label=""
+                                      name="Pizza"
+                                      id="Portuguesa"
+                                      onClick={ () => { orderAddProductValue('Portuguesa', 51) } }
+                                      checked={ sList[index].name == 'Portuguesa' }
+                                    />
+                                  </td>
+                                  <td>
+                                    <Figure.Image
+                                      width={45}
+                                      height={45}
+                                      alt="171x180"
+                                      src="https://www.recipetineats.com/wp-content/uploads/2020/05/Pizza-Crust-without-yeast_5-SQ.jpg?w=500&h=500&crop=1"
+                                      style={{ margin: "0 10px 0 0" }}
+                                    />
+                                  </td>
+                                  <td>
+                                    <b>Portuguesa</b> Molho especial, muçarela, presunto, catupiry, milho verde, calabresa ralada, cebola, ovo cozido, pimentão, tomate e orégano.
+                                  </td>
+                                  <td>
+                                    <Badge pill bg="dark">
+                                      R$ 51,00
+                                    </Badge>
+                                  </td>
+                                  
+                                </tr>
+                                <tr className="align-middle">
+                                  
+                                  <td>
+                                    <Form.Check
+                                      type="radio"
+                                      label=""
+                                      name="Pizza"
+                                      id="Toscana"
+                                      onClick={ () => { orderAddProductValue('Toscana', 48) } }
+                                      checked={ sList[index].name == 'Toscana' }
+                                    />
+                                  </td>
+                                  <td>
+                                    <Figure.Image
+                                      width={45}
+                                      height={45}
+                                      alt="171x180"
+                                      src="https://www.tasteofhome.com/wp-content/uploads/2018/01/Homemade-Pizza_EXPS_HCA20_376_E07_09_2b-2.jpg?fit=700,1024"
+                                      style={{ margin: "0 10px 0 0" }}
+                                    />
+                                  </td>
+                                  <td width="70%">
+                                    <b>Toscana</b> Molho especial, muçarela, calabresa ralada, presunto, parmesão, ovo cozido e orégano. 
+                                  </td>
+                                  <td width="10%">
+                                    <Badge pill bg="dark">
+                                      R$ 48,00
+                                    </Badge>
+                                  </td>
+                                  
+                                </tr> */}
+                              </tbody>
+                            </Table>
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                            </div>
+                          </Col>
+                        </Form.Group>
+                      </fieldset>
+                    </div>
+                  </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="1">
+                  <Accordion.Header>
+                    <Figure>
+                      <Figure.Image
+                        width={45}
+                        height={45}
+                        alt="171x180"
+                        src="pizza_2.png"
+                        style={{ margin: "0 10px 0 0" }}
+                      />
+                      {/* <Figure.Caption>
+                        Nulla vitae elit libero, a pharetra augue mollis interdum.
+                      </Figure.Caption> */}
+                    </Figure>
+                    Pizza 2
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    Lorem.
+                  </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="2">
+                  <Accordion.Header>Borda</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem.
+                  </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="3">
+                  <Accordion.Header>Adicional</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem.
+                  </Accordion.Body>
+                </Accordion.Item>
+                {/* <Accordion.Item eventKey="2">
+                  <Accordion.Header>Accordion Item #3</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem.
+                  </Accordion.Body>
+                </Accordion.Item> */}
+              </Accordion>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", marginTop: "1rem" }}>
+                <InputGroup className="mb-3">
+                  <Button variant="danger" id="button-addon1"
+                    onClick={
+                      () => parseInt(sList[index].quantity) > 0
+                      ? productChangeQuantity(-1) /* setSList(sList.map((l, idx) => idx === index ? { ...sProduct, quantity: (parseInt(l.quantity) - 1).toString() } : l )) */
+                      : null } style={{ width: "45px" }}>
+                    <b>-</b>
+                  </Button>
+                  <FormControl style={{ width: "45px", flex: "none" }}
+                    placeholder={ sList[index].quantity } disabled
+                    aria-describedby="basic-addon1"
+                  />
+                  <Button variant="success" id="button-addon2" onClick={ () => parseInt(sList[index].quantity) < 99
+                    ? productChangeQuantity(1) //copyList = [...sList]; copyList[index].quantity = parseInt(copyList[index].quantity) + 1).toString(); setSList(copyList)
+                    /* setSList(
+                      ({Products}) => ({
+                        Products: [
+                            ...Products.slice(0,1),
+                            {
+                                ...Products[1],
+                                name: 'newName',
+                            },
+                            ...Products.slice(2)
+                        ]
+                      }) */
+                      /* sList.map((l, idx) => idx === index ? { ...sProduct, quantity: (parseInt(l.quantity) + 1).toString() } : l ) */
+                    /* ) */ : null } style={{ width: "45px" }}>
+                    <b>+</b>
+                  </Button>
+                </InputGroup>
+                <Badge bg="light" text="dark"><h4>Subtotal: R$ { (parseInt(sList[index].quantity) * sList[index].price) },00</h4></Badge>
+              </div>
+              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Observações:</Form.Label>
+                <Form.Control as="textarea" id="observ" rows={3} value={sList[index].note ? sList[index].note : ''} onChange={ (e) => { orderAddNote(e.currentTarget.value ?? '') }} />
+              </Form.Group>
+            </Card.Text>
+            {/* <textarea>{sList[index].note}</textarea> */}
+            {/* <Button variant="primary">Confirmar Comprar</Button> */}
+          </Card.Body>
+        
+        : 
+
+          <Card.Body>
+            <div style={{ textAlign: "right" }}>
+            { sList.length > 1 ?
+              <Button variant="danger" onClick={ () => { orderRemoveProduct() } }>Apagar - { sList[index].title }</Button>
+            :
+              <Button onClick={ () => navigate("/") }>Retornar ao Início</Button>
+            }
+            </div>
+            <Card.Title>Escolha uma Bebida &nbsp;<Badge pill bg="warning" text="dark">{ sList[index].name }{ sList[index].name ? ' x' + sList[index].quantity : null }</Badge></Card.Title>
+            <br/>
+            <Card.Text>
+              <div>
+                <Accordion flush>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>
+                      <Figure>
+                        <Figure.Image
+                          width={45}
+                          height={45}
+                          alt="171x180"
+                          src="soda.png"
+                          style={{ margin: "0 10px 0 0" }}
+                        />
+                      </Figure>
+                      Refrigerante 1L
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <div>
+                        <fieldset>
+                          <Form.Group as={Row} className="mb-12">
+                            <Col sm={12}>
+                            <Table striped responsive hover size="sm">
+                                <tbody>
+                                  { itemsFile.drinks.filter( f => f.type == "1L" ).map( d => {
+                                    return <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id={ d.name }
+                                        onClick={ () => { orderAddProductValue(d.name, d.price) } }
+                                        checked={ sList[index].name == d.name }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src={ d.image }
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td>
+                                      <b>{ d.name }</b> { d.description }
+                                    </td>
+                                    <td>
+                                      <Badge pill bg="dark">
+                                        R$ { d.price },00
+                                      </Badge>
+                                    </td>
+                                  </tr>
+                                  }) }
+                                  {/* <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id="Coca-Cola 1L"
+                                        onClick={ () => { orderAddProductValue('Coca-Cola 1L', 8) } }
+                                        checked={ sList[index].name == 'Coca-Cola 1L' }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src="https://tentulogo.com/wp-content/uploads/2017/06/cocacola-logo.jpg"
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td>
+                                      <b>Coca-Cola</b> 1 litro.
+                                    </td>
+                                    <td>
+                                      <Badge pill bg="dark">
+                                        R$ 8,00
+                                      </Badge>
+                                    </td>
+                                  </tr>
+                                  <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id="Guaraná Antártica 1L"
+                                        onClick={ () => { orderAddProductValue('Guaraná Antártica 1L', 8) } }
+                                        checked={ sList[index].name == 'Guaraná Antártica 1L' }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src="https://brasilmarketingmix.files.wordpress.com/2012/08/logo-guaranc3a1-antarctica1.jpg"
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td>
+                                      <b>Guaraná Antártica</b> 1 litro.
+                                    </td>
+                                    <td>
+                                      <Badge pill bg="dark">
+                                        R$ 8,00
+                                      </Badge>
+                                    </td>
+                                  </tr>
+                                  <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id="Pepsi 1L"
+                                        onClick={ () => { orderAddProductValue('Pepsi 1L', 8) } }
+                                        checked={ sList[index].name == 'Pepsi 1L' }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src="https://brandemia.org/contenido/subidas/2011/03/pepsi-a-traves-de-la-historia.jpg"
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td width="70%">
+                                      <b>Pepsi</b> 1 litro. 
+                                    </td>
+                                    <td width="10%">
+                                      <Badge pill bg="dark">
+                                        R$ 8,00
+                                      </Badge>
+                                    </td>
+                                  </tr>
+                                  <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id="Guaraná Antártica 1,5L"
+                                        onClick={ () => { orderAddProductValue('Guaraná Antártica 1,5L', 9) } }
+                                        checked={ sList[index].name == 'Guaraná Antártica 1,5L' }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src="https://brasilmarketingmix.files.wordpress.com/2012/08/logo-guaranc3a1-antarctica1.jpg"
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td>
+                                      <b>Guaraná Antártica</b> 1,5 litro.
+                                    </td>
+                                    <td>
+                                      <Badge pill bg="dark">
+                                        R$ 9,00
+                                      </Badge>
+                                    </td>
+                                  </tr> */}
+                                </tbody>
+                              </Table>
+                            </Col>
+                          </Form.Group>
+                        </fieldset>
+                      </div>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item eventKey="1">
+                    <Accordion.Header>
+                      <Figure>
+                        <Figure.Image
+                          width={45}
+                          height={45}
+                          alt="171x180"
+                          src="soda.png"
+                          style={{ margin: "0 10px 0 0" }}
+                        />
+                      </Figure>
+                      Refrigerante 2L
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <div>
+                        <fieldset>
+                          <Form.Group as={Row} className="mb-12">
+                            <Col sm={12}>
+                            <Table striped responsive hover size="sm">
+                                <tbody>
+                                  { itemsFile.drinks.filter(f => f.type == "2L").map( d=> {
+                                    return <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id={ d.name }
+                                        onClick={ () => { orderAddProductValue(d.name, d.price) } }
+                                        checked={ sList[index].name == d.name }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src={ d.image }
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td>
+                                      <b>{ d.name }</b> { d.description }
+                                    </td>
+                                    <td>
+                                      <Badge pill bg="dark">
+                                        R$ { d.price },00
+                                      </Badge>
+                                    </td>
+                                  </tr>
+                                  })}
+                                  {/* <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id="Coca-Cola 2L"
+                                        onClick={ () => { orderAddProductValue('Coca-Cola 2L', 12) } }
+                                        checked={ sList[index].name == 'Coca-Cola 2L' }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src="https://tentulogo.com/wp-content/uploads/2017/06/cocacola-logo.jpg"
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td>
+                                      <b>Coca-Cola</b> 2 litros.
+                                    </td>
+                                    <td>
+                                      <Badge pill bg="dark">
+                                        R$ 12,00
+                                      </Badge>
+                                    </td>
+                                  </tr>
+                                  <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id="Guaraná Antártica 2L"
+                                        onClick={ () => { orderAddProductValue('Guaraná Antártica 2L', 10) } }
+                                        checked={ sList[index].name == 'Guaraná Antártica 2L' }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src="https://brasilmarketingmix.files.wordpress.com/2012/08/logo-guaranc3a1-antarctica1.jpg"
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td>
+                                      <b>Guaraná Antártica</b> 2 litros.
+                                    </td>
+                                    <td>
+                                      <Badge pill bg="dark">
+                                        R$ 10,00
+                                      </Badge>
+                                    </td>
+                                  </tr>
+                                  <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id="Sukita Laranja 2L"
+                                        onClick={ () => { orderAddProductValue('Sukita Laranja 2L', 10) } }
+                                        checked={ sList[index].name == 'Sukita Laranja 2L' }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src="https://blogger.googleusercontent.com/img/a/AVvXsEifcyjVrNeIOgfTXHMgGYGaCaU31lgiSY0alKvqo0gVEVflltqHUHNrMvjZdHeNECXg8v8wR_5KiUmucLYMDv_LYHB606ULjXFw0NWVgX2Yb12Rv4LiVkOjeA8DRBcumCIUWvi0oPQjfQejjxYsOGPAW47HIxg0SKviIfQiZ2YPZkWdNEjvsA=w1200-h630-p-k-no-nu"
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td width="70%">
+                                      <b>Sukita Laranja</b> 2 litros. 
+                                    </td>
+                                    <td width="10%">
+                                      <Badge pill bg="dark">
+                                        R$ 10,00
+                                      </Badge>
+                                    </td>
+                                  </tr>
+                                  <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id="Pepsi 2L"
+                                        onClick={ () => { orderAddProductValue('Pepsi 2L', 10) } }
+                                        checked={ sList[index].name == 'Pepsi 2L' }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src="https://brandemia.org/contenido/subidas/2011/03/pepsi-a-traves-de-la-historia.jpg"
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td width="70%">
+                                      <b>Pepsi</b> 2 litros. 
+                                    </td>
+                                    <td width="10%">
+                                      <Badge pill bg="dark">
+                                        R$ 10,00
+                                      </Badge>
+                                    </td>
+                                  </tr>
+                                  <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id="Guaraná Antártica Zero 2L"
+                                        onClick={ () => { orderAddProductValue('Guaraná Antártica Zero 2L', 10) } }
+                                        checked={ sList[index].name == 'Guaraná Antártica Zero 2L' }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src="https://brasilmarketingmix.files.wordpress.com/2012/08/logo-guaranc3a1-antarctica1.jpg"
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td>
+                                      <b>Guaraná Antártica ZERO</b> 2 litros.
+                                    </td>
+                                    <td>
+                                      <Badge pill bg="dark">
+                                        R$ 10,00
+                                      </Badge>
+                                    </td>
+                                  </tr> */}
+                                </tbody>
+                              </Table>
+                            </Col>
+                          </Form.Group>
+                        </fieldset>
+                      </div>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item eventKey="2">
+                    <Accordion.Header>
+                      <Figure>
+                        <Figure.Image
+                          width={45}
+                          height={45}
+                          alt="171x180"
+                          src="soda.png"
+                          style={{ margin: "0 10px 0 0" }}
+                        />
+                      </Figure>
+                      Vinho
+                    </Accordion.Header>
+                    <Accordion.Body>
+                    <div>
+                        <fieldset>
+                          <Form.Group as={Row} className="mb-12">
+                            <Col sm={12}>
+                            <Table striped responsive hover size="sm">
+                                <tbody>
+                                  { itemsFile.drinks.filter(f => f.type == "Wine").map(
+                                    d => { return <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id={ d.name }
+                                        onClick={ () => { orderAddProductValue(d.name, d.price) } }
+                                        checked={ sList[index].name ==  d.name  }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src={ d.image }
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td>
+                                      Vinho <b>{ d.name }</b> { d.description }
+                                    </td>
+                                    <td>
+                                      <Badge pill bg="dark">
+                                        R$ { d.price },90
+                                      </Badge>
+                                    </td>
+                                  </tr>
+                                    
+                                    } 
+                                  ) }
+                                  {/* <tr className="align-middle">
+                                    <td>
+                                      <Form.Check
+                                        type="radio"
+                                        label=""
+                                        name="Refri"
+                                        id="Vinho La Casa Bordô Suave 750ml"
+                                        onClick={ () => { orderAddProductValue('Vinho La Casa Bordô Suave 750ml', 22.90) } }
+                                        checked={ sList[index].name == 'Vinho La Casa Bordô Suave 750ml' }
+                                      />
+                                    </td>
+                                    <td>
+                                      <Figure.Image
+                                        width={45}
+                                        height={45}
+                                        alt="171x180"
+                                        src="https://i.pinimg.com/736x/d9/1e/90/d91e90d351ed6ea268d3a95e7628ab61--logo-designing-icon-design.jpg"
+                                        style={{ margin: "0 10px 0 0" }}
+                                      />
+                                    </td>
+                                    <td>
+                                      Vinho <b>La Casa</b> Bordô Suave 750 militros.
+                                    </td>
+                                    <td>
+                                      <Badge pill bg="dark">
+                                        R$ 22,90
+                                      </Badge>
+                                    </td>
+                                  </tr> */}
+                                </tbody>
+                              </Table>
+                            </Col>
+                          </Form.Group>
+                        </fieldset>
+                      </div>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", marginTop: "1rem" }}>
+                <InputGroup className="mb-3">
+                  <Button variant="danger" id="button-addon1" onClick={ () => parseInt(sList[index].quantity) > 0 ? productChangeQuantity(-1) /* setSList(sList.map((l, idx) => idx === index ? { ...sProduct, quantity: (parseInt(l.quantity) - 1).toString() } : l )) */ : null } style={{ width: "45px" }}>
+                    <b>-</b>
+                  </Button>
+                  <FormControl style={{ width: "45px", flex: "none" }}
+                    placeholder={ sList[index].quantity } disabled
+                    aria-describedby="basic-addon1"
+                  />
+                  <Button variant="success" id="button-addon2" onClick={ () => parseInt(sList[index].quantity) < 99
+                    ? productChangeQuantity(1) //copyList = [...sList]; copyList[index].quantity = parseInt(copyList[index].quantity) + 1).toString(); setSList(copyList)
+                    /* setSList(
+                      ({Products}) => ({
+                        Products: [
+                            ...Products.slice(0,1),
+                            {
+                                ...Products[1],
+                                name: 'newName',
+                            },
+                            ...Products.slice(2)
+                        ]
+                      }) */
+                      /* sList.map((l, idx) => idx === index ? { ...sProduct, quantity: (parseInt(l.quantity) + 1).toString() } : l ) */
+                    /* ) */ : null } style={{ width: "45px" }}>
+                    <b>+</b>
+                  </Button>
+                </InputGroup>
+                <Badge bg="light" text="dark"><h4>Subtotal: R$ { (parseInt(sList[index].quantity) * sList[index].price) },00</h4></Badge>
+              </div>
+              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Observações:</Form.Label>
+                <Form.Control as="textarea" id="observ" rows={3} value={sList[index].note ? sList[index].note : ''} onChange={ (e) => { orderAddNote(e.currentTarget.value ?? '') }} />
+              </Form.Group>
+            </Card.Text>
+          </Card.Body>
+        }
+      </Card>
+      {/* <ButtonGroup aria-label="Basic example"> */}
+      {/* <ButtonGroup>
+        <DropdownButton as={ButtonGroup} title="Seguir Comprando" id="bg-nested-dropdown">
+          <Dropdown.Item eventKey="1" onClick={ () => { setSList([...sList, { id: sList.length, title: 'Pizza ' + (sList.length + 1), name: '', quantity: '1', price: 0, note: '' }]); setIndex(sList.length) } }>Pizza</Dropdown.Item>
+          <Dropdown.Item eventKey="2" onClick={ () => { setSList([...sList, { id: sList.length, title: 'Soda ' + (sList.length + 1), name: '', quantity: '1', price: 0, note: '' }]); setIndex(sList.length) } }>Refri</Dropdown.Item>
+        </DropdownButton> */}
+        {/* <Button variant="primary" onClick={ () => { /* $("input:radio").attr("checked", "false"); / setSList([...sList, { id: sList.length, title: 'Pizza ' + (sList.length + 1), name: '', quantity: '1', price: 0, note: '' }]); setIndex(sList.length) } }>Adicionar outro Item</Button> */}
+        <Button variant="success" style={{ marginTop: "1rem" }} onClick={() => navigate("/cartshopping", { state: sList })}>Confirmar Lista de Compra</Button>
+      {/* </ButtonGroup> */}
+      {/* </ButtonGroup> */}
+      {/* <Card border="primary" style={{ width: '18rem' }}>
+        <Card.Header>Header</Card.Header>
+        <Card.Body>
+          <Card.Title>Primary Card Title</Card.Title>
+          <Card.Text>
+          
+          </Card.Text>
+        </Card.Body>
+      </Card> */}
+      </div>
+    </Container>
+  );
+};
+
+export default FdPizzaBasicSelect;
