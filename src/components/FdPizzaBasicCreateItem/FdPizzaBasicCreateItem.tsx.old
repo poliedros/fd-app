@@ -61,6 +61,9 @@ function OffCanvasExample({ ...props }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  console.log('props');
+  console.log(props);
+
   return ( 
     <>
 
@@ -102,12 +105,19 @@ function OffCanvasExample({ ...props }) {
                     { p.name }
                   </ListGroup.Item>
                 } ) : null }
+                {/*<ListGroup.Item action href="#link1">
+                  Link 1
+                </ListGroup.Item>
+                <ListGroup.Item action href="#link2">
+                  Link 2
+                </ListGroup.Item> */}
               </ListGroup>
             </Col>
             <Col sm={8}>
               <Tab.Content>
                 { props.clients.filter((c: Client) => c.code == "1")[0] ? props.clients.filter((c: Client) => c.code == "1")[0].items.map( (p: Item, i: number) => {
                 return <Tab.Pane eventKey={ "#link" + i }>
+                  {/* <p style={{ color: 'white' }}> */}
 
                     <InputGroup className="mb-3">
                       <Form.Label style={{ width: '100%' }}>Tarja</Form.Label>
@@ -206,10 +216,12 @@ function OffCanvasExample({ ...props }) {
                       <Button variant="outline-secondary">Salvar Item</Button>
                     </InputGroup>
 
+                  {/* </p> */}
                 </Tab.Pane>
                 } ) : null }
                 { props.clients.filter((f: Client) => f.code == "1").map( (p: Client) => {
                 return <Tab.Pane eventKey="#linkAccount">
+                  {/* <p style={{ color: 'white' }}> */}
 
                     <InputGroup className="mb-3">
                       <Form.Label style={{ width: '100%' }}>Nome</Form.Label>
@@ -283,6 +295,7 @@ function OffCanvasExample({ ...props }) {
                       <Button variant="outline-secondary">Salvar Item</Button>
                     </InputGroup>
 
+                  {/* </p> */}
                 </Tab.Pane>
                 } ) }
                 <Tab.Pane eventKey="#link+">
@@ -294,6 +307,9 @@ function OffCanvasExample({ ...props }) {
                     <Form.Group className="mb-3" controlId="formBasicName">
                       <Form.Label>Nome</Form.Label>
                       <Form.Control type="text" placeholder="Insira nome" />
+                      {/* <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
+                      </Form.Text> */}
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicType">
                       <Form.Label>Tipo</Form.Label>
@@ -315,7 +331,7 @@ function OffCanvasExample({ ...props }) {
 
                     <Form.Group controlId="formFile" className="mb-3">
                       <Form.Label>Imagem</Form.Label>
-                      <Form.Control type="file" onChange={ (e) => console.log(e.target.value) } />
+                      <Form.Control type="file" onChange={ (e) => /* setImage("cu de pistola") */ console.log(e.target.value) } />
                     </Form.Group>
 
                     <InputGroup className="mb-3">
@@ -325,6 +341,12 @@ function OffCanvasExample({ ...props }) {
                       <Button variant="outline-secondary">Salvar Item</Button>
                     </InputGroup>
 
+                  {/*  <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="Check me out" />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                      Submit
+                    </Button> */}
                   </Form>
                 </Tab.Pane>
               </Tab.Content>
@@ -340,17 +362,48 @@ function OffCanvasExample({ ...props }) {
 }
 
 const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
+
+  //const [products, setProducts] = useState<Item[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
+
+  //console.log(props.code);
+
+  /* const getData = async () => {
+    const {data} = await axios.get('clients/' + props.code  + '/items');
+    console.log("data");
+    console.log(data);
+    setProducts(data);
+  };
+
+  useEffect(() => {
+    getData();
+  }, products); */
+
+  //let clients2: Client[] = [];
 
   const getData2 = async () => {
     await axios.get('clients').then(result => {
       setClients(result.data);
     });
+
+    console.log("data");
+    console.log(clients);
+    /* console.log("data");
+    console.log(data);
+    setClients(data); */
   }
 
   useEffect(() => {
     getData2();
   }, []);
+
+  //getData2();
+
+  console.log("Carlos");  
+  console.log(clients);
+  //console.log(products);
+
+  //let clients = props.clients as Client[];
 
   const [image, setImage] = useState("");
 
@@ -373,10 +426,19 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
         { clients ? ['bottom'].map((placement, idx) => (
           OffCanvas(idx, placement)
         )) : null }
+        {/* <Button variant="outline-secondary" id="button-addon2">
+          Validar Código
+        </Button> */}
       </InputGroup>
 
     </Container>
     <Container>
+
+    {/* <h1 style={{ color: 'white' }}>Anderson</h1> */}
+{/*     { products.map( (p) => {
+      return <h1>{p.name}</h1>
+    } ) }
+    {  } */}
 
     </Container>
   </div>);

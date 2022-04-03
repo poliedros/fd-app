@@ -1,100 +1,120 @@
 import React, { FC, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-/* import logo from './logo.svg'; */
+
 import './App.css';
 
-import axios from './axios';
-
-import ReactDOMServer from "react-dom/server";
-
-import FdNavbarMain from './components/FdNavbarMain/FdNavbarMain';
-import FdNavbarShopping from './components/FdNavbarShopping/FdNavbarShopping';
-import FdOptionsMainMenu from './components/FdOptionsMainMenu/FdOptionsMainMenu';
-import FdSelectPizza from './components/FdSelectPizza/FdSelectPizza';
-
-import FdPizzaBasicIntro from './components/FdPizzaBasicIntro/FdPizzaBasicIntro';
-
-import FdPizzaBasicCreateItem from './components/FdPizzaBasicCreateItem/FdPizzaBasicCreateItem';
+/* import axios from './axios'; */
 
 import FdPizzaBasicNavMenu from './components/FdPizzaBasicNavMenu/FdPizzaBasicNavMenu';
-import FdPizzaBasicCartShopping from './components/FdPizzaBasicCartShopping/FdPizzaBasicCartShopping';
-
+import FdPizzaBasicCreateItem from './components/FdPizzaBasicCreateItem/FdPizzaBasicCreateItem';
+import FdPizzaBasicIntro from './components/FdPizzaBasicIntro/FdPizzaBasicIntro';
 import FdPizzaBasicSelect from './components/FdPizzaBasicSelect/FdPizzaBasicSelect';
-import FdPatrickPage from './components/FdPatrickPage/FdPatrickPage';
+import FdPizzaBasicCartShopping from './components/FdPizzaBasicCartShopping/FdPizzaBasicCartShopping';
 import FdPizzaBasicFinalizeTransaction from './components/FdPizzaBasicFinalizeTransaction/FdPizzaBasicFinalizeTransaction';
 
-import itemsFile from '../src/files/items.json';
+import itemsFile from './files/items.json';
 
-/* const Hello = () => <FdPatrickPage />;
+interface Item {
+  id: string,
+  name: string,
+  description: string,
+  type: string,
+  price: number,
+  quantity: number,
+  clientId: string, //unnecessary
+  code: string, //unnecessary
+  image: string,
+  label: string,
+  note: string
+}
 
-const html = ReactDOMServer.renderToStaticMarkup(<Hello />);
+interface Client {
+  additionalInfo: string,
+  address: string,
+  code: string, //unnecessary
+  email: string,
+  id: string,
+  name: string,
+  phoneNumber: string,
+  items: Item[],
+  type: string
+}
 
-console.log(html.toString()); */
+interface Product {
+  type: string;
+  image: string | undefined;
+  description: string;
+  id: number;
+  label: string;
+  title: string;
+  name: string;
+  half: string;
+  quantity: number;
+  price: number;
+  note: string;
+}
+
+interface Data {
+  url: string,
+  client: Client,
+  products: Product[]
+}
 
 function App() {
 
-  const url = window.location.href.split("http://localhost:3000/").pop();
-  console.log("URL");
-  console.log(url);
+  const url = window.location.href.split("http://localhost:3000/").pop() ?? '';
 
-  const [clients, setClients] = useState<any[]>([]);
+/*   let client = {
+    additionalInfo: '',
+    address: '',
+    code: '', //unnecessary
+    email: '',
+    id: '',
+    name: '',
+    phoneNumber: '',
+    items: [],
+    type: ''
+  } */
 
-  const getData2 = async () => {
-    const {data} = await axios.get('clients');
-    setClients(data);
+/*   const [clients, setClients] = useState<Client[]>([]);
+
+  const getData = async () => {
+    await axios.get('clients').then(result => setClients(result.data));
   };
 
   useEffect(() => {
-    getData2();
-  }, clients);
+    getData();
+  }, []); */
 
-  console.log("CLIENTE");
-  console.log(clients);
+  let data: Data = { url: url, client: {
+    additionalInfo: '',
+    address: '',
+    code: '', //unnecessary
+    email: '',
+    id: '',
+    name: '',
+    phoneNumber: '',
+    items: [],
+    type: ''
+  },
+  products: [] };
+
+  console.log(data);
 
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      <div style={{
-        width: "100vw",
-        //height: "100vh",
-        backgroundColor: "black"
-      }}>
-        { clients.map(m => { return <h1>{ m.name }</h1>} )}
-        {/* <FdPizzaBasicNavMenu />
-        <FdPizzaBasicIntro /> */}
-
-        {/* <FdPizzaBasicNavMenu />
-        <FdPizzaBasicSelect /> */}
-
-        {/* <FdNavbarMain />
-        <FdNavbarShopping />
-        <FdOptionsMainMenu />
-        <FdSelectPizza /> */}
-
-        {/* <FdPatrickPage /> */}
-
+      <div style={{ width: "100vw" }}>
         <Router>
           <Routes>
-            <Route path={ "/" + url } element={<div><FdPizzaBasicNavMenu props={ url ? itemsFile.clients.filter(f => f.urlName == url) : '' } /><FdPizzaBasicIntro /></div>} />
-
-            <Route path="/manage" element={<div><FdPizzaBasicNavMenu props={ url ? itemsFile.clients.filter(f => f.urlName == url) : '' } /><FdPizzaBasicCreateItem /></div>} />
-
-            <Route path="/selector" element={<div><FdPizzaBasicNavMenu props={ url ? itemsFile.clients.filter(f => f.urlName == url) : '' } /><FdPizzaBasicSelect client={ itemsFile.clients.filter(f => f.urlName == url)[0] }/></div>} />
-            <Route path="/cartshopping" element={<div><FdPizzaBasicNavMenu props={ url ? itemsFile.clients.filter(f => f.urlName == url) : '' } /><FdPizzaBasicCartShopping /></div>} />
-            <Route path="/finalizeTransaction" element={<div><FdPizzaBasicNavMenu props={ url ? itemsFile.clients.filter(f => f.urlName == url) : '' } /><FdPizzaBasicFinalizeTransaction /></div>} />
+            <Route path={ "/" + url } element={ url != '' ? <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> : <><FdPizzaBasicCreateItem /></> } />
+            <Route path="/selector" element={ <div><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicSelect data={ data }/></div> } />
+            <Route path="/cartshopping" element={ <div><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicCartShopping /></div> } />
+            <Route path="/finalizeTransaction" element={ <div><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicFinalizeTransaction /></div> } />
+            {/* <Route path={ "/" + url } element={ url != "" ? <div><FdPizzaBasicNavMenu props={ url ? itemsFile.clients.filter(f => f.urlName == url) : '' } /><FdPizzaBasicIntro url={itemsFile.clients[0].name ?? ""} /></div> : <><FdPizzaBasicCreateItem /></> } />
+            <Route path="/adm" element={ <div><FdPizzaBasicNavMenu props={ url ? itemsFile.clients.filter(f => f.urlName == url) : '' } /><FdPizzaBasicCreateItem /></div> } />
+            <Route path="/selector" element={ <div><FdPizzaBasicNavMenu props={ url ? itemsFile.clients.filter(f => f.urlName == url) : '' } /><FdPizzaBasicSelect client={ itemsFile.clients.filter(f => f.urlName == url)[0] }/></div> } />
+            <Route path="/cartshopping" element={ <div><FdPizzaBasicNavMenu props={ url ? itemsFile.clients.filter(f => f.urlName == url) : '' } /><FdPizzaBasicCartShopping /></div> } />
+            <Route path="/finalizeTransaction" element={ <div><FdPizzaBasicNavMenu props={ url ? itemsFile.clients.filter(f => f.urlName == url) : '' } /><FdPizzaBasicFinalizeTransaction /></div> } /> */}
           </Routes>
         </Router>
       </div>
