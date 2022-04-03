@@ -61,9 +61,10 @@ interface Data {
 }
 
 function App() {
-
-  const url = window.location.href.split("http://localhost:3000/").pop() ?? '';
-
+  let address = window.location.href;
+  
+  const url = address.substring(address.lastIndexOf("/") + 1, address.length); //window.location.href.split("http://localhost:3000/").pop() ?? '';
+  console.log(url);
 /*   let client = {
     additionalInfo: '',
     address: '',
