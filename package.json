@@ -1,6 +1,6 @@
 {
-  "homepage": "https://poliedros.github.io/czardev",
-  "name": "czardev",
+  "homepage": "https://poliedros.github.io/fd-app",
+  "name": "fd-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
