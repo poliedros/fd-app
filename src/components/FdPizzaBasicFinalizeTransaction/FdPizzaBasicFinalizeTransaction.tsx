@@ -19,51 +19,7 @@ import emailjs from '@emailjs/browser';
 
 import apiKey from '../../emailkey';
 
-interface Item {
-  id: string,
-  name: string,
-  description: string,
-  type: string,
-  price: number,
-  quantity: number,
-  clientId: string, //unnecessary
-  code: string, //unnecessary
-  image: string,
-  label: string,
-  note: string
-}
-
-interface Client {
-  additionalInfo: string,
-  address: string,
-  code: string, //unnecessary
-  email: string,
-  id: string,
-  name: string,
-  phoneNumber: string,
-  items: Item[],
-  type: string
-}
-
-interface Product {
-  type: string;
-  image: string | undefined;
-  description: string;
-  id: number;
-  label: string;
-  title: string; //unecessary
-  name: string;
-  half: string;
-  quantity: number;
-  price: number;
-  note: string;
-}
-
-interface Data {
-  url: string,
-  client: Client,
-  products: Product[]
-}
+import { Data } from '../../interfaces/Interfaces';
 
 interface FdPizzaBasicFinalizeTransactionProps {}
 
@@ -130,7 +86,7 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
   <div>
     <Container style={{ marginTop: "1.5rem" }}>
       <div style={{ textAlign: "left" }}>
-        <Button variant="primary" style={{ marginBottom: "1rem" }} onClick={() => navigate("/cartshopping", { state: data })}>Voltar</Button>
+        <Button variant="primary" style={{ marginBottom: "1rem" }} onClick={() => navigate("/" + data.firstName + "/cartshopping", { state: data })}>Voltar</Button>
       </div>
       <Form noValidate validated={validated} onSubmit={ sendEmail } >
       <Card

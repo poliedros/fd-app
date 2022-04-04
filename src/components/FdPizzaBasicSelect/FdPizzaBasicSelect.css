@@ -46,3 +46,46 @@ figure {
         transform: none !important;
     }
 }
+
+
+.dropdown-toggle-image::after {
+    content: none !important;
+}
+
+.dropdown-toggle-image {
+    box-shadow: none !important;
+}
+
+.dropdown-toggle-image-small::after {
+    content: none !important;
+}
+
+.carousel-indicators {
+    /* bottom: -50px !important; */
+    
+}
+
+.dropdown-item-text-no-content:hover {
+    background-color: white !important;
+}
+
+.dropdown-item-text-no-content:active {
+  color: black !important;
+}
+
+.scrollableContent {
+  height: 90%;
+  margin: 0em;
+  overflow-y: auto;
+  overflow-y: scroll;
+}
+
+.accordion-button-radius > .accordion-button {
+  border-radius: 1rem !important;
+  min-height: 15vh;
+  background-image: url(https://www.tasteofhome.com/wp-content/uploads/2018/01/Homemade-Pizza_EXPS_HCA20_376_E07_09_2b-2.jpg?fit=700,1024);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  color: white;
+}

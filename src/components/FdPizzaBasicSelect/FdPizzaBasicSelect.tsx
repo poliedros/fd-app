@@ -26,51 +26,7 @@ import Overlay from 'react-bootstrap/Overlay';
 import itemsFile from '../../files/items.json';
 import { getEnvironmentData } from 'worker_threads';
 
-interface Item {
-  id: string,
-  name: string,
-  description: string,
-  type: string,
-  price: number,
-  quantity: number,
-  clientId: string, //unnecessary
-  code: string, //unnecessary
-  image: string,
-  label: string,
-  note: string
-}
-
-interface Client {
-  additionalInfo: string,
-  address: string,
-  code: string, //unnecessary
-  email: string,
-  id: string,
-  name: string,
-  phoneNumber: string,
-  items: Item[],
-  type: string
-}
-
-interface Product {
-  type: string;
-  image: string | undefined;
-  description: string;
-  id: number;
-  label: string;
-  title: string; //unecessary
-  name: string;
-  half: string;
-  quantity: number;
-  price: number;
-  note: string;
-}
-
-interface Data {
-  url: string,
-  client: Client,
-  products: Product[]
-}
+import { Data } from '../../interfaces/Interfaces';
 
 interface FdPizzaBasicSelectProps { data: Data }
 
@@ -178,7 +134,7 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
   return (
     <Container style={{ marginTop: "1.5rem", marginBottom: "1.5rem" }}>
       <div style={{ textAlign: "left" }}>
-        <Button style={{ marginBottom: "1rem" }} onClick={ () => navigate("/" + props.data.url) }>Retornar ao Início</Button>
+        <Button style={{ marginBottom: "1rem" }} onClick={ () => navigate("/" + props.data.firstName + "/" + props.data.url) }>Retornar ao Início</Button>
       </div>
       <div>
       <Card bg="secondary">
@@ -201,7 +157,7 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
               { products.length > 1 ?
                 <Button variant="danger" onClick={ () => { orderRemoveProduct() } }>Apagar - { products[index].title }</Button>
               :
-                <Button onClick={ () => navigate("/" + props.data.url) }>Retornar ao Início</Button>
+                <Button onClick={ () => navigate("/" + props.data.firstName + "/" + props.data.url) }>Retornar ao Início</Button>
               }
             </div>
             <Card.Title style={{ margin: "1rem" }}>Escolha até dois tipos de Pizzas &nbsp;<Badge pill bg="warning" text="dark">{ products[index].name + (products[index].half ? ' / ' + products[index].half : '') }{ products[index].name ? ' x' + products[index].quantity : '' }</Badge></Card.Title>
@@ -375,7 +331,7 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
                     onClick={
                       () => products[index].quantity > 0
                       ? (products.length == 1 && products[index].quantity == 1) ?
-                      navigate("/") : productChangeQuantity(-1)
+                      navigate("/" + props.data.firstName + "/" + props.data.url) : productChangeQuantity(-1)
                       : null } style={{ width: "45px" }}>
                     <b>-</b>
                   </Button>
@@ -402,7 +358,7 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
             { products.length > 1 ?
               <Button variant="danger" onClick={ () => { orderRemoveProduct() } }>Apagar - { products[index].title }</Button>
             :
-              <Button onClick={ () => navigate("/" + props.data.url) }>Retornar ao Início</Button>
+              <Button onClick={ () => navigate("/" + props.data.firstName + "/" + props.data.url) }>Retornar ao Início</Button>
             }
             </div>
             <Card.Title>Escolha uma Bebida &nbsp;<Badge pill bg="warning" text="dark">{ products[index].name }{ products[index].name ? ' x' + products[index].quantity : null }</Badge></Card.Title>
@@ -605,6 +561,11 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
                     <b>+</b>
                   </Button>
                 </InputGroup>
+                <ButtonGroup aria-label="Basic example" vertical>
+                  <Button variant="primary">Left</Button>
+                  <Button variant="primary">Middle</Button>
+                  <Button variant="primary">Right</Button>
+                </ButtonGroup>
                 <Badge bg="light" text="dark"><h4>Subtotal: R$ { (products[index].quantity * products[index].price) },00</h4></Badge>
               </div>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -617,7 +578,7 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
       </Card>
         { products.map( s => s.price > 0 ? null : verify = false ) }
         { verify ?
-        <Button variant="success" style={{ marginTop: "1rem" }} onClick={ () => { props.data.products = products; navigate("/cartshopping", { state: props.data }) }  }>Confirmar Lista de Compra</Button>
+        <Button variant="success" style={{ marginTop: "1rem" }} onClick={ () => { props.data.products = products; navigate("/" + props.data.firstName + "/cartshopping", { state: props.data }) }  }>Confirmar Lista de Compra</Button>
         : <><Button variant="success" style={{ marginTop: "1rem" }} ref={target} onClick={() => setShow(!show)}>Confirmar Lista de Compra</Button>
         <Overlay target={target.current} show={show} placement="right">
           {({ placement, arrowProps, show: _show, popper, ...props }) => (

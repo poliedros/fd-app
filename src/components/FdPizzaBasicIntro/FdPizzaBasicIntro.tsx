@@ -10,52 +10,9 @@ import Button from 'react-bootstrap/Button';
 
 import axios from '../../axios';
 
-interface Item {
-  id: string,
-  name: string,
-  description: string,
-  type: string,
-  price: number,
-  quantity: number,
-  clientId: string, //unnecessary
-  code: string, //unnecessary
-  image: string,
-  label: string,
-  note: string
-}
+import { Data } from '../../interfaces/Interfaces';
 
-interface Client {
-  additionalInfo: string,
-  address: string,
-  code: string, //unnecessary
-  email: string,
-  id: string,
-  name: string,
-  phoneNumber: string,
-  items: Item[],
-  type: string
-}
-
-interface Product {
-  type: string;
-  image: string | undefined;
-  description: string;
-  id: number;
-  title: string;
-  name: string;
-  half: string;
-  quantity: number;
-  price: number;
-  note: string;
-}
-
-interface Data {
-  url: string,
-  client: Client,
-  products: Product[]
-}
-
-interface FdPizzaBasicIntroProps { data: Data } //data: Data
+interface FdPizzaBasicIntroProps { data: Data }
 
 const FdPizzaBasicIntro: FC<FdPizzaBasicIntroProps> = (props) => {
   let navigate = useNavigate();
@@ -72,25 +29,23 @@ const FdPizzaBasicIntro: FC<FdPizzaBasicIntroProps> = (props) => {
 
   props.data.client = client;
 
-  console.log(props.data.client == null);
-
   return (
     <>
-      <Button style={{ margin: "1rem" }} variant="outline-secondary" size="sm" onClick={() => navigate("/adm")}>
+      <Button style={{ margin: "1rem" }} variant="outline-secondary" size="sm" onClick={() => navigate("/" + props.data.firstName + "/adm")}>
         Administrar Conta
       </Button>
       <Container className="containerMain" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-        <Row xs={1} md={3} className="g-4" style={{ display: "flex" }}>
+        <Row xs={1} md={3} className="g-4" style={{ display: "flex", alignItems: "center" }}>
           { Array.from({ length: 3 }).map((_, idx) => (
             <Col>
               <Card className="cardMain" style={{ alignContent: "center" }}>
-                <Card.Img className="mainImage" variant="top" src={ idx == 0 ? "/pizza.png" : idx == 1 ? "/pizzeria.png" : "/employee.png" } style={{ padding: "1.5rem" }} />
+                <Card.Img className="mainImage" variant="top" src={ idx == 0 ? "pizza.png" : idx == 1 ? "pizzeria.png" : "employee.png" } style={{ padding: "1.5rem" }} />
                 <Card.Body>
                   <Card.Title>{ idx == 0 ? "Fazer pedido" : idx == 1 ? "Promoções" : "Sobre nós" }</Card.Title>
                   <Card.Text>
-                  { idx == 0 ? "Saboreie nossas pizzas" : idx == 1 ? "Veja nossas promoções" : "Tudo sobre nós" }
+                    { idx == 0 ? "Saboreie nossas pizzas" : idx == 1 ? "Veja nossas promoções" : "Tudo sobre nós" }
                   </Card.Text>
-                  <Button variant="primary" onClick={() => navigate("/selector")}>Fazer pedido</Button>
+                  { idx == 0 ? <Button variant="primary" onClick={() => navigate("/" + props.data.firstName + "/selector")}>Fazer pedido</Button> : null }
                 </Card.Body>
               </Card>
             </Col>

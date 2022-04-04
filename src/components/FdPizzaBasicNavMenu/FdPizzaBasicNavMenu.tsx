@@ -10,51 +10,10 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Badge from 'react-bootstrap/Badge';
 
-interface Item {
-  id: string,
-  name: string,
-  description: string,
-  type: string,
-  price: number,
-  quantity: number,
-  clientId: string, //unnecessary
-  code: string, //unnecessary
-  image: string,
-  label: string,
-  note: string
-}
+import Dropdown from 'react-bootstrap/Dropdown';
+import Button from 'react-bootstrap/Button';
 
-interface Client {
-  additionalInfo: string,
-  address: string,
-  code: string, //unnecessary
-  email: string,
-  id: string,
-  name: string,
-  phoneNumber: string,
-  items: Item[],
-  type: string
-}
-
-interface Product {
-  type: string;
-  image: string | undefined;
-  description: string;
-  id: number;
-  label: string;
-  title: string;
-  name: string;
-  half: string;
-  quantity: number;
-  price: number;
-  note: string;
-}
-
-interface Data {
-  url: string,
-  client: Client,
-  products: Product[]
-}
+import { Data, Client } from '../../interfaces/Interfaces';
 
 interface FdPizzaBasicNavMenuProps { data: Data }
 
@@ -95,7 +54,7 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
   <>
     <Navbar bg="dark" variant="dark">
       <Container>
-      <Navbar.Brand onClick={() => navigate("/" + props.data.client.name)}>
+      <Navbar.Brand onClick={() => navigate("/" + props.data.firstName + "/" + props.data.client.name)}>
         <img
           src={ props.data.client.name }
           width="48"
@@ -104,8 +63,9 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
           alt="React Bootstrap logo"
         />
       </Navbar.Brand>
-      <Navbar.Brand onClick={() => navigate("/" + props.data.client.name)}>{ props.data.client.name }</Navbar.Brand>
-      <Navbar.Collapse className="justify-content-end">
+      <Navbar.Brand onClick={() => navigate("/" + props.data.firstName + "/" + props.data.client.name)}>{ props.data.client.name }</Navbar.Brand>
+
+      {/* <Navbar.Collapse className="justify-content-end">
         <Navbar.Brand onClick={() => navigate("/")}>
           <img
             src="pizza.png"
@@ -114,12 +74,98 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
             style={{ filter: "invert(1)" }}
-          />
+          /> 
           <Badge pill bg="danger" style={{ position: "absolute", margin: "-15px 0 0 -15px" }}>
             { data ? data.products.length : 0 }
           </Badge>
         </Navbar.Brand>
-      </Navbar.Collapse>
+      </Navbar.Collapse> */}
+          <Dropdown>
+            <Dropdown.Toggle id="dropdown-basic" style={{
+                  backgroundColor: "black",
+                  borderWidth: "2px",
+                  borderColor: "white",
+                  padding: "12px",
+                  borderRadius: "100%"
+            }} className="dropdown-toggle-image-small">
+              <img
+                src="pizza.png"
+                width="50"
+                height="50"
+                className="d-inline-block align-top"
+                alt="React Bootstrap logo"
+                style={{ filter: "invert(1)" }}
+              />
+              <Badge pill bg="danger" style={{
+                position: "absolute",
+                marginLeft: "-15px" }}>
+                { data ? data.products.length : 0 }
+              </Badge>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu style={{
+              right: "auto",
+              left: "50%",
+              WebkitTransform: "translate(-50%, 0)",
+              transform: "translate(-50%, 0)",
+              marginTop: "1rem",
+              textAlign: "end",
+              minWidth: "auto"
+            }}>
+              <Dropdown.Item className="dropdown-item-text-no-content">
+                <h5 style={{ textAlign: "center"}}>
+                  Sua compra
+                </h5>
+              </Dropdown.Item>
+
+              { data ? data.products.map((p) =>
+                <Dropdown.Item>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <Badge pill bg="danger" style={{ marginRight: "20px" }}>{ p.quantity }</Badge>
+                    <div>
+                    <h6>
+                      <b>{ p.name }{ p.half ? ' / ' + p.half : '' }</b>
+                    </h6>
+                    <p>Sub-total: <b>R${ p.price },00</b></p>
+                    </div>
+                  </div>
+                  <Button variant="outline-secondary" size="sm" style={{ textAlign: "center"}} disabled>Editar Pedido</Button>
+                </Dropdown.Item>
+              ) : 0 }
+
+              {/* <Dropdown.Item href="#/action-2">
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <Badge pill bg="danger" style={{ marginRight: "20px" }}>1</Badge>
+                  <div>
+                  <h6>
+                    <b>Pizza Muçarela ao Alho</b>
+                  </h6>
+                  <p>Sub-total: <b>R$58,40</b></p>
+                  </div>
+                </div>
+                <Button variant="outline-secondary" size="sm" style={{ textAlign: "center"}}>Editar Pedido</Button>
+              </Dropdown.Item>
+
+              <Dropdown.Item href="#/action-3">
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <Badge pill bg="danger" style={{ marginRight: "20px" }}>1</Badge>
+                  <div>
+                  <h6>
+                    <b>Pepsi 2L</b>
+                  </h6>
+                  <p>Sub-total: <b>R$13,00</b></p>
+                  </div>
+                </div>
+                <Button variant="outline-secondary" size="sm" style={{ textAlign: "center"}}>Editar Pedido</Button>
+              </Dropdown.Item> */}
+
+              <Dropdown.Item className="dropdown-item-text-no-content" style={{ textAlign: "center"}}>
+                <h6><b>Total: R$ <span style={{ fontSize: "1.75rem" }}>{/* { data ? data.products.map((p, a) => p.price + a, 0) : '0' } */}</span><span style={{ fontSize: "1.25rem" }}>,00</span></b></h6>
+                <Button variant="success" size="sm">Concluir Pedido</Button>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+
       </Container>
     </Navbar>
   </>
