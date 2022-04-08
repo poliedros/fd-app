@@ -61,8 +61,8 @@ function App() {
         <Router>
           <Routes>
 
-            <Route path={ "/" } element={ <><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
-            <Route path={ data.firstName + "/" } element={ <><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
+            <Route path={ "/" } element={ <><h1 style={{ color: "white" }}>Anderson</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
+            <Route path={ data.firstName + "/" } element={ <><h1 style={{ color: "white" }}>Mendes</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
             
             <Route path={ data.firstName + "/" + url } element={ url != '' ? <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> : <><FdPizzaBasicCreateItem /></> } />
             <Route path={ data.firstName + "/selector"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicSelect data={ data }/></> } />
