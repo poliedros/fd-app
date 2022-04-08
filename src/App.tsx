@@ -16,12 +16,19 @@ import { Data } from '../src/interfaces/Interfaces';
 
 function App() {
 
-  const address = window.location.href;
+  const address = window.location.pathname;
   
-  const url = address.substring(address.lastIndexOf("/") + 1, address.length); //window.location.href.split("http://localhost:3000/").pop() ?? '';
+  //const url = address.substring(address.lastIndexOf("/") + 1, address.length); //window.location.href.split("http://localhost:3000/").pop() ?? '';
+
+  const url = address.split('/');
+
+  const url2 = window.location.origin;
+
+  console.log(url);
+  console.log(url2);
 
   let data: Data = {
-    url: url,
+    url: url[2],
     firstName: 'fd-app',
     client: {
       additionalInfo: '',
@@ -64,7 +71,7 @@ function App() {
             <Route path={ "/" } element={ <><h1 style={{ color: "white" }}>Anderson</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
             <Route path={ data.firstName + "/" } element={ <><h1 style={{ color: "white" }}>Mendes</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
             
-            <Route path={ data.firstName + "/" + url } element={ url != '' ? <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> : <><FdPizzaBasicCreateItem /></> } />
+            <Route path={ data.firstName + "/" + url[2] } element={ url[2] != '' ? <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> : <><FdPizzaBasicCreateItem /></> } />
             <Route path={ data.firstName + "/selector"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicSelect data={ data }/></> } />
             <Route path={ data.firstName + "/cartshopping"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicCartShopping /></> } />
             <Route path={ data.firstName + "/finalizeTransaction"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicFinalizeTransaction /></> } />
