@@ -13,7 +13,7 @@ import Badge from 'react-bootstrap/Badge';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 
-import { Data, Client } from '../../interfaces/Interfaces';
+import { Data, Client, Item } from '../../interfaces/Interfaces';
 
 interface FdPizzaBasicNavMenuProps { data: Data }
 
@@ -33,8 +33,28 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
     type: ''
   } );
 
+  const [items, setItems] = useState<Item[]>( [{
+    id: '',
+    name: '',
+    code: '', //unnecessary
+    description: '',
+    type: '',
+    price: 0,
+    quantity: 0,
+    clientId: '',
+    image: '',
+    label: '',
+    note: '',
+  }] );
+
   const getData = async () => {
-    await axios.get('clients/' + props.data.url).then(result => setClients(result.data));
+    //await axios.get('clients/' + props.data.url).then(result => setClients(result.data));
+    //await axios.get('storage/' + props.data.url).then(result => { setClients(result.data)});
+    await axios.get('storage/' + props.data.url).then(result => { setClients(result.data)});
+    let newClient 
+    await axios.get('items/' + props.data.url).then(result => { setItems(result.data)});
+    //await axios.get('items/' + props.data.url).then(resultItems => setClients({...client, items: resultItems.data}))
+    //await axios.get('storage/' + props.data.url).then(result => setClients(result.data));
   };
 
   useEffect(() => {
@@ -44,6 +64,8 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
   props.data.client = client;
 
   console.log(props);
+  console.log(client);
+  console.log(items);
   
   let navigate = useNavigate();
 

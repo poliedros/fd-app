@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+/* import { HashRouter, Route, Routes } from 'react-router-dom'; */
 
 import './App.css';
 
@@ -66,6 +67,8 @@ function App() {
     <div className="App">
       <div style={{ width: "100vw" }}>
         <Router>
+        {/* <HashRouter> */}
+          
           <Routes>
 
             <Route path={ "/" } element={ <><h1 style={{ color: "white" }}>Anderson</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
@@ -78,6 +81,8 @@ function App() {
             <Route path={ data.firstName + "/adm" } element={ <><FdPizzaBasicCreateItem /></> } />
 
           </Routes>
+          
+        {/* </HashRouter> */}
         </Router>
       </div>
     </div>

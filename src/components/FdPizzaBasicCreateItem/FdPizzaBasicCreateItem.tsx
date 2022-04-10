@@ -2,6 +2,11 @@ import React, { FC, useEffect, useState } from 'react';
 
 import axios from '../../axios';
 
+import UploadImage from '../FdPizzaBasicUpdateImage/FdPizzaBasicUpdateImage';
+
+import { Upload } from "@aws-sdk/lib-storage";
+import { S3Client, S3 } from "@aws-sdk/client-s3";
+
 import Container from 'react-bootstrap/Container';
 import Tab from 'react-bootstrap/Tab';
 import Row from 'react-bootstrap/Row';
@@ -43,13 +48,34 @@ interface Client {
 }
 
 interface Props {
-  
     key: string;
     placement: string;
     name: string;
     code: string;
     clients: Client[];
- 
+}
+
+function sendImage(file: any) {
+
+  const creds = {accessKeyId: "AKIARVN2XQEDLNX53XWC", secretAccessKey: "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"};
+
+  const target = { Bucket: "storage-files-general-use", Key: file[0].file.name, Body: file[0].file };
+  try {
+    const parallelUploads3 = new Upload({
+      client: new S3Client({region: "sa-east-1", credentials: creds}),
+      leavePartsOnError: false, // optional manually handle dropped parts
+      params: target,
+    });
+
+    parallelUploads3.on("httpUploadProgress", (progress) => {
+      console.log(progress);
+    });
+
+    parallelUploads3.done();
+  } catch (e) {
+    console.log(e);
+  }
+
 }
 
 function OffCanvasExample({ ...props }) {
@@ -58,8 +84,14 @@ function OffCanvasExample({ ...props }) {
 
   const [show, setShow] = useState(false);
 
+  const [imagesState, setImagesState] = useState([]);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  console.log(imagesState[0]);
+
+  console.log(props);
 
   return ( 
     <>
@@ -67,7 +99,7 @@ function OffCanvasExample({ ...props }) {
       <Button variant="outline-secondary" onClick={ props.clients ? handleShow : undefined } className="me-2">
         Validar Código
       </Button>
-      
+      { console.log(props.clients) }
       { props.clients ? 
       <Offcanvas style={{ height: "100vh" }} show={show} onHide={handleClose} {...props}>
         <Offcanvas.Header closeButton>
@@ -79,7 +111,7 @@ function OffCanvasExample({ ...props }) {
           <Row>
             <Col sm={4}>
               <ListGroup>
-                { props.clients.filter((f: Client) => f.code == "1").map((p: Client) => {
+                { props.clients.filter((f: Client) => f.code == "PZBC031" /* props.code */).map((p: Client) => {
                   return <ListGroup.Item action href={ "#linkAccount" }>
                     { p.name }
                   </ListGroup.Item>
@@ -97,7 +129,7 @@ function OffCanvasExample({ ...props }) {
                 }}>
                   <h3 style={{ marginBottom: "0" }}><b>+</b></h3>
                 </ListGroup.Item>
-                { props.clients.filter((c: Client) => c.code == "1")[0] ? props.clients.filter((c: Client) => c.code == "1")[0].items.map( (p: Item, i: number) => {
+                { props.clients.filter((c: Client) => c.code == props.code)[0] ? props.clients.filter((c: Client) => c.code == props.code)[0].items.map( (p: Item, i: number) => {
                   return <ListGroup.Item action href={ "#link" + i } onClick={ () => setIndex(i) }>
                     { p.name }
                   </ListGroup.Item>
@@ -106,7 +138,7 @@ function OffCanvasExample({ ...props }) {
             </Col>
             <Col sm={8}>
               <Tab.Content>
-                { props.clients.filter((c: Client) => c.code == "1")[0] ? props.clients.filter((c: Client) => c.code == "1")[0].items.map( (p: Item, i: number) => {
+                { props.clients.filter((c: Client) => c.code == props.code)[0] ? props.clients.filter((c: Client) => c.code == props.code)[0].items.map( (p: Item, i: number) => {
                 return <Tab.Pane eventKey={ "#link" + i }>
 
                     <InputGroup className="mb-3">
@@ -208,7 +240,7 @@ function OffCanvasExample({ ...props }) {
 
                 </Tab.Pane>
                 } ) : null }
-                { props.clients.filter((f: Client) => f.code == "1").map( (p: Client) => {
+                { props.clients.filter((f: Client) => f.code == "PZBC031" /* props.code */).map( (p: Client) => {
                 return <Tab.Pane eventKey="#linkAccount">
 
                     <InputGroup className="mb-3">
@@ -313,16 +345,21 @@ function OffCanvasExample({ ...props }) {
                       <Form.Control type="number" placeholder="Insira estoque" />
                     </Form.Group>
 
-                    <Form.Group controlId="formFile" className="mb-3">
+                    {/* <Form.Group controlId="formFile" className="mb-3">
                       <Form.Label>Imagem</Form.Label>
                       <Form.Control type="file" onChange={ (e) => console.log(e.target.value) } />
+                    </Form.Group> */}
+
+                    <Form.Group controlId="formFile" className="mb-3">
+                      <Form.Label>Imagem</Form.Label>
+                      <UploadImage onChange={ (e: any) => { setImagesState(e) } }></UploadImage>
                     </Form.Group>
 
                     <InputGroup className="mb-3">
                       <Form.Label style={{ width: '100%' }}>Código do Estabelecimento | Pergunta Chave</Form.Label>
                       <FormControl aria-label="Example text with two button addons" placeholder="Reinsira Código do Estabelecimento" />
                       <FormControl aria-label="Example text with two button addons" placeholder="Telefone do estabelecimento?" />
-                      <Button variant="outline-secondary">Salvar Item</Button>
+                      <Button variant="outline-secondary" onClick={ () => sendImage(imagesState) }>Salvar Item</Button>
                     </InputGroup>
 
                   </Form>
@@ -341,20 +378,40 @@ function OffCanvasExample({ ...props }) {
 
 const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
   const [clients, setClients] = useState<Client[]>([]);
+  //const [items, setItems] = useState<Item[]>();
 
   const getData2 = async () => {
-    await axios.get('clients').then(result => {
+    //await axios.get('clients').then(result => {
+    await axios.get('storage').then(result => {
       setClients(result.data);
     });
   }
 
+  const getData1 = async () => {
+    //await axios.get('clients').then(result => {
+    /* await axios.get('items').then(result => {
+      setItems(result.data);
+    }); */
+    await axios.get('items').then(result => {
+      getData2();
+      let clientsCopy = clients;
+      clientsCopy.map(m => m.items = []);
+      console.log(clientsCopy);
+      result.data.map((r: Item) => clientsCopy.filter(f => f.id == r.clientId).map(m => m.items.push(r)))
+      setClients(clientsCopy);
+    });
+  }
+
   useEffect(() => {
-    getData2();
+    //getData2();
+    getData1();
   }, []);
 
   const [image, setImage] = useState("");
 
   const [code, setCode] = useState('');
+
+  //let code: string;
 
   const OffCanvas = (idx: React.Key | null | undefined, placement: string) => { return <OffCanvasExample key={idx} placement={placement} name={placement} code={code} clients={clients} /> }; 
 

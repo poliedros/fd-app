@@ -20,7 +20,8 @@ const FdPizzaBasicIntro: FC<FdPizzaBasicIntroProps> = (props) => {
   const [client, setClients] = useState<any>({});
 
   const getData = async () => {
-    await axios.get('clients/' + props.data.url).then(result => setClients(result.data));
+    //await axios.get('clients/' + props.data.url).then(result => setClients(result.data));
+    await axios.get('storage/' + props.data.url).then(result => setClients(result.data));
   };
 
   useEffect(() => {
