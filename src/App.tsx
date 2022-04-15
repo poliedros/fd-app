@@ -30,7 +30,7 @@ function App() {
 
   let data: Data = {
     url: url[2],
-    firstName: 'fd-app',
+    firstName: '/fd-app',
     client: {
       additionalInfo: '',
       address: '',
