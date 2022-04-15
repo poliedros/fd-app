@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { /* HashRouter as Router, */ Link, Routes, Route } from "react-router-dom";
 /* import { HashRouter, Route, Routes } from 'react-router-dom'; */
 
 import './App.css';
@@ -66,15 +66,16 @@ function App() {
 
     <div className="App">
       <div style={{ width: "100vw" }}>
-        <Router>
+        {/* <Router> */}
         {/* <HashRouter> */}
-          
-          <Routes>
+          {/* <nav...>*/}
+          <Routes> 
 
             <Route path={ "/" } element={ <><h1 style={{ color: "white" }}>Anderson</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
             <Route path={ data.firstName + "/" } element={ <><h1 style={{ color: "white" }}>Mendes</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
             
             <Route path={ data.firstName + "/" + url[2] } element={ url[2] != '' ? <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> : <><FdPizzaBasicCreateItem /></> } />
+            <Route path={ data.firstName + "/624fb30f570d98201f131685" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } />
             <Route path={ data.firstName + "/selector"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicSelect data={ data }/></> } />
             <Route path={ data.firstName + "/cartshopping"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicCartShopping /></> } />
             <Route path={ data.firstName + "/finalizeTransaction"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicFinalizeTransaction /></> } />
@@ -83,7 +84,7 @@ function App() {
           </Routes>
           
         {/* </HashRouter> */}
-        </Router>
+        {/* </Router> */}
       </div>
     </div>
 
