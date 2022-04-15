@@ -15,15 +15,19 @@ import Collapse from 'react-bootstrap/Collapse';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Alert from 'react-bootstrap/Alert';
 
-import emailjs from '@emailjs/browser';
+/* import emailjs from '@emailjs/browser';
 
-import apiKey from '../../emailkey';
+import apiKey from '../../emailkey'; */
+
+import nodemailer, { createTransport } from 'nodemailer';
 
 import { Data } from '../../interfaces/Interfaces';
 
 interface FdPizzaBasicFinalizeTransactionProps {}
 
 const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> = () => {
+
+  /* const nodemailer = require("nodemailer"); */
 
   let navigate = useNavigate();
 
@@ -54,7 +58,7 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
   const [show, setShow] = useState(true);
   const target = useRef(null);
 
-  function sendEmail(e: any) {
+  /* function sendEmail(e: any) {
     const form = e.currentTarget;
 
     if (form.checkValidity() === false) {
@@ -72,6 +76,62 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
     }
 
     setValidated(true);
+  }; */
+
+  /* const nodemailer = require('nodemailer'); */
+  /*const dotenv = require('dotenv');
+  dotenv.config()*/
+
+  /* var nodemailer = require('nodemailer');
+
+  const yourEmail = "yourEmail@gmail.com";
+  const yourPass = "yourEmailPasswrd";
+  const mailHost = "smpt.gmail.com";
+  const mailPort = 587;
+  const senderEmail = "senderEmail@gmail.com"; */
+
+  /* const sendMail = (to: any, subject: any, htmlContent: any) => {
+    let transporter = createTransport({
+      host: mailHost,
+      port: mailPort,
+      secure: false, // use SSL - TLS
+      auth: {
+        user: yourEmail,
+        pass: yourPass,
+      },
+    });
+    let mailOptions = {
+      from: senderEmail,
+      to: to,
+      subject: subject,
+      html: htmlContent,
+    };
+    return transporter.sendMail(mailOptions); // promise
+  }; */
+
+/*   nodemailer.createTransport({
+
+  }) */
+
+  /* const smtpTransport = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    auth: {
+      user: 'sr.andersonmendesribeiro@gmail.com', //process.env.EMAIL_USER,
+      pass: 'Arcana09!!' //process.env.EMAIL_PASSWORD,
+    },
+  }) */ 
+
+  async function sendEmail() {
+    /* let sendResult = await smtpTransport.sendMail({
+      from: 'anderson@anderson.com',
+      to: 'sr.andersonmendesribeiro@gmail.com',
+      subject: 'Hello there',
+      text: 'Save Jesus',
+      html: '<body><h1>Hello Goodbye</h1></body>'
+    })
+
+    console.log(sendResult); */
   };
 
   let total = 0;
@@ -83,11 +143,18 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
   console.log(data);
 
   return (
+  
   <div>
+    { data.products.map((s) => {
+      productsTable += '<tr><td style="border: 1px solid white; background-color: #96D4D4; border-radius: 0.5rem; padding: 0.25rem">' + s.name + '</td><td style="border: 1px solid white; background-color: #96D4D4; border-radius: 0.5rem; text-align: right; padding: 0.25rem">x' + s.quantity + '</td><td style="border: 1px solid white; background-color: #96D4D4; border-radius: 0.5rem; text-align: right; padding: 0.25rem">R$' + (s.price * s.quantity) + ',00' + '</td></tr>';
+      prices += 'R$' + (s.price * s.quantity) + ',00' + '\n';
+      finalPrice += (s.price * s.quantity)
+    }) }
     <Container style={{ marginTop: "1.5rem" }}>
       <div style={{ textAlign: "left" }}>
         <Button variant="primary" style={{ marginBottom: "1rem" }} onClick={() => navigate("/" + data.firstName + "/cartshopping", { state: data })}>Voltar</Button>
       </div>
+      
       <Form noValidate validated={validated} onSubmit={ sendEmail } >
       <Card
         bg={'secondary'}
@@ -99,11 +166,6 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
           <Card.Title style={{ color: "white" }}>Finalizar Pedido</Card.Title>
           <br />
           <Card.Text>
-              { data.products.map((s) => {
-                productsTable += '<tr><td style="border: 1px solid white; background-color: #96D4D4; border-radius: 0.5rem; padding: 0.25rem">' + s.name + '</td><td style="border: 1px solid white; background-color: #96D4D4; border-radius: 0.5rem; text-align: right; padding: 0.25rem">x' + s.quantity + '</td><td style="border: 1px solid white; background-color: #96D4D4; border-radius: 0.5rem; text-align: right; padding: 0.25rem">R$' + (s.price * s.quantity) + ',00' + '</td></tr>';
-                prices += 'R$' + (s.price * s.quantity) + ',00' + '\n';
-                finalPrice += (s.price * s.quantity)
-              }) }
               <p hidden>{ productsTable += '<tr><td></td><th style="border: 1px solid white; background-color: #96D4D4; border-radius: 0.5rem; padding: 0.25rem">Total</th><td style="border: 1px solid white; background-color: #96D4D4; border-radius: 0.5rem; text-align: right; padding: 0.25rem"><b>R$' + finalPrice + ',00</b></td></tr></table>' }</p>
               <input type="hidden" name="orderCode" value="1278AS7" />
               <input type="hidden" name="products" value={ productsTable } />

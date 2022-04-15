@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useRef } from 'react';
 
 import axios from '../../axios';
 
@@ -18,6 +18,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Figure from 'react-bootstrap/Figure';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+
+import $ from 'jquery';
 
 interface FdPizzaBasicCreateItemProps {}
 
@@ -80,11 +82,63 @@ function sendImage(file: any) {
 
 function OffCanvasExample({ ...props }) {
 
+  async function updateStorage() {
+    const request = {
+      /* id: "",
+      code: "",
+      type: type,
+      urlName: "anderson",
+      phoneNumber: "1155082980",
+      email: "sr.andersonmendesribeiro@gmail.com",
+      socialMedia: "",
+      address: "Moreno 3028 8C",
+      city: "Buenos Aires",
+      additionalInfo: "informação adicional", */
+      name: clientName
+    };
+    await axios.patch("/storage/624fb30f570d98201f131685", request);
+    alert("enviou");
+  }
+
+  async function postItem() {
+    const request = {
+      id: "",
+      code: "",
+      description: description,
+      type: type,
+      price: price,
+      quantity: quantity,
+      image: "https://storage-files-general-use.s3.sa-east-1.amazonaws.com/" + imagesState[0].file.name,
+      clientId: "",
+      name: name/* ,
+      description: description,
+      amountCents: price,
+      width: width,
+      height: height */
+    };
+    /* const token = res2.data.token;
+    const headers =  {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }; */
+    await axios.post("/items", request/* , { headers: headers } */);
+    alert("enviou");
+    console.log(imagesState);
+  }
+
+  const [clientName, setClientName] = useState(props.code ? props.clients.filter((f: Client) => f.code == props.code /* props.code */).map( (p: Client) => { console.log(p); return p.name }) : null);
+
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+
+  const [imagesState, setImagesState] = useState<any[]>([]);
+
   const [index, setIndex] = useState(0);
 
   const [show, setShow] = useState(false);
-
-  const [imagesState, setImagesState] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -93,13 +147,27 @@ function OffCanvasExample({ ...props }) {
 
   console.log(props);
 
+  /* const getData = async () => {
+    /* const {data} = await axios.get('ad-formats');
+    setAdFormatList(data); /
+    await props.clients.filter((f: Client) => f.code == "PZBC031" /* props.code /).map( (p: Client) => {
+      console.log("Nando Moura"); console.log(props); setClientName(p.name)
+    } )
+  }; */
+
+  /* useEffect(() => {
+    setClientName(props.clients.filter((f: Client) => f.code == "PZBC031" /* props.code /).map( (p: Client) => { console.log(p); return p.name }))
+    /* document.title = `You clicked ${clientName} times`;
+    $(".inputName").html(`You clicked ${clientName} times`); /
+  }, []); */ 
+
   return ( 
     <>
 
       <Button variant="outline-secondary" onClick={ props.clients ? handleShow : undefined } className="me-2">
         Validar Código
       </Button>
-      { console.log(props.clients) }
+      { console.log(props) }
       { props.clients ? 
       <Offcanvas style={{ height: "100vh" }} show={show} onHide={handleClose} {...props}>
         <Offcanvas.Header closeButton>
@@ -111,11 +179,11 @@ function OffCanvasExample({ ...props }) {
           <Row>
             <Col sm={4}>
               <ListGroup>
-                { props.clients.filter((f: Client) => f.code == "PZBC031" /* props.code */).map((p: Client) => {
-                  return <ListGroup.Item action href={ "#linkAccount" }>
+                { props.code ? props.clients.filter((f: Client) => f.code == props.code).map((p: Client) => {
+                  return <ListGroup.Item action href={ "#linkAccount" } onClick={ () => { setClientName(p.name) } }>
                     { p.name }
                   </ListGroup.Item>
-                } ) }
+                } ) : null }
               </ListGroup>
               <br/>
               <ListGroup style={{ alignItems: "center" }}>
@@ -129,16 +197,21 @@ function OffCanvasExample({ ...props }) {
                 }}>
                   <h3 style={{ marginBottom: "0" }}><b>+</b></h3>
                 </ListGroup.Item>
-                { props.clients.filter((c: Client) => c.code == props.code)[0] ? props.clients.filter((c: Client) => c.code == props.code)[0].items.map( (p: Item, i: number) => {
+              </ListGroup>
+              <br/>
+              <ListGroup>
+                { console.log(props.clients.filter((c: Client) => c.code == props.code) !== 'undefined' && props.clients.filter((c: Client) => c.code == props.code).length > 0) }
+                { props.code ? props.clients.filter((c: Client) => c.code == props.code) !== 'undefined' && props.clients.filter((c: Client) => c.code == props.code).length > 0 ? props.clients.filter((c: Client) => c.code == props.code)[0].items ? props.clients.filter((c: Client) => c.code == props.code)[0].items.map( (p: Item, i: number) => {
                   return <ListGroup.Item action href={ "#link" + i } onClick={ () => setIndex(i) }>
                     { p.name }
                   </ListGroup.Item>
-                } ) : null }
+                } ) : null : null : null }
               </ListGroup>
+              <br/>
             </Col>
             <Col sm={8}>
               <Tab.Content>
-                { props.clients.filter((c: Client) => c.code == props.code)[0] ? props.clients.filter((c: Client) => c.code == props.code)[0].items.map( (p: Item, i: number) => {
+              { props.code ? props.clients.filter((c: Client) => c.code == props.code) !== 'undefined' && props.clients.filter((c: Client) => c.code == props.code).length > 0 ? props.clients.filter((c: Client) => c.code == props.code)[0].items ? props.clients.filter((c: Client) => c.code == props.code)[0].items.map( (p: Item, i: number) => {
                 return <Tab.Pane eventKey={ "#link" + i }>
 
                     <InputGroup className="mb-3">
@@ -239,19 +312,21 @@ function OffCanvasExample({ ...props }) {
                     </InputGroup>
 
                 </Tab.Pane>
-                } ) : null }
-                { props.clients.filter((f: Client) => f.code == "PZBC031" /* props.code */).map( (p: Client) => {
+                } ) : null : null : null }
+                { props.code ? props.clients.filter((f: Client) => f.code == props.code).map( (p: Client) => {
                 return <Tab.Pane eventKey="#linkAccount">
-
+                  <Form /* onSubmit={updateStorage} */>
                     <InputGroup className="mb-3">
                       <Form.Label style={{ width: '100%' }}>Nome</Form.Label>
                       <FormControl
+                        className="inputName"
                         aria-label="Example text with button addon"
                         aria-describedby="basic-addon1"
-                        value={ p.name }
+                        value={ clientName ?? "" }
+                        onChange={ event => setClientName(event.target.value) }
                         disabled
                       />
-                      <Button variant="outline-secondary" id="button-addon1">
+                      <Button variant="outline-secondary" id="button-addon1" onClick={ () => $(".inputName").prop("disabled", true) ? $(".inputName").prop("disabled", false) : $(".inputName").add("disabled") }> {/* updateStorage() */}
                         Editar
                       </Button>
                     </InputGroup>
@@ -312,37 +387,37 @@ function OffCanvasExample({ ...props }) {
                       <Form.Label style={{ width: '100%' }}>Código do Estabelecimento | Pergunta Chave</Form.Label>
                       <FormControl aria-label="Example text with two button addons" placeholder="Reinsira Código do Estabelecimento" />
                       <FormControl aria-label="Example text with two button addons" placeholder="Telefone do estabelecimento?" />
-                      <Button variant="outline-secondary">Salvar Item</Button>
+                      <Button variant="outline-secondary" /* type="submit" */ onClick={ () => { updateStorage() } }>Salvar Loja</Button>
                     </InputGroup>
-
+                  </Form>
                 </Tab.Pane>
-                } ) }
+                } ) : null }
                 <Tab.Pane eventKey="#link+">
-                  <Form>
+                  <Form onSubmit={postItem}>
                     <Form.Group className="mb-3" controlId="formBasicLabel">
                       <Form.Label>Tarja</Form.Label>
                       <Form.Control type="text" placeholder="Insira tarja" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicName">
                       <Form.Label>Nome</Form.Label>
-                      <Form.Control type="text" placeholder="Insira nome" />
+                      <Form.Control value={ name } type="text" placeholder="Insira nome" onChange={ event => setName(event.target.value) } />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicType">
                       <Form.Label>Tipo</Form.Label>
-                      <Form.Control type="text" placeholder="Insira tipo" />
+                      <Form.Control value={ type } type="text" placeholder="Insira tipo" onChange={ event => setType(event.target.value) } />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicDescription">
                       <Form.Label>Descrição</Form.Label>
-                      <Form.Control type="text" placeholder="Insira descrição" />
+                      <Form.Control value={ description } type="text" placeholder="Insira descrição" onChange={ event => setDescription(event.target.value) }/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPrice">
                       <Form.Label>Preço</Form.Label>
-                      <Form.Control type="number" placeholder="Insira preço" />
+                      <Form.Control value={ price } type="number" placeholder="Insira preço" onChange={ event => setPrice(parseInt(event.target.value)) }/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicQuantity">
                       <Form.Label>Quantidade</Form.Label>
-                      <Form.Control type="number" placeholder="Insira estoque" />
+                      <Form.Control value={ quantity } type="number" placeholder="Insira estoque" onChange={ event => setQuantity(parseInt(event.target.value)) } />
                     </Form.Group>
 
                     {/* <Form.Group controlId="formFile" className="mb-3">
@@ -352,14 +427,14 @@ function OffCanvasExample({ ...props }) {
 
                     <Form.Group controlId="formFile" className="mb-3">
                       <Form.Label>Imagem</Form.Label>
-                      <UploadImage onChange={ (e: any) => { setImagesState(e) } }></UploadImage>
+                      <UploadImage /* value={ imageState } */ onChange={ (e: any) => { setImagesState(e) } }></UploadImage>
                     </Form.Group>
 
                     <InputGroup className="mb-3">
                       <Form.Label style={{ width: '100%' }}>Código do Estabelecimento | Pergunta Chave</Form.Label>
                       <FormControl aria-label="Example text with two button addons" placeholder="Reinsira Código do Estabelecimento" />
                       <FormControl aria-label="Example text with two button addons" placeholder="Telefone do estabelecimento?" />
-                      <Button variant="outline-secondary" onClick={ () => sendImage(imagesState) }>Salvar Item</Button>
+                      <Button variant="outline-secondary" type="submit" onClick={ () => sendImage(imagesState) }>Salvar Item</Button>
                     </InputGroup>
 
                   </Form>
@@ -377,14 +452,47 @@ function OffCanvasExample({ ...props }) {
 }
 
 const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
+  
+  
   const [clients, setClients] = useState<Client[]>([]);
-  //const [items, setItems] = useState<Item[]>();
+  const [items, setItems] = useState<Item[]>([]);
+
+  const getData3 = async () => {
+    await axios.get('items').then(async result => {
+      await axios.get('storage').then(result1 => {
+        console.log(result.data);
+        result1.data.map((r: Client) => r.items = []);
+        result.data.map((r: Item) => result1.data.filter((f: Client) => f.id == r.clientId).map((m: Client) => m.items.push(r)));
+        console.log(result1.data);
+        setClients(result1.data);
+      })
+    });
+  }
+
+  /* const getData3 = async () => {
+    await axios.get('items').then(result => {
+      console.log(result.data);
+      setItems(result.data);
+      console.log(items);
+    }).then( async () =>
+    await axios.get('storage').then(result1 => {
+      console.log(items);
+      console.log(result1.data);
+    }) );
+  } */
 
   const getData2 = async () => {
     //await axios.get('clients').then(result => {
     await axios.get('storage').then(result => {
-      setClients(result.data);
+      result.data.map((r: any) => r.items = []);
+      setClients(result.data, /* (async () => await axios.get('items').then(result1 => {
+        let clientsCopy = result1.data;
+        console.log(clientsCopy);
+        result1.data.map((r: Item) => clientsCopy.filter(f => f.id == r.clientId).map(m => m.items.push(r)))
+        setClients(clientsCopy);
+      })) */ );
     });
+   
   }
 
   const getData1 = async () => {
@@ -395,7 +503,7 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
     await axios.get('items').then(result => {
       getData2();
       let clientsCopy = clients;
-      clientsCopy.map(m => m.items = []);
+      /* clientsCopy.map(m => m.items = []); */
       console.log(clientsCopy);
       result.data.map((r: Item) => clientsCopy.filter(f => f.id == r.clientId).map(m => m.items.push(r)))
       setClients(clientsCopy);
@@ -403,9 +511,21 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
   }
 
   useEffect(() => {
-    //getData2();
-    getData1();
+    getData3();
   }, []);
+
+/*   const isInitialMount = useRef(true);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      console.log("PASSOU AQUI NÃO")
+      isInitialMount.current = false;
+    } else {
+      console.log("PASSOU AQUI")
+      getData1();
+    }
+    //getData2();
+  }, []); */
 
   const [image, setImage] = useState("");
 
@@ -426,7 +546,6 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
           aria-describedby="basic-addon2"
           onChange={(e) => { setCode(e.target.value) }}
         />
-
         { clients ? ['bottom'].map((placement, idx) => (
           OffCanvas(idx, placement)
         )) : null }
