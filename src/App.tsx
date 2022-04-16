@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { /* HashRouter as Router, */ Link, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Link, Routes, Route } from "react-router-dom";
 /* import { HashRouter, Route, Routes } from 'react-router-dom'; */
 
 import './App.css';
@@ -30,7 +30,7 @@ function App() {
 
   let data: Data = {
     url: url[2],
-    firstName: '/fd-app',
+    firstName: 'fd-app',
     client: {
       additionalInfo: '',
       address: '',
@@ -63,31 +63,26 @@ function App() {
   };
 
   return (
-
-    <div className="App">
-      <div style={{ width: "100vw" }}>
-        {/* <Router> */}
-        {/* <HashRouter> */}
-          {/* <nav...>*/}
+    /* <div className="App">
+      <div style={{ width: "100vw" }}> */
+        <Router>
           <Routes> 
 
-            <Route path={ "/" } element={ <><h1 style={{ color: "white" }}>Anderson</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
-            <Route path={ data.firstName + "/" } element={ <><h1 style={{ color: "white" }}>Mendes</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
+            {/* <Route path={ "/" } element={ <><h1 style={{ color: "white" }}>Anderson</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
+            <Route path={ data.firstName + "/" } element={ <><h1 style={{ color: "white" }}>Mendes</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } /> */}
             
+            <Route path={ data.firstName + "/" } element={ <><h1 style={{ color: "white" }}>Anderson</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
             <Route path={ data.firstName + "/" + url[2] } element={ url[2] != '' ? <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> : <><FdPizzaBasicCreateItem /></> } />
-            <Route path={ data.firstName + "/624fb30f570d98201f131685" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } />
+            {/* <Route path={ data.firstName + "/624fb30f570d98201f131685" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } /> */}
             <Route path={ data.firstName + "/selector"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicSelect data={ data }/></> } />
             <Route path={ data.firstName + "/cartshopping"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicCartShopping /></> } />
             <Route path={ data.firstName + "/finalizeTransaction"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicFinalizeTransaction /></> } />
             <Route path={ data.firstName + "/adm" } element={ <><FdPizzaBasicCreateItem /></> } />
 
           </Routes>
-          
-        {/* </HashRouter> */}
-        {/* </Router> */}
-      </div>
-    </div>
-
+        </Router>
+      /* </div>
+    </div> */
   );
 }
 

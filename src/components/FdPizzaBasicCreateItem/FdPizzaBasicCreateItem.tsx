@@ -21,6 +21,9 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 
 import $ from 'jquery';
 
+import ListItems from '../FdPizzaBasicCreateItemList/FdPizzaBasicCreateItemList';
+import Monitor from '../FdPizzaBasicCreateItemMonitor/FdPizzaBasicCreateItemMonitor';
+
 interface FdPizzaBasicCreateItemProps {}
 
 interface Item {
@@ -179,6 +182,7 @@ function OffCanvasExample({ ...props }) {
           <Row>
             <Col sm={4}>
               <ListGroup>
+                { console.log(props.clients.filter((f: Client) => f.code == props.code)) }
                 { props.code ? props.clients.filter((f: Client) => f.code == props.code).map((p: Client) => {
                   return <ListGroup.Item action href={ "#linkAccount" } onClick={ () => { setClientName(p.name) } }>
                     { p.name }
