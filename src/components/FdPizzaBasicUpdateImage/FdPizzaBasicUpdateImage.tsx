@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import ImageUploading from 'react-images-uploading';
+/* import ImageUploading from 'react-images-uploading'; */
 
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
@@ -22,7 +22,7 @@ const FdPizzaBasicUpdateImage: FC<FdPizzaBasicUpdateImageProps> = (props) => {
 
   return (
     <div>
-      <ImageUploading
+      {/* <ImageUploading
         multiple
         value={images}
         onChange={onChange}
@@ -39,16 +39,16 @@ const FdPizzaBasicUpdateImage: FC<FdPizzaBasicUpdateImageProps> = (props) => {
           dragProps
         }) => (
           <div className="upload__image-wrapper">
-            <Button id="upload" variant="dark" /* style={isDragging ? { color: "red" } : null} */ onClick={onImageUpload} {...dragProps}>
+            <Button id="upload" variant="dark" /* style={isDragging ? { color: "red" } : null} / onClick={onImageUpload} {...dragProps}>
               <span id="span-center">
-                {/* <img className="icon ion-md-arrow-forward" src={process.env.PUBLIC_URL + "/user_circle_icon_172814.svg"} width="32px" /> */}
+                {/* <img className="icon ion-md-arrow-forward" src={process.env.PUBLIC_URL + "/user_circle_icon_172814.svg"} width="32px" /> /}
                 Click ou Arraste a Imagem para esse Botão
               </span>
             </Button>
             &nbsp;
-            <Button id="removeAll" variant="dark" onClick={()=>{ onImageRemoveAll(); /* document.getElementById("upload").toggleAttribute("enabled"); document.getElementById("upload").removeAttribute("disabled") */ }}>
+            <Button id="removeAll" variant="dark" onClick={()=>{ onImageRemoveAll(); /* document.getElementById("upload").toggleAttribute("enabled"); document.getElementById("upload").removeAttribute("disabled") / }}>
               <span id="span-center">
-                {/* <img className="icon ion-md-arrow-forward" src={ process.env.PUBLIC_URL + "/user_circle_icon_172814.svg" } width="32px" /> */}
+                {/* <img className="icon ion-md-arrow-forward" src={ process.env.PUBLIC_URL + "/user_circle_icon_172814.svg" } width="32px" /> /}
                 Eliminar Todas as Imagens
               </span>
             </Button>
@@ -76,7 +76,7 @@ const FdPizzaBasicUpdateImage: FC<FdPizzaBasicUpdateImageProps> = (props) => {
             </div>
           </div>
         )}
-      </ImageUploading>
+      </ImageUploading> */}
     </div>
   );
 }

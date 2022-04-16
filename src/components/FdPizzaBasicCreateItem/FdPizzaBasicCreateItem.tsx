@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState, useRef } from 'react';
 
 import axios from '../../axios';
 
-import UploadImage from '../FdPizzaBasicUpdateImage/FdPizzaBasicUpdateImage';
+/* import UploadImage from '../FdPizzaBasicUpdateImage/FdPizzaBasicUpdateImage'; */
 
 import { Upload } from "@aws-sdk/lib-storage";
 import { S3Client, S3 } from "@aws-sdk/client-s3";
@@ -431,7 +431,7 @@ function OffCanvasExample({ ...props }) {
 
                     <Form.Group controlId="formFile" className="mb-3">
                       <Form.Label>Imagem</Form.Label>
-                      <UploadImage /* value={ imageState } */ onChange={ (e: any) => { setImagesState(e) } }></UploadImage>
+                      {/* <UploadImage /* value={ imageState } / onChange={ (e: any) => { setImagesState(e) } }></UploadImage> */}
                     </Form.Group>
 
                     <InputGroup className="mb-3">

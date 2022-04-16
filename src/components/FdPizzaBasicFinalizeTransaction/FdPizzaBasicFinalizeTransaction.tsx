@@ -145,11 +145,11 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
   return (
   
   <div>
-    { data.products.map((s) => {
+    {/* { data.products.map((s) => {
       productsTable += '<tr><td style="border: 1px solid white; background-color: #96D4D4; border-radius: 0.5rem; padding: 0.25rem">' + s.name + '</td><td style="border: 1px solid white; background-color: #96D4D4; border-radius: 0.5rem; text-align: right; padding: 0.25rem">x' + s.quantity + '</td><td style="border: 1px solid white; background-color: #96D4D4; border-radius: 0.5rem; text-align: right; padding: 0.25rem">R$' + (s.price * s.quantity) + ',00' + '</td></tr>';
       prices += 'R$' + (s.price * s.quantity) + ',00' + '\n';
       finalPrice += (s.price * s.quantity)
-    }) }
+    }) } */}
     <Container style={{ marginTop: "1.5rem" }}>
       <div style={{ textAlign: "left" }}>
         <Button variant="primary" style={{ marginBottom: "1rem" }} onClick={() => navigate("/" + data.firstName + "/cartshopping", { state: data })}>Voltar</Button>
