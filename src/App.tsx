@@ -71,7 +71,7 @@ function App() {
             {/* <Route path={ "/" } element={ <><h1 style={{ color: "white" }}>Anderson</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
             <Route path={ data.firstName + "/" } element={ <><h1 style={{ color: "white" }}>Mendes</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } /> */}
             
-            <Route path={ data.firstName + "/" } element={ <><h1 style={{ color: "white" }}>Anderson</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
+            <Route path={ data.firstName + "/" } element={ <><Link to={ data.firstName + '/624fb30f570d98201f131685' } style={{ color: "white" }}>Anderson</Link><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
             <Route path={ data.firstName + "/" + url[2] } element={ url[2] != '' ? <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> : <><FdPizzaBasicCreateItem /></> } />
             {/* <Route path={ data.firstName + "/624fb30f570d98201f131685" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } /> */}
             <Route path={ data.firstName + "/selector"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicSelect data={ data }/></> } />
