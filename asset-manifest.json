@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/fd-app/static/css/main.b9340449.css",
-    "main.js": "/fd-app/static/js/main.74e54a0e.js",
-    "static/js/787.f92a3733.chunk.js": "/fd-app/static/js/787.f92a3733.chunk.js",
+    "main.css": "/fd-app/static/css/main.0b4e74b4.css",
+    "main.js": "/fd-app/static/js/main.334696ce.js",
+    "static/js/787.492e7443.chunk.js": "/fd-app/static/js/787.492e7443.chunk.js",
     "index.html": "/fd-app/index.html",
-    "main.b9340449.css.map": "/fd-app/static/css/main.b9340449.css.map",
-    "main.74e54a0e.js.map": "/fd-app/static/js/main.74e54a0e.js.map",
-    "787.f92a3733.chunk.js.map": "/fd-app/static/js/787.f92a3733.chunk.js.map"
+    "main.0b4e74b4.css.map": "/fd-app/static/css/main.0b4e74b4.css.map",
+    "main.334696ce.js.map": "/fd-app/static/js/main.334696ce.js.map",
+    "787.492e7443.chunk.js.map": "/fd-app/static/js/787.492e7443.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b9340449.css",
-    "static/js/main.74e54a0e.js"
+    "static/css/main.0b4e74b4.css",
+    "static/js/main.334696ce.js"
   ]
 }
