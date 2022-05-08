@@ -98,7 +98,8 @@ const FdPizzaBasicCartShopping: FC<FdPizzaBasicCartShoppingProps> = () => {
             </Card.Text>
           </Card.Body>
         </Card>
-        <Button variant="success" style={{ margin: "1rem" }} onClick={() => navigate("/" + data.firstName + "/finalizeTransaction", { state: data })}>Confirmar Checagem das Compras</Button>
+        {/* <Button variant="success" style={{ margin: "1rem" }} onClick={() => navigate("/" + data.firstName + "/finalizeTransaction", { state: data })}>Confirmar Checagem das Compras</Button> */}
+        <Button variant="success" style={{ margin: "1rem" }} onClick={() => navigate("/finalizeTransaction", { state: data })}>Confirmar Checagem das Compras</Button>
       </Container>
     </>
   )

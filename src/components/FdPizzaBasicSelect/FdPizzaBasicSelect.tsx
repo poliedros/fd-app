@@ -578,7 +578,8 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
       </Card>
         { products.map( s => s.price > 0 ? null : verify = false ) }
         { verify ?
-        <Button variant="success" style={{ marginTop: "1rem" }} onClick={ () => { props.data.products = products; navigate("/" + props.data.firstName + "/cartshopping", { state: props.data }) }  }>Confirmar Lista de Compra</Button>
+        /* <Button variant="success" style={{ marginTop: "1rem" }} onClick={ () => { props.data.products = products; navigate("/" + props.data.firstName + "/cartshopping", { state: props.data }) }  }>Confirmar Lista de Compra</Button> */
+        <Button variant="success" style={{ marginTop: "1rem" }} onClick={ () => { props.data.products = products; navigate("/cartshopping", { state: props.data }) }  }>Confirmar Lista de Compra</Button>
         : <><Button variant="success" style={{ marginTop: "1rem" }} ref={target} onClick={() => setShow(!show)}>Confirmar Lista de Compra</Button>
         <Overlay target={target.current} show={show} placement="right">
           {({ placement, arrowProps, show: _show, popper, ...props }) => (

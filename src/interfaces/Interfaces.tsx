@@ -21,7 +21,8 @@ export interface Client {
     name: string,
     phoneNumber: string,
     items: Item[],
-    type: string
+    type: string,
+    logoImage: string
 }
 
 export interface Product {

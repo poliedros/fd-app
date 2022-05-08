@@ -46,7 +46,8 @@ const FdPizzaBasicIntro: FC<FdPizzaBasicIntroProps> = (props) => {
                   <Card.Text>
                     { idx == 0 ? "Saboreie nossas pizzas" : idx == 1 ? "Veja nossas promoções" : "Tudo sobre nós" }
                   </Card.Text>
-                  { idx == 0 ? <Button variant="primary" onClick={() => navigate("/" + props.data.firstName + "/selector")}>Fazer pedido</Button> : null }
+                  {/* { idx == 0 ? <Button variant="primary" onClick={() => navigate("/" + props.data.firstName + "/selector")}>Fazer pedido</Button> : null } */}
+                  { idx == 0 ? <Button variant="primary" onClick={() => navigate("/selector")}>Fazer pedido</Button> : null }
                 </Card.Body>
               </Card>
             </Col>

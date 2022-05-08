@@ -30,7 +30,8 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
     name: '',
     phoneNumber: '',
     items: [],
-    type: ''
+    type: '',
+    logoImage: ''
   } );
 
   const [items, setItems] = useState<Item[]>( [{
@@ -80,7 +81,7 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
       <Container>
         <Navbar.Brand onClick={() => navigate("/" + props.data.firstName + "/" + props.data.client.name)}>
           <img
-            src={ "https://storage-files-general-use.s3.sa-east-1.amazonaws.com/efige.jpg" }
+            src={ client.logoImage }
             width="48"
             height="48"
             className="d-inline-block align-top"
