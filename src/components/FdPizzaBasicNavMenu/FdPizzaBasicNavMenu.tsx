@@ -21,17 +21,23 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
 
   /* const url = window.location.href.split("http://localhost:3000/").pop(); */
 
-  const [client, setClients] = useState<Client>( {
+  const [client, setClient] = useState<Client>( {
     additionalInfo: '',
     address: '',
-    code: '', //unnecessary
+    city: '',
+    code: '',           //unnecessary
+    deliveryPrice: '',
     email: '',
     id: '',
-    name: '',
-    phoneNumber: '',
     items: [],
+    logoImage: '',
+    name: '',
+    paymentMethods: '',
+    phoneNumber: '',
+    socialMedia: '',
+    theme: '',
     type: '',
-    logoImage: ''
+    _id: ''
   } );
 
   const [items, setItems] = useState<Item[]>( [{
@@ -51,7 +57,7 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
   const getData = async () => {
     //await axios.get('clients/' + props.data.url).then(result => setClients(result.data));
     //await axios.get('storage/' + props.data.url).then(result => { setClients(result.data)});
-    await axios.get('storage/' + props.data.url).then(result => { setClients(result.data)});
+    await axios.get('storage/' + props.data.url).then(result => { setClient(result.data[0])});
     let newClient 
     await axios.get('items/' + props.data.url).then(result => { setItems(result.data)});
     //await axios.get('items/' + props.data.url).then(resultItems => setClients({...client, items: resultItems.data}))
@@ -64,6 +70,7 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
 
   props.data.client = client;
 
+  console.log("MY WAY");
   console.log(props);
   console.log(client);
   console.log(items);

@@ -15,14 +15,20 @@ export interface Item {
 export interface Client {
     additionalInfo: string,
     address: string,
+    city: string,
     code: string,           //unnecessary
+    deliveryPrice: string,
     email: string,
     id: string,
-    name: string,
-    phoneNumber: string,
     items: Item[],
+    logoImage: string,
+    name: string,
+    paymentMethods: string,
+    phoneNumber: string,
+    socialMedia: string,
+    theme: string,
     type: string,
-    logoImage: string
+    _id: ''
 }
 
 export interface Product {

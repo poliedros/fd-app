@@ -13,7 +13,7 @@ import FdPizzaBasicFinalizeTransaction from './components/FdPizzaBasicFinalizeTr
 
 /* import itemsFile from './files/items.json'; */
 
-import { Data } from './interfaces/Interfaces';
+import { Data, Client } from './interfaces/Interfaces';
 
 function App() {
 
@@ -34,14 +34,20 @@ function App() {
     client: {
       additionalInfo: '',
       address: '',
+      city: '',
       code: '',           //unnecessary
+      deliveryPrice: '',
       email: '',
       id: '',
-      name: '',
-      phoneNumber: '',
       items: [],
+      logoImage: '',
+      name: '',
+      paymentMethods: '',
+      phoneNumber: '',
+      socialMedia: '',
+      theme: '',
       type: '',
-      logoImage: ''
+      _id: ''
     },
     products: []
   };
@@ -52,17 +58,25 @@ function App() {
     client: {
       additionalInfo: '',
       address: '',
+      city: '',
       code: '',           //unnecessary
+      deliveryPrice: '',
       email: '',
       id: '',
-      name: '',
-      phoneNumber: '',
       items: [],
+      logoImage: '',
+      name: '',
+      paymentMethods: '',
+      phoneNumber: '',
+      socialMedia: '',
+      theme: '',
       type: '',
-      logoImage: ''
+      _id: '',
     },
     products: []
   };
+
+  const [clients, setClients] = useState<Client[]>([]);
 
   return (
     /* <div className="App">

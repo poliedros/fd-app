@@ -10,18 +10,35 @@ import Button from 'react-bootstrap/Button';
 
 import axios from '../../axios';
 
-import { Data } from '../../interfaces/Interfaces';
+import { Data, Client } from '../../interfaces/Interfaces';
 
 interface FdPizzaBasicIntroProps { data: Data }
 
 const FdPizzaBasicIntro: FC<FdPizzaBasicIntroProps> = (props) => {
   let navigate = useNavigate();
 
-  const [client, setClients] = useState<any>({});
+  const [client, setClient] = useState<Client>({
+    additionalInfo: '',
+    address: '',
+    city: '',
+    code: '',           //unnecessary
+    deliveryPrice: '',
+    email: '',
+    id: '',
+    items: [],
+    logoImage: '',
+    name: '',
+    paymentMethods: '',
+    phoneNumber: '',
+    socialMedia: '',
+    theme: '',
+    type: '',
+    _id: ''
+  });
 
   const getData = async () => {
     //await axios.get('clients/' + props.data.url).then(result => setClients(result.data));
-    await axios.get('storage/' + props.data.url).then(result => setClients(result.data));
+    await axios.get('storage/' + props.data.url).then(result => setClient(result.data[0]));
   };
 
   useEffect(() => {
@@ -29,6 +46,7 @@ const FdPizzaBasicIntro: FC<FdPizzaBasicIntroProps> = (props) => {
   }, []);
 
   props.data.client = client;
+  console.log(client);
 
   return (
     <>
