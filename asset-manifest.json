@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/fd-app/static/css/main.03315860.css",
-    "main.js": "/fd-app/static/js/main.164ae0e9.js",
+    "main.js": "/fd-app/static/js/main.0cfc8e04.js",
     "static/js/787.492e7443.chunk.js": "/fd-app/static/js/787.492e7443.chunk.js",
     "index.html": "/fd-app/index.html",
     "main.03315860.css.map": "/fd-app/static/css/main.03315860.css.map",
-    "main.164ae0e9.js.map": "/fd-app/static/js/main.164ae0e9.js.map",
+    "main.0cfc8e04.js.map": "/fd-app/static/js/main.0cfc8e04.js.map",
     "787.492e7443.chunk.js.map": "/fd-app/static/js/787.492e7443.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.03315860.css",
-    "static/js/main.164ae0e9.js"
+    "static/js/main.0cfc8e04.js"
   ]
 }
