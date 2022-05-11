@@ -17,6 +17,10 @@ import { Data, Client, Item } from './interfaces/Interfaces';
 function App() {
 
   const urlName = window.location.hash.substring(2);
+  const [client, setClient] = useState<Client>();
+
+  console.log("URLNAME");
+  console.log(urlName);
 
   let data: Data = {
     urlName: urlName,
@@ -42,14 +46,12 @@ function App() {
     products: []
   };
 
-  const [client, setClient] = useState<Client>();
-
   const getData = async () => {
-    await axios.get('items').then(async result => {
-      await axios.get('storage').then(result1 => {
-        result1.data.map((r: Client) => r.items = []);
-        result.data.map((r: Item) => result1.data.filter((f: Client) => f.id == r.clientId).map((m: Client) => m.items.push(r)));
-        setClient(result1.data.filter((r: Client) => (r.urlName == urlName))[0]);
+    await axios.get('items').then(async itRes => {
+      await axios.get('storage').then(stRes => {
+        stRes.data.map((cl: Client) => cl.items = []);
+        itRes.data.map((it: Item) => stRes.data.filter((clFil: Client) => clFil.id == it.clientId).map((clMp: Client) => clMp.items.push(it)));
+        setClient(stRes.data.filter((clUn: Client) => (clUn.urlName == urlName))[0]);
       })
     })
   }
@@ -60,6 +62,8 @@ function App() {
 
   if(client)
     require("bootswatch/dist/" + client.theme + "/bootstrap.min.css");
+  else
+    require("bootswatch/dist/cyborg/bootstrap.min.css");
 
   return (
     <HashRouter>
