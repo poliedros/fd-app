@@ -1,8 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
 import { HashRouter, BrowserRouter as Router, Link, Routes, Route } from "react-router-dom";
-/* import { HashRouter, Route, Routes } from 'react-router-dom'; */
 
 import './App.css';
+
+import axios from '../src/axios';
 
 import FdPizzaBasicNavMenu from './components/FdPizzaBasicNavMenu/FdPizzaBasicNavMenu';
 import FdPizzaBasicCreateItem from './components/FdPizzaBasicCreateItem/FdPizzaBasicCreateItem';
@@ -11,50 +12,14 @@ import FdPizzaBasicSelect from './components/FdPizzaBasicSelect/FdPizzaBasicSele
 import FdPizzaBasicCartShopping from './components/FdPizzaBasicCartShopping/FdPizzaBasicCartShopping';
 import FdPizzaBasicFinalizeTransaction from './components/FdPizzaBasicFinalizeTransaction/FdPizzaBasicFinalizeTransaction';
 
-/* import itemsFile from './files/items.json'; */
-
-import { Data, Client } from './interfaces/Interfaces';
+import { Data, Client, Item } from './interfaces/Interfaces';
 
 function App() {
 
-  const address = window.location.pathname;
-  
-  //const url = address.substring(address.lastIndexOf("/") + 1, address.length); //window.location.href.split("http://localhost:3000/").pop() ?? '';
-
-  const url = address.split('/');
-
-  const url2 = window.location.origin;
-
-  console.log(url);
-  console.log(url2);
+  const urlName = window.location.hash.substring(2);
 
   let data: Data = {
-    url: url[2],
-    firstName: 'fd-app',
-    client: {
-      additionalInfo: '',
-      address: '',
-      city: '',
-      code: '',           //unnecessary
-      deliveryPrice: '',
-      email: '',
-      id: '',
-      items: [],
-      logoImage: '',
-      name: '',
-      paymentMethods: '',
-      phoneNumber: '',
-      socialMedia: '',
-      theme: '',
-      type: '',
-      _id: ''
-    },
-    products: []
-  };
-
-  let data2: Data = {
-    url: 'PizzaABeca',
-    firstName: '/fd-app',
+    urlName: urlName,
     client: {
       additionalInfo: '',
       address: '',
@@ -72,58 +37,43 @@ function App() {
       theme: '',
       type: '',
       _id: '',
+      urlName: ''
     },
     products: []
   };
 
-  const [clients, setClients] = useState<Client[]>([]);
+  const [client, setClient] = useState<Client>();
+
+  const getData = async () => {
+    await axios.get('items').then(async result => {
+      await axios.get('storage').then(result1 => {
+        result1.data.map((r: Client) => r.items = []);
+        result.data.map((r: Item) => result1.data.filter((f: Client) => f.id == r.clientId).map((m: Client) => m.items.push(r)));
+        setClient(result1.data.filter((r: Client) => (r.urlName == urlName))[0]);
+      })
+    })
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  if(client)
+    require("bootswatch/dist/" + client.theme + "/bootstrap.min.css");
 
   return (
-    /* <div className="App">
-      <div style={{ width: "100vw" }}> */
-        <HashRouter>
-          <Routes> 
+    <HashRouter>
+      <Routes> 
+        <Route path={ '/' } element={ <><Link to={ '/pizzaabeca' } style={{ color: "white" }}>Pizza a Beça</Link><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicCreateItem /></> } />
+        <Route path={ '/pizzaabeca' } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } />
+        <Route path={ '/czardev' } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } />
 
-            {/* <Route path={ "/" } element={ <><h1 style={{ color: "white" }}>Anderson</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
-            <Route path={ data.firstName + "/" } element={ <><h1 style={{ color: "white" }}>Mendes</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } /> */}
-
-            <Route path={ "/" } element={ <><Link to={ '/624fb30f570d98201f131685' } style={{ color: "white" }}>Anderson</Link><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
-            <Route path={ "/624fb30f570d98201f131685" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } />
-
-            <Route path={ "/selector"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicSelect data={ data }/></> } />
-            <Route path={ "/cartshopping"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicCartShopping /></> } />
-            <Route path={ "/finalizeTransaction"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicFinalizeTransaction /></> } />
-            
-            {/* <Route path={ data.firstName + "/" } element={ <><Link to={ '/fd-app/624fb30f570d98201f131685' } style={{ color: "white" }}>Anderson</Link><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
-            <Route path={ data.firstName + "/" + url[2] } element={ url[2] != '' ? <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> : <><FdPizzaBasicCreateItem /></> } />
-            <Route path={ data.firstName + "/624fb30f570d98201f131685" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } />
-            <Route path={ data.firstName + "/selector"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicSelect data={ data }/></> } />
-            <Route path={ data.firstName + "/cartshopping"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicCartShopping /></> } />
-            <Route path={ data.firstName + "/finalizeTransaction"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicFinalizeTransaction /></> } />
-            <Route path={ data.firstName + "/adm" } element={ <><FdPizzaBasicCreateItem /></> } /> */}
-
-          </Routes>
-        </HashRouter>
-      /* </div>
-    </div> */
+        <Route path={ "/selector" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicSelect data={ data }/></> } />
+        <Route path={ "/cartshopping" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicCartShopping /></> } />
+        <Route path={ "/finalizeTransaction" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicFinalizeTransaction /></> } />
+      </Routes>
+    </HashRouter>
   );
 }
 
 export default App;
-
-{/* <Router>
-  <Routes> 
-
-    {/* <Route path={ "/" } element={ <><h1 style={{ color: "white" }}>Anderson</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
-    <Route path={ data.firstName + "/" } element={ <><h1 style={{ color: "white" }}>Mendes</h1><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } /> /}
-    
-    <Route path={ data.firstName + "/" } element={ <><Link to={ '/fd-app/624fb30f570d98201f131685' } style={{ color: "white" }}>Anderson</Link><FdPizzaBasicNavMenu data={ data2 } /><FdPizzaBasicCreateItem /></> } />
-    <Route path={ data.firstName + "/" + url[2] } element={ url[2] != '' ? <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> : <><FdPizzaBasicCreateItem /></> } />
-    <Route path={ data.firstName + "/624fb30f570d98201f131685" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } />
-    <Route path={ data.firstName + "/selector"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicSelect data={ data }/></> } />
-    <Route path={ data.firstName + "/cartshopping"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicCartShopping /></> } />
-    <Route path={ data.firstName + "/finalizeTransaction"} element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicFinalizeTransaction /></> } />
-    <Route path={ data.firstName + "/adm" } element={ <><FdPizzaBasicCreateItem /></> } />
-
-  </Routes>
-</Router> */}

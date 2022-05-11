@@ -33,12 +33,13 @@ const FdPizzaBasicIntro: FC<FdPizzaBasicIntroProps> = (props) => {
     socialMedia: '',
     theme: '',
     type: '',
-    _id: ''
+    _id: '',
+    urlName: ''
   });
 
   const getData = async () => {
     //await axios.get('clients/' + props.data.url).then(result => setClients(result.data));
-    await axios.get('storage/' + props.data.url).then(result => setClient(result.data[0]));
+    await axios.get('storage/' + props.data.client._id).then(result => setClient(result.data[0]));
   };
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const FdPizzaBasicIntro: FC<FdPizzaBasicIntroProps> = (props) => {
 
   return (
     <>
-      <Button style={{ margin: "1rem" }} variant="outline-secondary" size="sm" onClick={() => navigate("/" + props.data.firstName + "/adm")}>
+      <Button style={{ margin: "1rem" }} variant="outline-secondary" size="sm" onClick={() => navigate("/adm")}>
         Administrar Conta
       </Button>
       <Container className="containerMain" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>

@@ -45,7 +45,7 @@ const FdPizzaBasicCartShopping: FC<FdPizzaBasicCartShoppingProps> = () => {
     <>
       <Container style={{ marginTop: "1.5rem" }}>
         <div style={{ textAlign: "left" }}>
-          <Button variant="primary" style={{ marginBottom: "1rem" }} onClick={() => { console.log(data); navigate("/" + data.firstName + "/selector", { state: data })} }>Voltar</Button>
+          <Button variant="primary" style={{ marginBottom: "1rem" }} onClick={() => { console.log(data); navigate("/selector", { state: data })} }>Voltar</Button>
         </div>
         <Card
           bg={'secondary'}

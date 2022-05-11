@@ -28,7 +28,8 @@ export interface Client {
     socialMedia: string,
     theme: string,
     type: string,
-    _id: ''
+    urlName: string,
+    _id: string
 }
 
 export interface Product {
@@ -46,8 +47,7 @@ export interface Product {
 }
 
 export interface Data {
-    url: string,
-    firstName: string,
+    urlName: string,
     client: Client,
     products: Product[]
 }

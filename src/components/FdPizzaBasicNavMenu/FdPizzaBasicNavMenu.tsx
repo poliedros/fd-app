@@ -37,7 +37,8 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
     socialMedia: '',
     theme: '',
     type: '',
-    _id: ''
+    _id: '',
+    urlName: ''
   } );
 
   const [items, setItems] = useState<Item[]>( [{
@@ -57,9 +58,9 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
   const getData = async () => {
     //await axios.get('clients/' + props.data.url).then(result => setClients(result.data));
     //await axios.get('storage/' + props.data.url).then(result => { setClients(result.data)});
-    await axios.get('storage/' + props.data.url).then(result => { setClient(result.data[0])});
+    await axios.get('storage/' + props.data.client._id).then(result => { setClient(result.data[0])});
     let newClient 
-    await axios.get('items/' + props.data.url).then(result => { setItems(result.data)});
+    await axios.get('items/' + props.data.client._id).then(result => { setItems(result.data)});
     //await axios.get('items/' + props.data.url).then(resultItems => setClients({...client, items: resultItems.data}))
     //await axios.get('storage/' + props.data.url).then(result => setClients(result.data));
   };
@@ -86,7 +87,7 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
   <>
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand onClick={() => navigate("/" + props.data.firstName + "/" + props.data.client.name)}>
+        <Navbar.Brand onClick={() => navigate("/" + props.data.client.name)}>
           <img
             src={ client.logoImage }
             width="48"
@@ -95,7 +96,7 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
             alt="React Bootstrap logo"
           />
         </Navbar.Brand>
-        <Navbar.Brand onClick={() => navigate("/" + props.data.firstName + "/" + props.data.client.name)}>{ props.data.client.name }</Navbar.Brand>
+        <Navbar.Brand onClick={() => navigate("/" + props.data.client.name)}>{ props.data.client.name }</Navbar.Brand>
 
         {/* <Navbar.Collapse className="justify-content-end">
           <Navbar.Brand onClick={() => navigate("/")}>

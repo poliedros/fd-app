@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -6,17 +6,95 @@ import reportWebVitals from './reportWebVitals';
 
 /* import { HashRouter as Router } from "react-router-dom"; */
 
+import axios from '../src/axios';
+
 import $ from 'jquery';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 /* import 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'; */
 
+/* import "bootswatch/dist/quartz/bootstrap.min.css"; */
+
+import { Data, Client } from './interfaces/Interfaces';
+
+/* function main() {
+  const [client, setClient] = useState<Client>({
+    additionalInfo: '',
+    address: '',
+    city: '',
+    code: '',           //unnecessary
+    deliveryPrice: '',
+    email: '',
+    id: '',
+    items: [],
+    logoImage: '',
+    name: '',
+    paymentMethods: '',
+    phoneNumber: '',
+    socialMedia: '',
+    theme: '',
+    type: '',
+    _id: ''
+  });
+
+  const getData = async () => {
+    //await axios.get('clients/' + props.data.url).then(result => setClients(result.data));
+    await axios.get('storage/').then(result => setClient(result.data[0]));
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+} */
+
+/* const Initial = () => {
+
+  function main() {
+    const [client, setClient] = useState<Client>({
+      additionalInfo: '',
+      address: '',
+      city: '',
+      code: '',           //unnecessary
+      deliveryPrice: '',
+      email: '',
+      id: '',
+      items: [],
+      logoImage: '',
+      name: '',
+      paymentMethods: '',
+      phoneNumber: '',
+      socialMedia: '',
+      theme: '',
+      type: '',
+      _id: '',
+      urlName: ''
+    });
+  
+    const getData = async () => {
+      //await axios.get('clients/' + props.data.url).then(result => setClients(result.data));
+      await axios.get('storage/').then(result => setClient(result.data[0]));
+    };
+  
+    useEffect(() => {
+      getData();
+    }, []);
+  }
+
+  return <></>
+} */
+
 ReactDOM.render(
-  <React.StrictMode>
-    {/* <Router> */}
-      <App />
-    {/* </Router> */}
-  </React.StrictMode>,
+  <>
+    {/* <Initial /> */}
+    <React.StrictMode>
+      {/* <Router> */}
+      
+      {/* <p>{client.theme}</p> */}
+        
+        <App />
+      {/* </Router> */}
+    </React.StrictMode>
+  </>,
   document.getElementById('root')
 );
 

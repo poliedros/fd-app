@@ -152,7 +152,7 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
     }) } */}
     <Container style={{ marginTop: "1.5rem" }}>
       <div style={{ textAlign: "left" }}>
-        <Button variant="primary" style={{ marginBottom: "1rem" }} onClick={() => navigate("/" + data.firstName + "/cartshopping", { state: data })}>Voltar</Button>
+        <Button variant="primary" style={{ marginBottom: "1rem" }} onClick={() => navigate("/cartshopping", { state: data })}>Voltar</Button>
       </div>
       
       <Form noValidate validated={validated} onSubmit={ sendEmail } >
