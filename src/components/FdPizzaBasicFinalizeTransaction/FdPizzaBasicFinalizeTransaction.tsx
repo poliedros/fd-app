@@ -160,6 +160,7 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
         bg={'secondary'}
         key={'0'}
         className="mb-2"
+        style={{ textAlign: "center" }}
       >
         <Card.Header style={{ color: "white" }}>Já estamos quase lá</Card.Header>
         <Card.Body>
@@ -175,13 +176,13 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
               <input type="hidden" name="message" value={ payment == "Em Dinheiro" ? 'Valor do Pedido: R$' + (total + 6) + ',00 - Valor a Receber: R$' + exchange + ',00 - Troco a Entregar: R$' + (exchange - (total + 6)) + ',00' : payment == "Por Cartão" ? 'Valor do Pedido: R$' + (total + 6) + ',00 - Marca do Cartão: ' + cardBrand : payment == "Pix" ? 'Pagado' : '' } />
               <Accordion flush>
                 <Accordion.Item eventKey="0">
-                  <Accordion.Header>Identificação &nbsp;<h4><Badge pill bg="info">{ name }</Badge></h4>&nbsp;<Badge pill bg="dark">{ phoneNumber }{ email ? ' | ' + email : '' }</Badge></Accordion.Header>
+                  <Accordion.Header>Identificação &nbsp;<h4><Badge pill bg="info">{ name }</Badge></h4>&nbsp;<Badge pill bg="dark" text="light">{ phoneNumber }{ email ? ' | ' + email : '' }</Badge></Accordion.Header>
                   <Accordion.Body>
                     <Row className="mb-3">
                       <Form.Group as={Col} controlId="formGridEmail">
                         <Form.Label>Seu Nome</Form.Label>
                         <InputGroup hasValidation>
-                        <Form.Control name="name" placeholder="José ou Maria" onChange={ (e) => setName(e.target.value) } required />
+                        <Form.Control name="name" placeholder="José ou Maria" onChange={ (e: { target: { value: React.SetStateAction<string>; }; }) => setName(e.target.value) } required />
                         </InputGroup>
                       </Form.Group>
                     </Row>
@@ -189,7 +190,7 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
                       <Form.Group as={Col} controlId="formGridEmail">
                         <Form.Label>Seu Número de Contato</Form.Label>
                         <InputGroup hasValidation>
-                        <Form.Control name="phoneNumber" placeholder="DDD + número" onChange={ (e) => setPhoneNumber(e.target.value) } required />
+                        <Form.Control name="phoneNumber" placeholder="DDD + número" onChange={ (e: { target: { value: React.SetStateAction<string>; }; }) => setPhoneNumber(e.target.value) } required />
                         </InputGroup>
                       </Form.Group>
                     </Row>
@@ -199,14 +200,14 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
                       </Col>
                       <Form.Group as={Col} controlId="formGridEmail">
                         <Form.Label>Seu Email</Form.Label>
-                        <Form.Control type="email" name="email" placeholder="Preencha seu email" onChange={ (e) => setEmail(e.target.value) } />
+                        <Form.Control type="email" name="email" placeholder="Preencha seu email" onChange={ (e: { target: { value: React.SetStateAction<string>; }; }) => setEmail(e.target.value) } />
                         <p>Este campo não é obrigatório</p>
                       </Form.Group>
                     </Row>
                   </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="1">
-                  <Accordion.Header>Entrega &nbsp;<Badge pill bg="dark">{ delivery }{ delivery == "Por Entregador / Delivery" ? address ? ' · ' + address : '' : ''}{ delivery == "Por Entregador / Delivery" ? complementary ? ' (' + complementary + ')' : '' : '' }{ delivery == "Por Entregador / Delivery" ? city ? ' - ' + city : '' : '' }</Badge></Accordion.Header>
+                  <Accordion.Header>Entrega &nbsp;<Badge pill bg="dark" text="light">{ delivery }{ delivery == "Por Entregador / Delivery" ? address ? ' · ' + address : '' : ''}{ delivery == "Por Entregador / Delivery" ? complementary ? ' (' + complementary + ')' : '' : '' }{ delivery == "Por Entregador / Delivery" ? city ? ' - ' + city : '' : '' }</Badge></Accordion.Header>
                   <Accordion.Body>
                       <div style={{ display: "flex", justifyContent: "center" }}>
                         Retirar no Estabelecimento &nbsp;
@@ -222,19 +223,19 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
                           <Form.Group as={Col} controlId="formGridAdress">
                             <Form.Label>Endereço (rua, número, completo, bairro)</Form.Label>
                             <InputGroup hasValidation>
-                            <Form.Control name="address" placeholder="Rua Min. Gabriel Passos, 199 - Centro" required={ delivery == "Por Entregador / Delivery" } onChange={ (e) => setAddress(e.target.value) } />
+                            <Form.Control name="address" placeholder="Rua Min. Gabriel Passos, 199 - Centro" required={ delivery == "Por Entregador / Delivery" } onChange={ (e: { target: { value: React.SetStateAction<string>; }; }) => setAddress(e.target.value) } />
                             </InputGroup>
                           </Form.Group>
 
                           <Form.Group as={Col} controlId="formGridAdditional">
                             <Form.Label>Complemento / Ponto de Referência / Observações</Form.Label>
-                            <Form.Control name="complementary" placeholder="Apto. 203 / Fundos / Próximo ao posto de saúde / ..." onChange={ (e) => setComplementary(e.target.value) } />
+                            <Form.Control name="complementary" placeholder="Apto. 203 / Fundos / Próximo ao posto de saúde / ..." onChange={ (e: { target: { value: React.SetStateAction<string>; }; }) => setComplementary(e.target.value) } />
                           </Form.Group>
 
                           <Form.Group as={Col} controlId="formGridCity">
                             <Form.Label>Cidade</Form.Label>
                             <InputGroup hasValidation>
-                            <Form.Select name="city" required={ delivery == "Por Entregador / Delivery" } onChange={ (e) => setCity(e.target.value) }>
+                            <Form.Select name="city" required={ delivery == "Por Entregador / Delivery" } onChange={ (e: { target: { value: React.SetStateAction<string>; }; }) => setCity(e.target.value) }>
                               <option>São João del Rei</option>
                               <option>Tiradentes</option>
                             </Form.Select>
@@ -245,7 +246,7 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
                   </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="2">
-                  <Accordion.Header>Pagamento &nbsp;<Badge pill bg="dark">{ payment + (exchange > 0 && openCash ? ' · R$ ' + exchange + ',00' : '') + (openCardBrand ? ' · ' + cardBrand : '') + (openPixCode ? ' · Código Pix: ' + 'AD13' : '') }</Badge></Accordion.Header>
+                  <Accordion.Header>Pagamento &nbsp;<Badge pill bg="dark" text="light">{ payment + (exchange > 0 && openCash ? ' · R$ ' + exchange + ',00' : '') + (openCardBrand ? ' · ' + cardBrand : '') + (openPixCode ? ' · Código Pix: ' + 'AD13' : '') }</Badge></Accordion.Header>
                   <Accordion.Body>
                       <div className="mb-3">
                         <Form.Check
@@ -282,7 +283,7 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
                             <InputGroup hasValidation>
                               <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                 R$
-                                <Form.Control id="exchange" type="number" placeholder="100" min="0" onChange={ (e) => setExchange(parseInt(e.target.value)) } style={{ width: "100px" }} required={ (payment == "Em Dinheiro") } />
+                                <Form.Control id="exchange" type="number" placeholder="100" min="0" onChange={ (e: { target: { value: string; }; }) => setExchange(parseInt(e.target.value)) } style={{ width: "100px" }} required={ (payment == "Em Dinheiro") } />
                                 ,00
                                 <Form.Control.Feedback style={{ marginTop: "0" }} >
                                   &nbsp; Não se esqueça que esse valor tem que ser maior que o valor do pedido. {/* { total <= exchange ? "true" : "false" }{ total }{ exchange } */}
@@ -304,7 +305,7 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
                           <Form.Group as={Col} controlId="formGridCard">
                             <Form.Label>Marca</Form.Label>
                             <InputGroup hasValidation>
-                            <Form.Select id="Card" required={ payment == "Por Cartão" } onChange={ (e) => setCardBrand(e.target.value) }>
+                            <Form.Select id="Card" required={ payment == "Por Cartão" } onChange={ (e: { target: { value: React.SetStateAction<string>; }; }) => setCardBrand(e.target.value) }>
                               <option>Visa</option>
                               <option>MasterCard</option>
                             </Form.Select>
@@ -364,7 +365,9 @@ const FdPizzaBasicFinalizeTransaction: FC<FdPizzaBasicFinalizeTransactionProps> 
               Verifique que não faltam informações nas sessões de Identificação, Entrega e Pagamento.
             </p>
           </Alert> : null }
-          <Button style={{ margin: "1rem" }} variant="primary" type="submit" disabled={ payment == "" }>Enviar</Button>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Button style={{ margin: "1rem" }} variant="primary" type="submit" disabled={ payment == "" }>Enviar</Button>
+          </div>
         </>
       </Form>
     </Container>

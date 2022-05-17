@@ -255,13 +255,22 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
                 <ListGroup style={{ alignItems: "center" }}>
                   <ListGroup.Item action href="#link+"
                   style={{ borderRadius: "100px",
-                    width: "58px",
+                    //width: "58px",
                     paddingLeft: "8px",
                     paddingRight: "8px",
-                    height: "58px",
-                    textAlign: "center"
+                    //height: "58px",
+                    textAlign: "center",
+                    aspectRatio: "1 / 1",
+                    width: "auto", //"calc(3vw + 6vh)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
                   }}>
-                    <h3 style={{ marginBottom: "0" }}><b>+</b></h3>
+                    {/*<h3 style={{ marginBottom: "0" }}> <b> */}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                    </svg>
+                    {/* </b> </h3>*/}
                   </ListGroup.Item>
                 </ListGroup>
                 <br/>
@@ -291,7 +300,7 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
                           aria-label="Example text with button addon"
                           aria-describedby="basic-addon1"
                           value={ stateClientCopy.name ?? '' }
-                          onChange={ event => { setStateClientCopy({...stateClientCopy, name: event.target.value}) /* setClientName(event.target.value); */ /* setName(event.target.value) */;  } }
+                          onChange={ (event: any) => { setStateClientCopy({...stateClientCopy, name: event.target.value}) /* setClientName(event.target.value); */ /* setName(event.target.value) */;  } }
                           disabled
                         />
                         <Button variant="outline-secondary" id="button-addon1" onClick={ () => $(".inputName").prop("disabled", true) ? $(".inputName").prop("disabled", false) : $(".inputName").add("disabled") }> {/* updateStorage() */}
@@ -306,7 +315,7 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
                           aria-label="Example text with button addon"
                           aria-describedby="basic-addon1"
                           value={ stateClientCopy.phoneNumber ?? '' }
-                          onChange={ event => { setStateClientCopy({...stateClientCopy, phoneNumber: event.target.value}) /* setClientPhone(event.target.value) */ } }
+                          onChange={ (event: any) => { setStateClientCopy({...stateClientCopy, phoneNumber: event.target.value}) /* setClientPhone(event.target.value) */ } }
                           disabled
                         />
                         <Button variant="outline-secondary" id="button-addon1" onClick={ () => $(".inputPhone").prop("disabled", true) ? $(".inputPhone").prop("disabled", false) : $(".inputPhone").add("disabled") }>
@@ -321,7 +330,7 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
                           aria-label="Example text with button addon"
                           aria-describedby="basic-addon1"
                           value={ stateClientCopy.email ?? '' }
-                          onChange={ event => { setStateClientCopy({...stateClientCopy, email: event.target.value}) /* setClientPhone(event.target.value) */ } }
+                          onChange={ (event: any) => { setStateClientCopy({...stateClientCopy, email: event.target.value}) /* setClientPhone(event.target.value) */ } }
                           disabled
                         />
                         <Button variant="outline-secondary" id="button-addon1" onClick={ () => $(".inputEmail").prop("disabled", true) ? $(".inputEmail").prop("disabled", false) : $(".inputEmail").add("disabled") }>
@@ -336,7 +345,7 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
                           aria-label="Example text with button addon"
                           aria-describedby="basic-addon1"
                           value={ stateClientCopy.address ?? '' }
-                          onChange={ event => { setStateClientCopy({...stateClientCopy, address: event.target.value}) /* setClientPhone(event.target.value) */ } }
+                          onChange={ (event: any) => { setStateClientCopy({...stateClientCopy, address: event.target.value}) /* setClientPhone(event.target.value) */ } }
                           disabled
                         />
                         <Button variant="outline-secondary" id="button-addon1" onClick={ () => $(".inputAddress").prop("disabled", true) ? $(".inputAddress").prop("disabled", false) : $(".inputAddress").add("disabled") }>
@@ -351,7 +360,7 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
                           aria-label="Example text with button addon"
                           aria-describedby="basic-addon1"
                           value={ stateClientCopy.additionalInfo ?? '' }
-                          onChange={ event => { setStateClientCopy({...stateClientCopy, additionalInfo: event.target.value}) /* setClientPhone(event.target.value) */ } }
+                          onChange={ (event: any) => { setStateClientCopy({...stateClientCopy, additionalInfo: event.target.value}) /* setClientPhone(event.target.value) */ } }
                           disabled
                         />
                         <Button variant="outline-secondary" id="button-addon1" onClick={ () => $(".inputAddionalInfo").prop("disabled", true) ? $(".inputAddionalInfo").prop("disabled", false) : $(".inputAddionalInfo").add("disabled") }>
@@ -430,7 +439,7 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
   async function updateStorage() {
     const request = clientCopy;
     console.log(request);
-    alert(clientCopy.name);
+    /* alert(clientCopy.name); */
     /* {
       phoneNumber: clientPhone,
       name: clientName
@@ -466,7 +475,7 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
   }, []);
 
   useEffect(() => {
-    alert("pau no meu cu");
+    /* alert("pau no meu cu"); */
     /* clients ?? setClientCopy(clients[0]); */
   }, [clients]);
 
@@ -492,7 +501,7 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
           placeholder="Código do Estabelecimento"
           aria-label="Recipient's username"
           aria-describedby="basic-addon2"
-          onChange={(e) => { setCode(e.target.value) }}
+          onChange={(e: any) => { setCode(e.target.value) }}
         />
         { clients ? ['bottom'].map((placement, idx) => (
           OffCanvas(idx, placement)

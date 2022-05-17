@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 
 import { useNavigate } from "react-router-dom";
 
+import axios from '../../axios';
+
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Badge from 'react-bootstrap/Badge';
@@ -11,11 +13,68 @@ import Badge from 'react-bootstrap/Badge';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 
-import { Data } from '../../interfaces/Interfaces';
+import { Data, Client, Item } from '../../interfaces/Interfaces';
 
 interface FdPizzaBasicNavMenuProps { data: Data }
 
 const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
+
+  /* const url = window.location.href.split("http://localhost:3000/").pop(); */
+
+  const [client, setClient] = useState<Client>( {
+    additionalInfo: '',
+    address: '',
+    city: '',
+    code: '',           //unnecessary
+    deliveryPrice: '',
+    email: '',
+    id: '',
+    items: [],
+    logoImage: '',
+    name: '',
+    paymentMethods: '',
+    phoneNumber: '',
+    socialMedia: '',
+    theme: '',
+    type: '',
+    _id: '',
+    urlName: ''
+  } );
+
+  const [items, setItems] = useState<Item[]>( [{
+    id: '',
+    name: '',
+    code: '', //unnecessary
+    description: '',
+    type: '',
+    price: 0,
+    quantity: 0,
+    clientId: '',
+    image: '',
+    label: '',
+    note: '',
+  }] );
+
+  const getData = async () => {
+    //await axios.get('clients/' + props.data.url).then(result => setClients(result.data));
+    //await axios.get('storage/' + props.data.url).then(result => { setClients(result.data)});
+    await axios.get('storage/' + props.data.client._id).then(result => { setClient(result.data[0])});
+    let newClient 
+    await axios.get('items/' + props.data.client._id).then(result => { setItems(result.data)});
+    //await axios.get('items/' + props.data.url).then(resultItems => setClients({...client, items: resultItems.data}))
+    //await axios.get('storage/' + props.data.url).then(result => setClients(result.data));
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  props.data.client = client;
+
+  console.log("MY WAY");
+  console.log(props);
+  console.log(client);
+  console.log(items);
   
   let navigate = useNavigate();
 
@@ -30,26 +89,39 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
       <Container>
         <Navbar.Brand onClick={() => navigate("/" + props.data.client.name)}>
           <img
-            src={ props.data ? props.data.client.logoImage : '' }
+            src={ client.logoImage }
             width="48"
             height="48"
             className="d-inline-block align-top"
-            alt={ '' }
+            alt="React Bootstrap logo"
           />
         </Navbar.Brand>
         <Navbar.Brand onClick={() => navigate("/" + props.data.client.name)}>{ props.data.client.name }</Navbar.Brand>
 
+        {/* <Navbar.Collapse className="justify-content-end">
+          <Navbar.Brand onClick={() => navigate("/")}>
+            <img
+              src="pizza.png"
+              width="36"
+              height="36"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+              style={{ filter: "invert(1)" }}
+            /> 
+            <Badge pill bg="danger" style={{ position: "absolute", margin: "-15px 0 0 -15px" }}>
+              { data ? data.products.length : 0 }
+            </Badge>
+          </Navbar.Brand>
+        </Navbar.Collapse> */}
+
         <Dropdown>
-          <Dropdown.Toggle
-          id="dropdown-basic"
-          style={{
-            backgroundColor: "transparent",
-            borderWidth: "0px",
-            //borderColor: "white",
-            padding: "12px",
-            borderRadius: "100%"
-          }}
-          className="dropdown-toggle-image-small">
+          <Dropdown.Toggle id="dropdown-basic" style={{
+                backgroundColor: "transparent",
+                borderWidth: "0px",
+                //borderColor: "white",
+                padding: "12px",
+                borderRadius: "100%"
+          }} className="dropdown-toggle-image-small">
             <img
               src="pizza.png"
               width="36"
@@ -76,7 +148,7 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
             minWidth: "auto"
           }}>
             <Dropdown.Item className="dropdown-item-text-no-content">
-              <h5 style={{ textAlign: "center", color: "black" }}>
+              <h5 style={{ textAlign: "center"}}>
                 Sua compra
               </h5>
             </Dropdown.Item>
@@ -85,18 +157,18 @@ const FdPizzaBasicNavMenu: FC<FdPizzaBasicNavMenuProps> = (props) => {
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <Badge pill bg="danger" style={{ marginRight: "20px" }}>{ p.quantity }</Badge>
                   <div>
-                  <h6 style={{ color: "black" }}>
+                  <h6>
                     <b>{ p.name }{ p.half ? ' / ' + p.half : '' }</b>
                   </h6>
                   <p>Sub-total: <b>R${ p.quantity * p.price },00</b></p>
                   </div>
                 </div>
-                <p style={{ fontSize: "0rem", color: "white", marginBottom: "0" }}>{ (total += (p.quantity * p.price)) == 0 ? null : total }</p>
+                { total += (p.quantity * p.price) }
                 {/* <Button variant="outline-secondary" size="sm" style={{ textAlign: "center"}} disabled>Editar Pedido</Button> */}
               </Dropdown.Item>
-              ) : null }
+              ) : 0 }
             <Dropdown.Item className="dropdown-item-text-no-content" style={{ textAlign: "center"}}>
-              <h6 style={{ color: "black" }}><b>Total: R$ <span style={{ fontSize: "1.75rem" }}>{total}</span><span style={{ fontSize: "1.25rem" }}>,00</span></b></h6>
+              <h6><b>Total: R$ <span style={{ fontSize: "1.75rem" }}>{total}</span><span style={{ fontSize: "1.25rem" }}>,00</span></b></h6>
               {/* <Button variant="success" size="sm">Concluir Pedido</Button> */}
             </Dropdown.Item>
           </Dropdown.Menu>

@@ -17,13 +17,11 @@ import { Data, Client, Item } from './interfaces/Interfaces';
 function App() {
 
   const urlName = window.location.hash.substring(2);
+  
   const [client, setClient] = useState<Client>();
-
-  console.log("URLNAME");
-  console.log(urlName);
-
-  let data: Data = {
+  const [data, setData] = useState<Data>( {
     urlName: urlName,
+    firstItem: '',
     client: {
       additionalInfo: '',
       address: '',
@@ -44,31 +42,45 @@ function App() {
       urlName: ''
     },
     products: []
-  };
+  } );
 
-  const getData = async () => {
+  const getClient = async () => {
     await axios.get('items').then(async itRes => {
       await axios.get('storage').then(stRes => {
         stRes.data.map((cl: Client) => cl.items = []);
         itRes.data.map((it: Item) => stRes.data.filter((clFil: Client) => clFil.id == it.clientId).map((clMp: Client) => clMp.items.push(it)));
         setClient(stRes.data.filter((clUn: Client) => (clUn.urlName == urlName))[0]);
-      })
-    })
+      });
+    });
   }
 
   useEffect(() => {
-    getData();
+    getClient();
   }, []);
+
+  useEffect(() => {
+
+  }, [data]);
+
+  useEffect(() => {
+    if(client) {
+      setData({ ...data, client: client });
+    }
+  }, [client]);
 
   if(client)
     require("bootswatch/dist/" + client.theme + "/bootstrap.min.css");
   else
     require("bootswatch/dist/cyborg/bootstrap.min.css");
 
+  console.log("DATA");
+  console.log(data);
+
   return (
     <HashRouter>
       <Routes> 
-        <Route path={ '/' } element={ <><Link to={ '/pizzaabeca' } style={{ color: "white" }}>Pizza a Beça</Link><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicCreateItem /></> } />
+        <Route path={ '/' } element={ <><Link to={ '/pizzaabeca' } style={{ color: "white" }}>Pizza a Beça</Link>{/* <FdPizzaBasicNavMenu data={ data } /> */}<FdPizzaBasicCreateItem /></> } />
+        
         <Route path={ '/pizzaabeca' } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } />
         <Route path={ '/czardev' } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } />
 

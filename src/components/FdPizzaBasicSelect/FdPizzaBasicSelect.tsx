@@ -5,8 +5,6 @@ import { useLocation } from 'react-router-dom';
 
 import './FdPizzaBasicSelect.css';
 
-import axios from '../../axios';
-
 import Container from 'react-bootstrap/Container';
 import Accordion from 'react-bootstrap/Accordion';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -25,10 +23,11 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Overlay from 'react-bootstrap/Overlay';
 
-import itemsFile from '../../files/items.json';
-import { getEnvironmentData } from 'worker_threads';
+//import itemsFile from '../../files/items.json';
+//import { getEnvironmentData } from 'worker_threads';
 
-import { Data, Client, Item } from '../../interfaces/Interfaces';
+import { Data,/* , Client, Item */ 
+Product} from '../../interfaces/Interfaces';
 
 interface FdPizzaBasicSelectProps { data: Data }
 
@@ -37,25 +36,26 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
   let navigate = useNavigate();
 
   const location = useLocation();
-  const data = location.state as Data;
+  const [data, setData] = useState(location.state as Data);
 
-  console.log(props.data);
+  //const data = location.state as Data;
 
-  const [products, setProducts] = useState(data != null && data.products != [] ? data.products : [
-    {
-      type: '',
-      image: '',
-      description: '',
-      id: 1,
-      label: '1',
-      title: '1',
-      name: '',
-      half: '',
-      quantity: 1,
-      price: 0,
-      note: ''
-    }
-  ]);
+  const [products, setProducts] = useState(data != null ? data.products
+    : [
+      {
+        type: '',
+        image: '',
+        description: '',
+        id: 0,
+        label: '1',
+        title: props.data.firstItem != 'Pizza' ? 'Bebida (Item 1)' : 'Pizza (Item 1)',
+        name: '',
+        half: '',
+        quantity: 1,
+        price: 0,
+        note: ''
+      }
+    ]);
 
   const [index, setIndex] = useState(0);
 
@@ -67,34 +67,6 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
   const getIndex = async (idx: number) => {
     setIndex(idx);
   };
-
-  const [clients, setClients] = useState<Client[]>([]);
-
-  const getData = async () => {
-    await axios.get('items').then(async result => {
-      await axios.get('storage').then(result1 => {
-        console.log(result.data);
-        result1.data.map((r: Client) => r.items = []);
-        result.data.map((r: Item) => result1.data.filter((f: Client) => f.id == r.clientId).map((m: Client) => m.items.push(r)));
-        console.log(result1.data);
-        setClients(result1.data);
-      })
-    })
-  }
-
-  const setProps = () => {
-    props.data.client = clients[0];
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    setProps();
-    
-    alert(props.data.client);
-  }, [clients]);
 
   console.log("DATA");
   console.log(props);
@@ -123,6 +95,14 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
       setProducts(copyList);
       if(index == products.length-1)
         setIndex(index-1);
+  };
+
+  const orderRemoveAllProducts = async () => {
+    let copyList: Product[] = [];
+    setProducts(copyList);
+    let copyData = data;
+    copyData.products = copyList;
+    setData(copyData);
   };
 
   const productChangeHalf = async (half: string, price: number) => {
@@ -161,27 +141,36 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
     }
     return products.length;
   };
-  
-  useEffect ( () => {
 
+  useEffect(() => {
+    setData(props.data);
   }, []);
+
+  /* useEffect(() => {
+    let copyData = data;
+    copyData.products = products;
+    setData(copyData);
+  }, [products]); */
+
+  console.log("PND");
+  console.log(props.data.client ? props.data.client.items ? props.data.client.items : null : null);
 
   return (
     <Container style={{ marginTop: "1.5rem", marginBottom: "1.5rem" }}>
       <div style={{ textAlign: "left" }}>
-        <Button style={{ marginBottom: "1rem" }} onClick={ () => navigate("/" + props.data.urlName) }>Retornar ao Início</Button>
+        <Button style={{ marginBottom: "1rem" }} onClick={ () => { /* alert("CARA"); orderRemoveAllProducts(); alert(JSON.stringify(data)); */ navigate("/" + data.urlName);  } }>Retornar ao Início</Button>
       </div>
       <div>
-      <Card bg="secondary">
-        <Card.Header>
+      <Card bg="secondary" style={{ textAlign: "center" }}>
+        <Card.Header style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <DropdownButton style={{ marginBottom: "1rem" }} as={ButtonGroup} title="Adicionar um novo produto" id="bg-nested-dropdown">
-            <Dropdown.Item eventKey="1" onClick={ () => { setProducts([...products, { id: findId(), title: 'Pizza ' + (findId() + 1), name: '', half: '', quantity: 1, price: 0, note: '', type: '', image: '', description: '', label: '' }]); setIndex(products.length) } }>Pizza</Dropdown.Item>
-            <Dropdown.Item eventKey="2" onClick={ () => { setProducts([...products, { id: findId(), title: 'Soda ' + (findId() + 1), name: '', half: '', quantity: 1, price: 0, note: '', type: '', image: '', description: '', label: '' }]); setIndex(products.length) } }>Bebida</Dropdown.Item>
+            <Dropdown.Item eventKey="1" onClick={ () => { setProducts([...products, { id: findId(), title: 'Pizza (Item ' + (findId() + 1) + ")", name: '', half: '', quantity: 1, price: 0, note: '', type: '', image: '', description: '', label: '' }]); setIndex(products.length) } }>Pizza</Dropdown.Item>
+            <Dropdown.Item eventKey="2" onClick={ () => { setProducts([...products, { id: findId(), title: 'Bebida (Item ' + (findId() + 1) + ")", name: '', half: '', quantity: 1, price: 0, note: '', type: '', image: '', description: '', label: '' }]); setIndex(products.length) } }>Bebida</Dropdown.Item>
           </DropdownButton>
           <Nav variant="pills" defaultActiveKey="0">
           { products.map((it, idx) => 
             <Nav.Item>
-              <Nav.Link id={ idx.toString() } eventKey={ idx.toString() } onClick={ event => { getIndex(idx) } } active={ idx == index }>{it.title}</Nav.Link>
+              <Nav.Link id={ idx.toString() } eventKey={ idx.toString() } onClick={ () => { getIndex(idx) } } active={ idx == index }>{it.title}</Nav.Link>
             </Nav.Item>
           ) }
           </Nav>
@@ -195,10 +184,9 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
                 <Button onClick={ () => navigate("/" + props.data.urlName) }>Retornar ao Início</Button>
               }
             </div>
-            <Card.Title style={{ margin: "1rem" }}>Escolha até dois tipos de Pizzas &nbsp;<Badge pill bg="warning" text="dark">{ products[index].name + (products[index].half ? ' / ' + products[index].half : '') }{ products[index].name ? ' x' + products[index].quantity : '' }</Badge></Card.Title>
+            <Card.Title style={{ display: "flex", justifyContent: "center", margin: "1rem" }}>Escolha até dois tipos de Pizzas &nbsp;<Badge pill bg="warning" text="dark">{ products[index].name + (products[index].half ? ' / ' + products[index].half : '') }{ products[index].name ? ' x' + products[index].quantity : '' }</Badge></Card.Title>
             <br/>
             <Card.Text>
-              <div>
               <Accordion flush>
                 <Accordion.Item eventKey="0">
                   <Accordion.Header>
@@ -214,52 +202,50 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
                     Pizza 1 &nbsp;<Badge pill bg="secondary">{ products[index].name }</Badge>
                   </Accordion.Header>
                   <Accordion.Body>
-                    <div>
-                      <fieldset>
-                        <Form.Group as={Row} className="mb-12">
-                          <Col sm={12}>
-                          <Table striped responsive hover size="sm">
-                              <tbody>
-                                { props.data.client ? props.data.client.items ? props.data.client.items.filter(f => f.type == "Pizza").map(i => {
-                                  return <tr className="align-middle">
-                                  <td>
-                                    <Form.Check
-                                      type="radio"
-                                      label=""
-                                      name="Pizza"
-                                      id={ i.name }
-                                      style={{ marginLeft: "10px" }}
-                                      onClick={ () => { orderAddProductValue(i.name ?? '', i.price ?? 0); productChangeHalf('', 0) } }
-                                      checked={ products[index].name == i.name }
-                                    />
-                                  </td>
-                                  <td>
-                                    <Figure.Image
-                                      width={45}
-                                      height={45}
-                                      alt="171x180"
-                                      src={ i.image }
-                                      style={{ margin: "0 10px 0 0" }}
-                                    />
-                                  </td>
-                                  <td>
-                                    <b>{ i.name }</b> { ' ' + i.description }
-                                  </td>
-                                  <td>
-                                    <Badge pill bg="dark" style={{ marginRight: "10px" }}>
-                                      R$ { i.price },00
-                                    </Badge>
-                                  </td>
-                                </tr>
-                                }) : null : null }
-                              </tbody>
-                            </Table>
-                            <div style={{ display: "flex", alignItems: "center" }}>
-                            </div>
-                          </Col>
-                        </Form.Group>
-                      </fieldset>
-                    </div>
+                    <fieldset>
+                      <Form.Group as={Row} className="mb-12">
+                        <Col sm={12}>
+                        <Table striped responsive hover size="sm">
+                            <tbody>
+                              { props.data.client ? props.data.client.items ? props.data.client.items.filter(f => f.type == "Pizza").map(i => {
+                                return <tr className="align-middle">
+                                <td>
+                                  <Form.Check
+                                    type="radio"
+                                    label=""
+                                    name="Pizza"
+                                    id={ i.name }
+                                    style={{ marginLeft: "10px" }}
+                                    onClick={ () => { orderAddProductValue(i.name ?? '', i.price ?? 0); productChangeHalf('', 0) } }
+                                    checked={ products[index].name == i.name }
+                                  />
+                                </td>
+                                <td>
+                                  <Figure.Image
+                                    width={45}
+                                    height={45}
+                                    alt="171x180"
+                                    src={ i.image }
+                                    style={{ margin: "0 10px 0 0" }}
+                                  />
+                                </td>
+                                <td>
+                                  <b>{ i.name }</b> { ' ' + i.description }
+                                </td>
+                                <td>
+                                  <Badge pill bg="dark" text="light" style={{ marginRight: "10px" }}>
+                                    R$ { i.price },00
+                                  </Badge>
+                                </td>
+                              </tr>
+                              }) : null : null }
+                            </tbody>
+                          </Table>
+                          <div style={{ display: "flex", alignItems: "center" }}>
+                          </div>
+                        </Col>
+                      </Form.Group>
+                    </fieldset>
                   </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="1">
@@ -276,74 +262,68 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
                     Pizza 2 &nbsp;<Badge pill bg="secondary">{ products[index].half }</Badge>
                   </Accordion.Header>
                   <Accordion.Body>
-                  <div>
-                      <fieldset>
-                        <Form.Group as={Row} className="mb-12">
-                          <Col sm={12}>
-                            <Table striped responsive hover size="sm">
-                              <tbody>
-                                <tr className="align-middle">
-                                  <td>
-                                    <Form.Check
-                                      type="radio"
-                                      label=""
-                                      name="Pizza-2"
-                                      id="NoPizza"
-                                      style={{ marginLeft: "10px" }}
-                                      onClick={ () => { productChangeHalf('', 0) } }
-                                      checked={ products[index].half == "" }
-                                    />
-                                  </td>
-                                  <td>
-                                    
-                                  </td>
-                                  <td>
-                                    Não Selecionar
-                                  </td>
-                                  <td>
-                                    
-                                  </td>
-                                </tr>
-                                { props.data.client ? props.data.client.items ? props.data.client.items.filter( f => f.type == 'Pizza' && products[index].name != '' && f.name != products[index].name).map(i => {
-                                  return <tr className="align-middle">
-                                  <td>
-                                    <Form.Check
-                                      type="radio"
-                                      label=""
-                                      name="Pizza-2"
-                                      id={ i.name }
-                                      style={{ marginLeft: "10px" }}
-                                      onClick={ () => { productChangeHalf(i.name ?? '', i.price ?? 0) } }
-                                      checked={ products[index].half == i.name }
-                                    />
-                                  </td>
-                                  <td>
-                                    <Figure.Image
-                                      width={45}
-                                      height={45}
-                                      alt="171x180"
-                                      src={ i.image }
-                                      style={{ margin: "0 10px 0 0" }}
-                                    />
-                                  </td>
-                                  <td>
-                                    <b>{ i.name }</b> { ' ' + i.description }
-                                  </td>
-                                  <td>
-                                    <Badge pill bg="dark" style={{ marginRight: "10px" }}>
-                                      R$ { i.price },00
-                                    </Badge>
-                                  </td>
-                                </tr>
-                                }) : null : null }
-                              </tbody>
-                            </Table>
-                            <div style={{ display: "flex", alignItems: "center" }}>
-                            </div>
-                          </Col>
-                        </Form.Group>
-                      </fieldset>
-                    </div>
+                    <fieldset>
+                      <Form.Group as={Row} className="mb-12">
+                        <Col sm={12}>
+                          <Table striped responsive hover size="sm">
+                            <tbody>
+                              <tr className="align-middle">
+                                <td>
+                                  <Form.Check
+                                    type="radio"
+                                    label=""
+                                    name="Pizza-2"
+                                    id="NoPizza"
+                                    style={{ marginLeft: "10px" }}
+                                    onClick={ () => { productChangeHalf('', 0) } }
+                                    checked={ products[index].half == "" }
+                                  />
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                  Não Selecionar
+                                </td>
+                                <td>
+                                </td>
+                              </tr>
+                              { props.data.client ? props.data.client.items ? props.data.client.items.filter( f => f.type == 'Pizza' && products[index].name != '' && f.name != products[index].name).map(i => {
+                                return <tr className="align-middle">
+                                <td>
+                                  <Form.Check
+                                    type="radio"
+                                    label=""
+                                    name="Pizza-2"
+                                    id={ i.name }
+                                    style={{ marginLeft: "10px" }}
+                                    onClick={ () => { productChangeHalf(i.name ?? '', i.price ?? 0) } }
+                                    checked={ products[index].half == i.name }
+                                  />
+                                </td>
+                                <td>
+                                  <Figure.Image
+                                    width={45}
+                                    height={45}
+                                    alt="171x180"
+                                    src={ i.image }
+                                    style={{ margin: "0 10px 0 0" }}
+                                  />
+                                </td>
+                                <td>
+                                  <b>{ i.name }</b> { ' ' + i.description }
+                                </td>
+                                <td>
+                                  <Badge pill bg="dark" text="light" style={{ marginRight: "10px" }}>
+                                    R$ { i.price },00
+                                  </Badge>
+                                </td>
+                              </tr>
+                              }) : null : null }
+                            </tbody>
+                          </Table>
+                        </Col>
+                      </Form.Group>
+                    </fieldset>
                   </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="2">
@@ -359,7 +339,7 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
                   </Accordion.Body>
                 </Accordion.Item>
               </Accordion>
-              </div>
+              
               <div style={{ display: "flex", alignItems: "center", marginTop: "1rem" }}>
                 <InputGroup className="mb-3">
                   <Button variant="danger" id="button-addon1"
@@ -379,10 +359,10 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
                     <b>+</b>
                   </Button>
                 </InputGroup>
-                <Badge bg="light" text="dark"><h4>Subtotal: R$ { (products[index].quantity * products[index].price) },00</h4></Badge>
+                <Badge bg="light" text="dark"><h4 style={{ color: 'black' }}>Subtotal: R$ { (products[index].quantity * products[index].price) },00</h4></Badge>
               </div>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Observações:</Form.Label>
+                <Form.Label style={{ display: "flex", justifyContent: "center" }}>Observações:</Form.Label>
                 <Form.Control as="textarea" id="observ" rows={3} value={products[index].note ? products[index].note : ''} onChange={ (e) => { orderAddNote(e.currentTarget.value ?? '') }} />
               </Form.Group>
             </Card.Text>
@@ -390,198 +370,77 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
         : 
           <Card.Body>
             <div style={{ textAlign: "right" }}>
-            { products.length > 1 ?
-              <Button variant="danger" onClick={ () => { orderRemoveProduct() } }>Apagar - { products[index].title }</Button>
-            :
-              <Button onClick={ () => navigate("/" + props.data.urlName) }>Retornar ao Início</Button>
-            }
+              { products.length > 1 ?
+                <Button variant="danger" onClick={ () => { orderRemoveProduct() } }>Apagar - { products[index].title }</Button>
+              :
+                <Button onClick={ () => navigate("/" + props.data.urlName) }>Retornar ao Início</Button>
+              }
             </div>
-            <Card.Title>Escolha uma Bebida &nbsp;<Badge pill bg="warning" text="dark">{ products[index].name }{ products[index].name ? ' x' + products[index].quantity : null }</Badge></Card.Title>
+            <Card.Title style={{ display: "flex", justifyContent: "center", margin: "1rem" }}>Escolha uma Bebida &nbsp;<Badge pill bg="warning" text="dark">{ products[index].name }{ products[index].name ? ' x' + products[index].quantity : null }</Badge></Card.Title>
             <br/>
             <Card.Text>
-              <div>
-                <Accordion flush>
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>
-                      <Figure>
-                        <Figure.Image
-                          width={45}
-                          height={45}
-                          alt="171x180"
-                          src="soda.png"
-                          style={{ margin: "0 10px 0 0" }}
-                        />
-                      </Figure>
-                      Refrigerante 1L
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <div>
-                        <fieldset>
-                          <Form.Group as={Row} className="mb-12">
-                            <Col sm={12}>
-                            <Table striped responsive hover size="sm">
-                                <tbody>
-                                  { itemsFile.items[0].drinks.filter( f => f.type == "1L" ).map( d => {
-                                    return <tr className="align-middle">
-                                    <td>
-                                      <Form.Check
-                                        type="radio"
-                                        label=""
-                                        name="Refri"
-                                        id={ d.name }
-                                        onClick={ () => { orderAddProductValue(d.name, d.price) } }
-                                        checked={ products[index].name == d.name }
-                                      />
-                                    </td>
-                                    <td>
-                                      <Figure.Image
-                                        width={45}
-                                        height={45}
-                                        alt="171x180"
-                                        src={ d.image }
-                                        style={{ margin: "0 10px 0 0" }}
-                                      />
-                                    </td>
-                                    <td>
-                                      <b>{ d.name }</b> { d.description }
-                                    </td>
-                                    <td>
-                                      <Badge pill bg="dark">
-                                        R$ { d.price },00
-                                      </Badge>
-                                    </td>
-                                  </tr>
-                                  }) }
-                                </tbody>
-                              </Table>
-                            </Col>
-                          </Form.Group>
-                        </fieldset>
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>
-                      <Figure>
-                        <Figure.Image
-                          width={45}
-                          height={45}
-                          alt="171x180"
-                          src="soda.png"
-                          style={{ margin: "0 10px 0 0" }}
-                        />
-                      </Figure>
-                      Refrigerante 2L
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <div>
-                        <fieldset>
-                          <Form.Group as={Row} className="mb-12">
-                            <Col sm={12}>
-                            <Table striped responsive hover size="sm">
-                                <tbody>
-                                  { itemsFile.items[0].drinks.filter(f => f.type == "2L").map( d=> {
-                                    return <tr className="align-middle">
-                                    <td>
-                                      <Form.Check
-                                        type="radio"
-                                        label=""
-                                        name="Refri"
-                                        id={ d.name }
-                                        onClick={ () => { orderAddProductValue(d.name, d.price) } }
-                                        checked={ products[index].name == d.name }
-                                      />
-                                    </td>
-                                    <td>
-                                      <Figure.Image
-                                        width={45}
-                                        height={45}
-                                        alt="171x180"
-                                        src={ d.image }
-                                        style={{ margin: "0 10px 0 0" }}
-                                      />
-                                    </td>
-                                    <td>
-                                      <b>{ d.name }</b> { d.description }
-                                    </td>
-                                    <td>
-                                      <Badge pill bg="dark">
-                                        R$ { d.price },00
-                                      </Badge>
-                                    </td>
-                                  </tr>
-                                  })}
-                                </tbody>
-                              </Table>
-                            </Col>
-                          </Form.Group>
-                        </fieldset>
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="2">
-                    <Accordion.Header>
-                      <Figure>
-                        <Figure.Image
-                          width={45}
-                          height={45}
-                          alt="171x180"
-                          src="soda.png"
-                          style={{ margin: "0 10px 0 0" }}
-                        />
-                      </Figure>
-                      Vinho
-                    </Accordion.Header>
-                    <Accordion.Body>
-                    <div>
-                        <fieldset>
-                          <Form.Group as={Row} className="mb-12">
-                            <Col sm={12}>
-                            <Table striped responsive hover size="sm">
-                                <tbody>
-                                  { itemsFile.items[0].drinks.filter(f => f.type == "Wine").map(
-                                    d => { return <tr className="align-middle">
-                                    <td>
-                                      <Form.Check
-                                        type="radio"
-                                        label=""
-                                        name="Refri"
-                                        id={ d.name }
-                                        onClick={ () => { orderAddProductValue(d.name, d.price) } }
-                                        checked={ products[index].name ==  d.name  }
-                                      />
-                                    </td>
-                                    <td>
-                                      <Figure.Image
-                                        width={45}
-                                        height={45}
-                                        alt="171x180"
-                                        src={ d.image }
-                                        style={{ margin: "0 10px 0 0" }}
-                                      />
-                                    </td>
-                                    <td>
-                                      Vinho <b>{ d.name }</b> { d.description }
-                                    </td>
-                                    <td>
-                                      <Badge pill bg="dark">
-                                        R$ { d.price },90
-                                      </Badge>
-                                    </td>
-                                  </tr>
-                                    
-                                    } 
-                                  ) }
-                                </tbody>
-                              </Table>
-                            </Col>
-                          </Form.Group>
-                        </fieldset>
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-              </div>
+              <Accordion flush>
+              { props.data.client ? props.data.client.items ? Array.from(new Set(props.data.client.items.filter(f => (f.type == "Drink")).map(({ subType }) => {
+                return <Accordion.Item eventKey={ subType }>
+                  <Accordion.Header>
+                    <Figure>
+                      <Figure.Image
+                        width={45}
+                        height={45}
+                        alt="171x180"
+                        src="soda.png"
+                        style={{ margin: "0 10px 0 0" }}
+                      />
+                    </Figure>
+                    { subType } {/* Refrigerante 1L */}
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <fieldset>
+                      <Form.Group as={Row} className="mb-12">
+                        <Col sm={12}>
+                        <Table striped responsive hover size="sm">
+                            <tbody>
+                              { props.data.client ? props.data.client.items ? props.data.client.items.filter(f => (f.type == "Drink" && f.subType == subType)).map(d => {
+                                return <tr className="align-middle">
+                                <td>
+                                  <Form.Check
+                                    type="radio"
+                                    label=""
+                                    name="Refri"
+                                    id={ d.name }
+                                    onClick={ () => { orderAddProductValue(d.name, d.price) } }
+                                    checked={ products[index].name == d.name }
+                                    style={{ marginLeft: "10px" }}
+                                  />
+                                </td>
+                                <td>
+                                  <Figure.Image
+                                    width={45}
+                                    height={45}
+                                    alt="171x180"
+                                    src={ d.image }
+                                    style={{ margin: "0 10px 0 0" }}
+                                  />
+                                </td>
+                                <td>
+                                  <b>{ d.name }</b> { d.description }
+                                </td>
+                                <td>
+                                  <Badge pill bg="dark" text="light">
+                                    R$ { d.price },00
+                                  </Badge>
+                                </td>
+                              </tr>
+                              }) : null : null }
+                            </tbody>
+                          </Table>
+                        </Col>
+                      </Form.Group>
+                    </fieldset>
+                  </Accordion.Body>
+                </Accordion.Item>
+                }))) : null : null }
+              </Accordion>
               <div style={{ display: "flex", alignItems: "center", marginTop: "1rem" }}>
                 <InputGroup className="mb-3">
                   <Button variant="danger" id="button-addon1" onClick={ () => products[index].quantity > 0 ? productChangeQuantity(-1) : null } style={{ width: "45px" }}>
@@ -596,15 +455,15 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
                     <b>+</b>
                   </Button>
                 </InputGroup>
-                <ButtonGroup aria-label="Basic example" vertical>
+                {/* <ButtonGroup aria-label="Basic example" vertical>
                   <Button variant="primary">Left</Button>
                   <Button variant="primary">Middle</Button>
                   <Button variant="primary">Right</Button>
-                </ButtonGroup>
-                <Badge bg="light" text="dark"><h4>Subtotal: R$ { (products[index].quantity * products[index].price) },00</h4></Badge>
+                </ButtonGroup> */}
+                <Badge bg="light" text="dark"><h4 style={{ color: 'black' }}>Subtotal: R$ { (products[index].quantity * products[index].price) },00</h4></Badge>
               </div>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Observações:</Form.Label>
+                <Form.Label style={{ display: "flex", justifyContent: "center" }}>Observações:</Form.Label>
                 <Form.Control as="textarea" id="observ" rows={3} value={products[index].note ? products[index].note : ''} onChange={ (e) => { orderAddNote(e.currentTarget.value ?? '') }} />
               </Form.Group>
             </Card.Text>
@@ -614,8 +473,9 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
         { products.map( s => s.price > 0 ? null : verify = false ) }
         { verify ?
         /* <Button variant="success" style={{ marginTop: "1rem" }} onClick={ () => { props.data.products = products; navigate("/" + props.data.firstName + "/cartshopping", { state: props.data }) }  }>Confirmar Lista de Compra</Button> */
-        <Button variant="success" style={{ marginTop: "1rem" }} onClick={ () => { props.data.products = products; navigate("/cartshopping", { state: props.data }) }  }>Confirmar Lista de Compra</Button>
-        : <><Button variant="success" style={{ marginTop: "1rem" }} ref={target} onClick={() => setShow(!show)}>Confirmar Lista de Compra</Button>
+        <div style={{ display: "flex", justifyContent: "center" }}><Button variant="success" style={{ marginTop: "1rem" }} onClick={ () => { props.data.products = products; navigate("/cartshopping", { state: props.data }) }  }>Confirmar Lista de Compra</Button></div>
+        : <>
+        <div style={{ display: "flex", justifyContent: "center" }}><Button variant="success" style={{ marginTop: "1rem" }} ref={target} onClick={() => setShow(!show)}>Confirmar Lista de Compra</Button></div>
         <Overlay target={target.current} show={show} placement="right">
           {({ placement, arrowProps, show: _show, popper, ...props }) => (
             <div
@@ -632,7 +492,8 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
               Selecione todos os produtos
             </div>
           )}
-        </Overlay></> }
+        </Overlay>
+        </> }
       </div>
     </Container>
   );

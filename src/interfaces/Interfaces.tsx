@@ -3,6 +3,7 @@ export interface Item {
     name: string,
     description: string,
     type: string,
+    subType: string,
     price: number,
     quantity: number,
     clientId: string,       //unnecessary
@@ -48,6 +49,7 @@ export interface Product {
 
 export interface Data {
     urlName: string,
+    firstItem: string,
     client: Client,
     products: Product[]
 }
