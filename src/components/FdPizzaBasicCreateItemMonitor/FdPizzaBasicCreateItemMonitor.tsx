@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 
-interface FdPizzaBasicCreateItemMonitorProps {}
+interface FdPizzaBasicCreateItemMonitorProps { }
 
 const FdPizzaBasicCreateItemMonitor: FC<FdPizzaBasicCreateItemMonitorProps> = () => (
   <div>

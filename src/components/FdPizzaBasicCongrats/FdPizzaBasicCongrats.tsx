@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
-
-interface FdPizzaBasicCongratsProps {}
+interface FdPizzaBasicCongratsProps { }
 
 const FdPizzaBasicCongrats: FC<FdPizzaBasicCongratsProps> = () => (
   <div>

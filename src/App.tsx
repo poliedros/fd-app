@@ -17,9 +17,9 @@ import { Data, Client, Item } from './interfaces/Interfaces';
 function App() {
 
   const urlName = window.location.hash.substring(2);
-  
+
   const [client, setClient] = useState<Client>();
-  const [data, setData] = useState<Data>( {
+  const [data, setData] = useState<Data>({
     urlName: urlName,
     firstItem: '',
     client: {
@@ -42,7 +42,7 @@ function App() {
       urlName: ''
     },
     products: []
-  } );
+  });
 
   const getClient = async () => {
     await axios.get('items').then(async itRes => {
@@ -63,12 +63,12 @@ function App() {
   }, [data]);
 
   useEffect(() => {
-    if(client) {
+    if (client) {
       setData({ ...data, client: client });
     }
   }, [client]);
 
-  if(client)
+  if (client)
     require("bootswatch/dist/" + client.theme + "/bootstrap.min.css");
   else
     require("bootswatch/dist/cyborg/bootstrap.min.css");
@@ -78,15 +78,15 @@ function App() {
 
   return (
     <HashRouter>
-      <Routes> 
-        <Route path={ '/' } element={ <><Link to={ '/pizzaabeca' } style={{ color: "white" }}>Pizza a Beça</Link>{/* <FdPizzaBasicNavMenu data={ data } /> */}<FdPizzaBasicCreateItem /></> } />
-        
-        <Route path={ '/pizzaabeca' } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } />
-        <Route path={ '/czardev' } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicIntro data={ data } /></> } />
+      <Routes>
+        <Route path={'/'} element={<><Link to={'/pizzaabeca'} style={{ color: "white" }}>Pizza a Beça</Link>{/* <FdPizzaBasicNavMenu data={ data } /> */}<FdPizzaBasicCreateItem /></>} />
 
-        <Route path={ "/selector" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicSelect data={ data }/></> } />
-        <Route path={ "/cartshopping" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicCartShopping /></> } />
-        <Route path={ "/finalizeTransaction" } element={ <><FdPizzaBasicNavMenu data={ data } /><FdPizzaBasicFinalizeTransaction /></> } />
+        <Route path={'/pizzaabeca'} element={<><FdPizzaBasicNavMenu data={data} /><FdPizzaBasicIntro data={data} /></>} />
+        <Route path={'/czardev'} element={<><FdPizzaBasicNavMenu data={data} /><FdPizzaBasicIntro data={data} /></>} />
+
+        <Route path={"/selector"} element={<><FdPizzaBasicNavMenu data={data} /><FdPizzaBasicSelect data={data} /></>} />
+        <Route path={"/cartshopping"} element={<><FdPizzaBasicNavMenu data={data} /><FdPizzaBasicCartShopping /></>} />
+        <Route path={"/finalizeTransaction"} element={<><FdPizzaBasicNavMenu data={data} /><FdPizzaBasicFinalizeTransaction /></>} />
       </Routes>
     </HashRouter>
   );

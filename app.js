@@ -31,7 +31,7 @@ app.post('/upload', uploadStrategy, (req, res) => {
     const streamLength = req.file.buffer.length;
 
     blobService.createBlockBlobFromStream(containerName, blobName, stream, streamLength, err => {
-        if(err) {
+        if (err) {
             console.log(err);
             return;
         }

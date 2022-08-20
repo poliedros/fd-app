@@ -9,7 +9,7 @@ import Card from 'react-bootstrap/Card';
 interface FdPizzaBasicUpdateImageProps { onChange: any }
 
 const FdPizzaBasicUpdateImage: FC<FdPizzaBasicUpdateImageProps> = (props) => {
-  
+
   const [images, setImages] = React.useState([]);
   const maxNumber = 69;
 
@@ -45,32 +45,32 @@ const FdPizzaBasicUpdateImage: FC<FdPizzaBasicUpdateImageProps> = (props) => {
               </span>
             </Button>
             &nbsp;
-            <Button id="removeAll" variant="dark" onClick={()=>{ onImageRemoveAll(); /* document.getElementById("upload").toggleAttribute("enabled"); document.getElementById("upload").removeAttribute("disabled") */ }}>
+            <Button id="removeAll" variant="dark" onClick={() => { onImageRemoveAll(); /* document.getElementById("upload").toggleAttribute("enabled"); document.getElementById("upload").removeAttribute("disabled") */ }}>
               <span id="span-center">
                 Eliminar Todas as Imagens
               </span>
             </Button>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", alignItems: "center", margin: "1.5rem", maxHeight: "70vh", overflowY: "scroll" }}>
-            {
-              imageList.map((image, index) => (
-                
-                <Card key={index} border="dark" style={{ width: '10rem', marginBottom: '10px' }}>
-                  <Card.Body>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                      <Image style={{ width: "100px", margin: "0px" }}
-                            className='unique'
-                            src={ image.data_url }
-                            alt={''}
-                            title={''}
-                      ></Image>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "-1rem", marginTop: "1rem" }}>
-                      <Button id="submit" variant="danger" className="button-mini" onClick={() => onImageRemove(index)}>Remover</Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              ))
-            }
+              {
+                imageList.map((image, index) => (
+
+                  <Card key={index} border="dark" style={{ width: '10rem', marginBottom: '10px' }}>
+                    <Card.Body>
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <Image style={{ width: "100px", margin: "0px" }}
+                          className='unique'
+                          src={image.data_url}
+                          alt={''}
+                          title={''}
+                        ></Image>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "-1rem", marginTop: "1rem" }}>
+                        <Button id="submit" variant="danger" className="button-mini" onClick={() => onImageRemove(index)}>Remover</Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                ))
+              }
             </div>
           </div>
         )}

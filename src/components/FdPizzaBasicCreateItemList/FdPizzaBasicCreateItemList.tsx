@@ -9,7 +9,7 @@ interface FdPizzaBasicCreateItemListProps { code: string, clients: Client[] }
 
 const FdPizzaBasicCreateItemList: FC<FdPizzaBasicCreateItemListProps> = (props) => {
 
-  const [clientName, setClientName] = useState(props.code ? props.clients.filter((f: Client) => f.code == props.code /* props.code */).map( (p: Client) => { console.log(p); return p.name }) : null);
+  const [clientName, setClientName] = useState(props.code ? props.clients.filter((f: Client) => f.code == props.code /* props.code */).map((p: Client) => { console.log(p); return p.name }) : null);
 
   const [clients, setClients] = useState<Client[]>([]);
   const [items, setItems] = useState<Item[]>([]);
@@ -30,12 +30,12 @@ const FdPizzaBasicCreateItemList: FC<FdPizzaBasicCreateItemListProps> = (props) 
 
   return (
     <ListGroup>
-      { props.code ? props.clients.filter((f: Client) => f.code == props.code).map((p: Client) => {
-        /* setClients(props.clients) */ 
-        return <ListGroup.Item action href={ "#linkAccount" } onClick={ () => { /* p.name = 'Mendes'; */ /* setClients(props.clients) */ } }> {/*  */}
-          { p.name }
+      {props.code ? props.clients.filter((f: Client) => f.code == props.code).map((p: Client) => {
+        /* setClients(props.clients) */
+        return <ListGroup.Item action href={"#linkAccount"} onClick={() => { /* p.name = 'Mendes'; */ /* setClients(props.clients) */ }}> {/*  */}
+          {p.name}
         </ListGroup.Item>
-      } ) : null }
+      }) : null}
     </ListGroup>
   )
 };

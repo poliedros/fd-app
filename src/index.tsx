@@ -15,7 +15,7 @@ import { Data, Client } from './interfaces/Interfaces';
 ReactDOM.render(
   <>
     <React.StrictMode>
-        <App />
+      <App />
     </React.StrictMode>
   </>,
   document.getElementById('root')
@@ -50,30 +50,30 @@ function moveToSelected(element: any) {
 }
 
 // Eventos teclado
-$(document).keydown(function(e) {
-    switch(e.which) {
-        case 37: // left
-        moveToSelected('prev');
-        break;
+$(document).keydown(function (e) {
+  switch (e.which) {
+    case 37: // left
+      moveToSelected('prev');
+      break;
 
-        case 39: // right
-        moveToSelected('next');
-        break;
+    case 39: // right
+      moveToSelected('next');
+      break;
 
-        default: return;
-    }
-    e.preventDefault();
+    default: return;
+  }
+  e.preventDefault();
 });
 
-$('#carousel div').click(function() {
+$('#carousel div').click(function () {
   moveToSelected($(this));
 });
 
-$('#prev').click(function() {
+$('#prev').click(function () {
   moveToSelected('prev');
 });
 
-$('#next').click(function() {
+$('#next').click(function () {
   moveToSelected('next');
 });
 
