@@ -106,7 +106,6 @@ const FdPatrickPage: FC<FdPatrickPageProps> = () => (
             <a href="" style={{ margin: "10rem", color: "black" }}><b>“A GLOBAL TEAM WITHIN YOUR REACH”</b></a>
           </Col>
           <Col>
-            {/* <img loading="lazy" src="https://myremoteteams.com/wp-content/uploads/2021/04/job_recruitement_13.png" alt="" title="" height="auto" width="auto" /* srcset="https://myremoteteams.com/wp-content/uploads/2021/04/job_recruitement_13.png 800w, https://myremoteteams.com/wp-content/uploads/2021/04/job_recruitement_13-480x502.png 480w" / sizes="(min-width: 0px) and (max-width: 480px) 480px, (min-width: 481px) 800px, 100vw" className="wp-image-12" /> */}
             <Figure>
               <Figure.Image
                 width={171}
@@ -216,28 +215,11 @@ const FdPatrickPage: FC<FdPatrickPageProps> = () => (
         <Row style={{ marginBottom: "1rem" }}>
           <Col>
             <div style={{ backgroundImage: "url(https://myremoteteams.com/wp-content/uploads/2021/05/it.jpg)", minHeight: "150px", position: "relative" }}>
-            {/* <Figure>
-              <Figure.Image
-                width="100%"
-                height={180}
-                alt="171x180"
-                src="https://myremoteteams.com/wp-content/uploads/2021/05/it.jpg"
-                style={{ width: "100%", maxHeight: "100px" }}
-              />
-            </Figure> */}
             <h2 style={{ fontFamily: "'Raleway', sans-serif", textAlign: "left", marginLeft: "0.5rem", color: "white", position: "absolute", bottom: "0", left: "0" }}>Tech & IT</h2>
             </div>
           </Col>
           <Col>
             <div style={{ backgroundImage: "url(https://myremoteteams.com/wp-content/uploads/2021/04/job_recruitement_03.jpg)", minHeight: "150px", position: "relative" }}>
-            {/* <Figure>
-              <Figure.Image
-                width={171}
-                height={180}
-                alt="171x180"
-                src="https://www.muycomputerpro.com/wp-content/uploads/2018/10/office-2019-precios.jpg"
-              />
-            </Figure> */}
             <h2 style={{ fontFamily: "'Raleway', sans-serif", textAlign: "left", marginLeft: "0.5rem", color: "white", position: "absolute", bottom: "0", left: "0" }}>Law</h2>
             </div>
           </Col>
@@ -245,27 +227,11 @@ const FdPatrickPage: FC<FdPatrickPageProps> = () => (
         <Row style={{ marginBottom: "1rem" }}>
           <Col>
           <div style={{ backgroundImage: "url(https://myremoteteams.com/wp-content/uploads/2021/05/finance.jpg)", minHeight: "150px", position: "relative" }}>
-            {/* <Figure>
-              <Figure.Image
-                width={171}
-                height={180}
-                alt="171x180"
-                src="https://www.muycomputerpro.com/wp-content/uploads/2018/10/office-2019-precios.jpg"
-              />
-            </Figure> */}
             <h2 style={{ fontFamily: "'Raleway', sans-serif", textAlign: "left", marginLeft: "0.5rem", color: "white", position: "absolute", bottom: "0", left: "0" }}>Administration  & Accounting</h2>
             </div>
           </Col>
           <Col>
             <div style={{ backgroundImage: "url(https://myremoteteams.com/wp-content/uploads/2021/05/design.jpg)", minHeight: "150px", position: "relative" }}>
-            {/* <Figure>
-              <Figure.Image
-                width={171}
-                height={180}
-                alt="171x180"
-                src="https://www.muycomputerpro.com/wp-content/uploads/2018/10/office-2019-precios.jpg"
-              />
-            </Figure> */}
             <h2 style={{ fontFamily: "'Raleway', sans-serif", textAlign: "left", marginLeft: "0.5rem", color: "white", position: "absolute", bottom: "0", left: "0" }}>Design</h2>
             </div>
           </Col>
@@ -273,27 +239,11 @@ const FdPatrickPage: FC<FdPatrickPageProps> = () => (
         <Row>
           <Col>
             <div style={{ backgroundImage: "url(https://myremoteteams.com/wp-content/uploads/2021/05/marketing.jpg)", minHeight: "150px", position: "relative" }}>
-            {/* <Figure>
-              <Figure.Image
-                width={171}
-                height={180}
-                alt="171x180"
-                src="https://www.muycomputerpro.com/wp-content/uploads/2018/10/office-2019-precios.jpg"
-              />
-            </Figure> */}
             <h2 style={{ fontFamily: "'Raleway', sans-serif", textAlign: "left", marginLeft: "0.5rem", color: "white", position: "absolute", bottom: "0", left: "0" }}>Marketing</h2>
             </div>
           </Col>
           <Col>
             <div style={{ backgroundImage: "url(https://myremoteteams.com/wp-content/uploads/2021/05/sales.jpg)", minHeight: "150px", position: "relative" }}>
-            {/* <Figure>
-              <Figure.Image
-                width={171}
-                height={180}
-                alt="171x180"
-                src="https://www.muycomputerpro.com/wp-content/uploads/2018/10/office-2019-precios.jpg"
-              />
-            </Figure> */}
             <h2 style={{ fontFamily: "'Raleway', sans-serif", textAlign: "left", marginLeft: "0.5rem", color: "white", position: "absolute", bottom: "0", left: "0" }}>Sales</h2>
             </div>
           </Col>

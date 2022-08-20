@@ -23,11 +23,8 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Overlay from 'react-bootstrap/Overlay';
 
-//import itemsFile from '../../files/items.json';
-//import { getEnvironmentData } from 'worker_threads';
 
-import { Data,/* , Client, Item */ 
-Product} from '../../interfaces/Interfaces';
+import { Data, Product } from '../../interfaces/Interfaces';
 
 interface FdPizzaBasicSelectProps { data: Data }
 
@@ -145,12 +142,6 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
   useEffect(() => {
     setData(props.data);
   }, []);
-
-  /* useEffect(() => {
-    let copyData = data;
-    copyData.products = products;
-    setData(copyData);
-  }, [products]); */
 
   console.log("PND");
   console.log(props.data.client ? props.data.client.items ? props.data.client.items : null : null);
@@ -455,11 +446,6 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
                     <b>+</b>
                   </Button>
                 </InputGroup>
-                {/* <ButtonGroup aria-label="Basic example" vertical>
-                  <Button variant="primary">Left</Button>
-                  <Button variant="primary">Middle</Button>
-                  <Button variant="primary">Right</Button>
-                </ButtonGroup> */}
                 <Badge bg="light" text="dark"><h4 style={{ color: 'black' }}>Subtotal: R$ { (products[index].quantity * products[index].price) },00</h4></Badge>
               </div>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -472,7 +458,6 @@ const FdPizzaBasicSelect: FC<FdPizzaBasicSelectProps> = (props) => {
       </Card>
         { products.map( s => s.price > 0 ? null : verify = false ) }
         { verify ?
-        /* <Button variant="success" style={{ marginTop: "1rem" }} onClick={ () => { props.data.products = products; navigate("/" + props.data.firstName + "/cartshopping", { state: props.data }) }  }>Confirmar Lista de Compra</Button> */
         <div style={{ display: "flex", justifyContent: "center" }}><Button variant="success" style={{ marginTop: "1rem" }} onClick={ () => { props.data.products = products; navigate("/cartshopping", { state: props.data }) }  }>Confirmar Lista de Compra</Button></div>
         : <>
         <div style={{ display: "flex", justifyContent: "center" }}><Button variant="success" style={{ marginTop: "1rem" }} ref={target} onClick={() => setShow(!show)}>Confirmar Lista de Compra</Button></div>

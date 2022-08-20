@@ -2,9 +2,7 @@ import React, { FC } from 'react';
 
 import Container from 'react-bootstrap/Container';
 
-/* import Nav from 'react-bootstrap/Nav'; */
 import Navbar from 'react-bootstrap/Navbar';
-/* import NavDropdown from 'react-bootstrap/NavDropdown'; */
 import Dropdown from 'react-bootstrap/Dropdown';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';

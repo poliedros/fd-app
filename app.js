@@ -1,7 +1,3 @@
-/* if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-} */
-
 import express from 'express';
 import { join } from 'path';
 import { json, urlencoded } from 'body-parser';

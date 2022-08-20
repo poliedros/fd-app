@@ -8,9 +8,6 @@ import { BlobServiceClient, ContainerClient, StorageSharedKeyCredential } from '
 
 import { Buffer } from "buffer";
 
-/* import { Upload } from "@aws-sdk/lib-storage";
-import { S3Client, S3 } from "@aws-sdk/client-s3"; */
-
 import Container from 'react-bootstrap/Container';
 import Tab from 'react-bootstrap/Tab';
 import Row from 'react-bootstrap/Row';
@@ -31,8 +28,6 @@ import ListItems from '../FdPizzaBasicCreateItemList/FdPizzaBasicCreateItemList'
 import Monitor from '../FdPizzaBasicCreateItemMonitor/FdPizzaBasicCreateItemMonitor';
 import { pointerPress } from '@testing-library/user-event/dist/types/pointer/pointerPress';
 import { setSyntheticLeadingComments } from 'typescript';
-
-//import { uploadImage } from './upload-image.ts.old';
 
 interface FdPizzaBasicCreateItemProps {}
 
@@ -62,78 +57,16 @@ interface Client {
   type: string;
 }
 
-/* interface Props {
-    key: string;
-    placement: string;
-    name: string;
-    code: string;
-    clients: Client[];
-} */
-
-/* const azure = require('azure-storage');
-
-export const uploadImage = async (
-  filename: string, //file[0].file.name
-  image: string, //file[0].file
-): Promise<string> => {
-  const blobService = azure.createBlobService(
-    'DefaultEndpointsProtocol=https;AccountName=catalogv2;AccountKey=/nae0fL8Nncvylu7l4WFQjOmPp0J+uwjv6ruXIevhIkJAJiLbQWTLS7sQ5X7J5/63P0MwCULRS5xrIdsoJwuew==;EndpointSuffix=core.windows.net',
-  );
-
-  const matches = image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-  const imageFormat = matches![1];
-  const buffer = new Buffer(matches![2], 'base64');
-
-  await blobService.createBlockBlobFromText(
-    'storage-images',
-    filename,
-    buffer,
-    {contentType: imageFormat},
-    (error: any, result: any, response: any) => {
-      if (error) filename = 'default.jpg';
-    },
-  );
-
-  return `${'https://catalogv2.blob.core.windows.net/storage-images'}/${filename}`;
-}; */
-
 function sendImage(file: any) {
   console.log("FILE");
   console.log(file);
-
-  //uploadImage(file[0].file.name, file[0].file);
 } 
-
-/* function sendImage(file: any) {
-
-  const creds = {accessKeyId: "AKIARVN2XQEDLNX53XWC", secretAccessKey: "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"};
-
-  const target = { Bucket: "storage-files-general-use", Key: file[0].file.name, Body: file[0].file };
-  try {
-    const parallelUploads3 = new Upload({
-      client: new S3Client({region: "sa-east-1", credentials: creds}),
-      leavePartsOnError: false, // optional manually handle dropped parts
-      params: target,
-    });
-
-    parallelUploads3.on("httpUploadProgress", (progress) => {
-      console.log(progress);
-    });
-
-    parallelUploads3.done();
-  } catch (e) {
-    console.log(e);
-  }
-
-} */
 
 type Props = {
   key: any;
   placement: any;
   name: string;
 }
-
-//function OffCanvasExample({ ...props }) {
 
 const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
 
@@ -200,9 +133,6 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
       console.log(imagesState);
     }
   
-    /* const [clientName, setClientName] = useState("");
-    const [clientPhone, setClientPhone] = useState(""); */
-  
     const [name2, setName2] = useState("");
     const [type, setType] = useState("");
     const [description, setDescription] = useState("");
@@ -255,10 +185,8 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
                 <ListGroup style={{ alignItems: "center" }}>
                   <ListGroup.Item action href="#link+"
                   style={{ borderRadius: "100px",
-                    //width: "58px",
                     paddingLeft: "8px",
                     paddingRight: "8px",
-                    //height: "58px",
                     textAlign: "center",
                     aspectRatio: "1 / 1",
                     width: "auto", //"calc(3vw + 6vh)",
@@ -266,11 +194,9 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
                     alignItems: "center",
                     justifyContent: "center"
                   }}>
-                    {/*<h3 style={{ marginBottom: "0" }}> <b> */}
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                     </svg>
-                    {/* </b> </h3>*/}
                   </ListGroup.Item>
                 </ListGroup>
                 <br/>
@@ -384,43 +310,6 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
                   } ) : null }
                   <Tab.Pane eventKey="#link+">
                     <Form onSubmit={postItem}>
-                      {/* <Form.Group className="mb-3" controlId="formBasicLabel">
-                        <Form.Label>Tarja</Form.Label>
-                        <Form.Control type="text" placeholder="Insira tarja" />
-                      </Form.Group>
-                      <Form.Group className="mb-3" controlId="formBasicName">
-                        <Form.Label>Nome</Form.Label>
-                        <Form.Control value={ name2 } type="text" placeholder="Insira nome" onChange={ event => setName2(event.target.value) } />
-                      </Form.Group>
-                      <Form.Group className="mb-3" controlId="formBasicType">
-                        <Form.Label>Tipo</Form.Label>
-                        <Form.Control value={ type } type="text" placeholder="Insira tipo" onChange={ event => setType(event.target.value) } />
-                      </Form.Group>
-                      <Form.Group className="mb-3" controlId="formBasicDescription">
-                        <Form.Label>Descrição</Form.Label>
-                        <Form.Control value={ description } type="text" placeholder="Insira descrição" onChange={ event => setDescription(event.target.value) }/>
-                      </Form.Group>
-  
-                      <Form.Group className="mb-3" controlId="formBasicPrice">
-                        <Form.Label>Preço</Form.Label>
-                        <Form.Control value={ price } type="number" placeholder="Insira preço" onChange={ event => setPrice(parseInt(event.target.value)) }/>
-                      </Form.Group>
-                      <Form.Group className="mb-3" controlId="formBasicQuantity">
-                        <Form.Label>Quantidade</Form.Label>
-                        <Form.Control value={ quantity } type="number" placeholder="Insira estoque" onChange={ event => setQuantity(parseInt(event.target.value)) } />
-                      </Form.Group>
-  
-                      <Form.Group controlId="formFile" className="mb-3">
-                        <Form.Label>Imagem</Form.Label>
-                        <UploadImage /* value={ imageState } / onChange={ (e: any) => { sendImage(e); setImagesState(e); console.log(imagesState)  } }></UploadImage>
-                      </Form.Group>
-  
-                      <InputGroup className="mb-3">
-                        <Form.Label style={{ width: '100%' }}>Código do Estabelecimento | Pergunta Chave</Form.Label>
-                        <FormControl aria-label="Example text with two button addons" placeholder="Reinsira Código do Estabelecimento" />
-                        <FormControl aria-label="Example text with two button addons" placeholder="Telefone do estabelecimento?" />
-                        <Button variant="outline-secondary" type="submit" onClick={ () => { sendImage(imagesState)/* ; setClientName(name) / } }>Salvar Item</Button>
-                      </InputGroup> */}
   
                     </Form>
                   </Tab.Pane>
@@ -439,11 +328,6 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
   async function updateStorage() {
     const request = clientCopy;
     console.log(request);
-    /* alert(clientCopy.name); */
-    /* {
-      phoneNumber: clientPhone,
-      name: clientName
-    }; */
     await axios.patch("/storage/624fb30f570d98201f131685", request);
     await axios.get('items').then(async result => {
       await axios.get('storage').then(result1 => {
@@ -465,7 +349,7 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
         setClients(result1.data);
         setClientCopy(result1.data[0]);
       })
-    })/* .then(() => setClientCopy(clients[0])) */;
+    });
     
   }
 
@@ -475,11 +359,8 @@ const FdPizzaBasicCreateItem: FC<FdPizzaBasicCreateItemProps> = () => {
   }, []);
 
   useEffect(() => {
-    /* alert("pau no meu cu"); */
-    /* clients ?? setClientCopy(clients[0]); */
   }, [clients]);
 
-  //const didMount = useRef(false);
   let didMount = useRef(0);
 
   useEffect(() => {
