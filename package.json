@@ -6,6 +6,7 @@
     "@aws-sdk/client-s3": "^3.72.0",
     "@aws-sdk/lib-storage": "^3.72.0",
     "@azure/storage-blob": "^12.9.0",
+    "@craco/craco": "^6.4.5",
     "@emailjs/browser": "^3.6.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "13.1.1",
@@ -30,6 +31,7 @@
     "node-polyfill-webpack-plugin": "^1.1.4",
     "nodemailer": "^6.7.3",
     "path-browserify": "^1.0.1",
+    "postcss-cli": "^10.0.0",
     "process": "^0.11.10",
     "react": "^18.0.0",
     "react-bootstrap": "^2.2.3",
@@ -39,6 +41,7 @@
     "react-scripts": "^5.0.1",
     "register-service-worker": "^1.7.2",
     "serve": "^13.0.2",
+    "tailwindcss": "^3.1.8",
     "tsconfig-paths": "^3.14.1",
     "typescript": "^4.6.3",
     "web-vitals": "^2.1.4",
@@ -71,8 +74,12 @@
     ]
   },
   "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.2.17",
     "@types/jquery": "^3.5.14",
+    "autoprefixer": "^10.4.8",
+    "eslint-config-react-app": "^7.0.1",
     "gh-pages": "^3.2.3",
+    "postcss": "^8.4.16",
     "webpack-config": "^7.5.0"
   },
   "type": "module"

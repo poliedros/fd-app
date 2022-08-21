@@ -68,7 +68,7 @@ const FdPizzaBasicIntro: FC<FdPizzaBasicIntroProps> = (props) => {
               <Card className="cardMain" style={{ alignContent: "center", textAlign: "center" }}>
                 <Card.Img className="mainImage" variant="top" src={idx == 0 ? "pizza.png" : idx == 1 ? "pizzeria.png" : "employee.png"} style={{ padding: "1.5rem" }} />
                 <Card.Body>
-                  <Card.Title style={{ color: "black" }}>{idx == 0 ? "Fazer pedido" : idx == 1 ? "Promoções" : "Sobre nós"}</Card.Title>
+                  <Card.Title className="text-3xl font-bold underline" style={{ color: "black" }}>{idx == 0 ? "Fazer pedido" : idx == 1 ? "Promoções" : "Sobre nós"}</Card.Title>
                   <Card.Text>
                     {idx == 0 ? "Saboreie nossas pizzas" : idx == 1 ? "Veja nossas promoções" : "Tudo sobre nós"}
                   </Card.Text>
