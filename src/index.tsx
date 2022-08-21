@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-import axios from '../src/axios';
+import axios from "../src/axios";
 
-import $ from 'jquery';
+import $ from "jquery";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Data, Client } from './interfaces/Interfaces';
+import { Data, Client } from "./interfaces/Interfaces";
 
 ReactDOM.render(
   <>
@@ -18,11 +18,10 @@ ReactDOM.render(
       <App />
     </React.StrictMode>
   </>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 function moveToSelected(element: any) {
-
   if (element == "next") {
     var selected = $(".selected").next();
   } else if (element == "prev") {
@@ -44,37 +43,37 @@ function moveToSelected(element: any) {
   $(nextSecond).removeClass().addClass("nextRightSecond");
   $(prevSecond).removeClass().addClass("prevLeftSecond");
 
-  $(nextSecond).nextAll().removeClass().addClass('hideRight');
-  $(prevSecond).prevAll().removeClass().addClass('hideLeft');
-
+  $(nextSecond).nextAll().removeClass().addClass("hideRight");
+  $(prevSecond).prevAll().removeClass().addClass("hideLeft");
 }
 
 // Eventos teclado
 $(document).keydown(function (e) {
   switch (e.which) {
     case 37: // left
-      moveToSelected('prev');
+      moveToSelected("prev");
       break;
 
     case 39: // right
-      moveToSelected('next');
+      moveToSelected("next");
       break;
 
-    default: return;
+    default:
+      return;
   }
   e.preventDefault();
 });
 
-$('#carousel div').click(function () {
+$("#carousel div").click(function () {
   moveToSelected($(this));
 });
 
-$('#prev').click(function () {
-  moveToSelected('prev');
+$("#prev").click(function () {
+  moveToSelected("prev");
 });
 
-$('#next').click(function () {
-  moveToSelected('next');
+$("#next").click(function () {
+  moveToSelected("next");
 });
 
 reportWebVitals();

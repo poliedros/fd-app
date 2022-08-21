@@ -6,7 +6,6 @@
     "@aws-sdk/client-s3": "^3.72.0",
     "@aws-sdk/lib-storage": "^3.72.0",
     "@azure/storage-blob": "^12.9.0",
-    "@craco/craco": "^6.4.5",
     "@emailjs/browser": "^3.6.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "13.1.1",
